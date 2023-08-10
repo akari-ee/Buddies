@@ -1,17 +1,25 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { auth } from '../config/firebase';
-import { signInWithPopup, OAuthProvider } from 'firebase/auth';
+import {
+  signInWithPopup,
+  OAuthProvider,
+  signInWithRedirect,
+} from 'firebase/auth';
 import axios from 'axios';
+import firebase from 'firebase/compat/app';
 
 export default function KakaoTalk() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const authCode = searchParams.get('code');
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [idToken, setIdToken] = useState<string | null>(null);
 
   const firebaseLogin = () => {
     const provider = new OAuthProvider('oidc.kakao');
+    // signInWithRedirect(auth, provider);
     signInWithPopup(auth, provider)
       .then((result) => {
         console.log(result);
@@ -22,9 +30,9 @@ export default function KakaoTalk() {
         console.log('Firebase IdToken', idToken);
       })
       .catch((error) => {
-        // Handle error.
         console.log(error);
       });
+    router.push('/');
   };
 
   const loginHandler = async (code: string | string[]) => {
@@ -40,16 +48,22 @@ export default function KakaoTalk() {
         console.log('getKakaoToken data', data);
         console.log('Kakao IdToken', data.id_token);
         console.log('Kakao AccessToken', data.access_token);
+        setAccessToken(data.access_token);
+        setIdToken(data.id_token);
       });
     } catch (err) {
       console.log(err);
     }
   };
+
   useEffect(() => {
     if (authCode) {
       loginHandler(authCode);
     }
   }, [authCode]);
 
+  useEffect(() => {
+    firebaseLogin();
+  }, [idToken]);
   return <div>page</div>;
 }
