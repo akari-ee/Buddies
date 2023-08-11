@@ -1,0 +1,13 @@
+.carousel-root {
+  height: 100%;
+}
+.carousel.carousel-slider {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  height: 100%;
+}
+.carousel .slider-wrapper {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  height: 100%;
+}
