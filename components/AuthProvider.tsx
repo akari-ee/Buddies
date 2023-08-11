@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { User } from 'firebase/auth';
 import { auth } from '@/app/config/firebase';
 
@@ -8,7 +8,7 @@ interface UserContextType {
   user: User | null;
 }
 
-const AuthContext = createContext<UserContextType>({ user: null });
+export const AuthContext = createContext<UserContextType>({ user: null });
 
 export default function AuthProvider({
   children,
@@ -29,3 +29,5 @@ export default function AuthProvider({
     </AuthContext.Provider>
   );
 }
+
+export const useAuth = () => useContext(AuthContext);

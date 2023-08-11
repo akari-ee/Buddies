@@ -6,8 +6,9 @@ import { auth } from '@/app/config/firebase';
 import { RiKakaoTalkFill } from '@react-icons/all-files/ri/RiKakaoTalkFill';
 import { FcGoogle } from '@react-icons/all-files/fc/FcGoogle';
 
-import Image from 'next/image';
+
 import LoginDialog from './Dialog';
+import { usePathname, useRouter } from 'next/navigation';
 // import kakaoTalkLogo from '/public/kakaotalk_logo.svg';
 // import googleLogo from '/public/google_logo.svg';
 
@@ -32,15 +33,16 @@ const scope = [
 ].join(',');
 
 export default function Login({}: Props) {
+  const router = useRouter();
   // 카카로 로그인 Handler
   const [isOpen, setIsOpen] = useState(false);
 
   const openDialog = () => {
-    setIsOpen(prev => !prev);
-  }
+    setIsOpen((prev) => !prev);
+  };
   const closeDialog = () => {
-    setIsOpen(prev => !prev);
-  }
+    setIsOpen((prev) => !prev);
+  };
 
   const kakaoLoginHandler = () => {
     window.Kakao.Auth.authorize({
@@ -56,6 +58,7 @@ export default function Login({}: Props) {
     await signInWithPopup(auth, provider)
       .then((data) => {
         console.log(data);
+        router.push('/home');
       })
       .catch((err) => {
         console.log(err);
@@ -75,10 +78,10 @@ export default function Login({}: Props) {
 
   return (
     <div className='w-full flex flex-col justify-center items-center space-y-6 mb-20'>
-      <div className='w-full flex justify-center items-center space-x-3'>
+      <div className='w-full flex justify-center items-center space-x-3 md:space-x-5'>
         <button
           onClick={kakaoLoginHandler}
-          className='rounded-full overflow-hidden h-10 w-10 bg-[#F9E000] flex items-center justify-center text-2xl shadow-md'
+          className='rounded-full overflow-hidden h-10 w-10 bg-[#F9E000] flex items-center justify-center text-2xl shadow-md md:w-16 md:h-16 md:text-4xl'
         >
           <RiKakaoTalkFill />
           {/* <Image src={kakaoTalkLogo} alt='kakaoLogin' width={30} height={30}/> */}
@@ -86,24 +89,17 @@ export default function Login({}: Props) {
 
         <button
           onClick={googleLoginHandler}
-          className='rounded-full overflow-hidden h-10 w-10 flex items-center justify-center text-2xl shadow-md'
+          className='rounded-full overflow-hidden h-10 w-10 flex items-center justify-center text-2xl shadow-md md:w-16 md:h-16 md:text-4xl'
         >
           <FcGoogle />
         </button>
       </div>
-      <div className='text-xs text-[#868686]'>
-        <button className='underline' onClick={openDialog}>비회원으로 서비스 이용하기</button>
+      <div className='text-xs text-[#868686] md:text-lg'>
+        <button className='underline' onClick={openDialog}>
+          비회원으로 서비스 이용하기
+        </button>
         <LoginDialog isOpen={isOpen} onClose={closeDialog} />
       </div>
     </div>
   );
 }
-
-// color: var(--grey-grey-87, #868686);
-// text-align: center;
-// font-family: Apple SD Gothic Neo;
-// font-size: 13px;
-// font-style: normal;
-// font-weight: 400;
-// line-height: 18px; /* 138.462% */
-// text-decoration-line: underline;

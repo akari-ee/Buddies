@@ -8,7 +8,6 @@ import {
   signInWithRedirect,
 } from 'firebase/auth';
 import axios from 'axios';
-import firebase from 'firebase/compat/app';
 
 export default function KakaoTalk() {
   const router = useRouter();
@@ -32,7 +31,7 @@ export default function KakaoTalk() {
       .catch((error) => {
         console.log(error);
       });
-    router.push('/');
+    router.push('/home');
   };
 
   const loginHandler = async (code: string | string[]) => {
