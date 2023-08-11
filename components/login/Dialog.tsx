@@ -19,7 +19,7 @@ export default function LoginDialog({ isOpen, onClose }: LoginDialogProps) {
     await signInAnonymously(auth)
       .then((data) => {
         console.log(data);
-        router.push('/');
+        router.push('/home');
       })
       .catch((err) => {
         console.log(err);
@@ -35,12 +35,12 @@ export default function LoginDialog({ isOpen, onClose }: LoginDialogProps) {
     >
       <div className='fixed inset-0 bg-[#00000080]' aria-hidden='true' />
       <div className='fixed inset-0 flex items-center justify-center p-6 border-gray-800'>
-        <Dialog.Panel className='w-full max-w-lg rounded-lg bg-white p-10 flex flex-col justify-center items-center'>
-          <Dialog.Title className='flex flex-col justify-center items-center text-center font-bold text-lg mb-6'>
+        <Dialog.Panel className='w-full max-w-lg rounded-lg bg-white p-10 flex flex-col justify-center items-center md:max-w-xl md:p-16'>
+          <Dialog.Title className='flex flex-col justify-center items-center text-center font-bold text-lg mb-6 md:text-2xl'>
             <p>간편한 회원가입으로</p>
             <p>아래 기능을 이용해보세요.</p>
           </Dialog.Title>
-          <ul className='text-xs list-disc space-y-1 text-[#444444] mb-6'>
+          <ul className='flex flex-col justify-center text-xs list-disc space-y-1 text-[#444444] mb-6 md:text-base md:mb-10'>
             <li>
               챗봇과의 대화기록 저장하고 나에게 꼭 맞는 대화경험을 느껴보세요.
             </li>
@@ -52,7 +52,7 @@ export default function LoginDialog({ isOpen, onClose }: LoginDialogProps) {
             <li>나에게 의미있게 다가온 핫토픽을 모아보세요.</li>
           </ul>
 
-          <div className='flex flex-col justify-center items-center space-y-4 text-xs'>
+          <div className='flex flex-col justify-center items-center space-y-4 text-xs md:text-base'>
             <button
               onClick={onClose}
               className='bg-[#171717] text-white rounded-full px-11 py-3.5'
