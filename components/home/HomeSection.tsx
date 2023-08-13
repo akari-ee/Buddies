@@ -6,6 +6,9 @@ import LogoHeader from '../UI/LogoHeader';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import './styles.css';
+import { useRouter } from 'next/navigation';
+import { FaUser } from '@react-icons/all-files/fa/FaUser';
+import { RiNotification3Fill } from '@react-icons/all-files/ri/RiNotification3Fill';
 
 import bomi_desc from '/public/bomi_desc.svg';
 import yermi_desc from '/public/yermi_desc.svg';
@@ -26,21 +29,32 @@ const characters = [
   { name: '겨우리', src: gyeouri_desc, ch_src: gyeouri },
 ];
 const bg_colors = ['bg-bomi', 'bg-yermi', 'bg-gauri', 'bg-gyeouri'];
-const gradients = ['from-bomi', 'from-yermi', 'from-gauri', 'from-gyeouri']
+const gradients = ['from-bomi', 'from-yermi', 'from-gauri', 'from-gyeouri'];
 type Props = {};
 export default function HomeSection({}: Props) {
+  const router = useRouter();
   const [currentIdx, setCurrentIdx] = useState<number>(0);
 
   return (
-    <div className={cn('w-screen h-screen flex flex-col gap-8 relative overflow-hidden pt-5 bg-gradient-to-b via-transparent to-white', bg_colors[currentIdx], gradients[currentIdx])}>
+    <div
+      className={cn(
+        'w-screen h-screen flex flex-col gap-8 relative overflow-hidden pt-5 bg-gradient-to-b via-transparent to-white',
+        bg_colors[currentIdx],
+        gradients[currentIdx]
+      )}
+    >
       <div id='header' className='flex justify-between items-center px-6'>
         <LogoHeader serviceTitle={service_title} isHome={true} />
         <div
           id='icon-wrapper'
-          className='flex justify-center items-center gap-3 text-white'
+          className='flex justify-center items-center gap-5 text-white'
         >
-          <div>User</div>
-          <div>Notify</div>
+          <button className='border border-white rounded-full flex justify-center items-center w-10 h-10 bg-inherit  bg-gradient-to-bl from-inherit via-transparent to-white/30 shadow-md shadow-gray'>
+            <FaUser size={22} />
+          </button>
+          <button className='border border-white rounded-full flex justify-center items-center w-10 h-10 bg-inherit  bg-gradient-to-bl from-inherit via-transparent to-white/30 shadow-md shadow-gray'>
+            <RiNotification3Fill size={22} />
+          </button>
         </div>
       </div>
       <div className='text-white pl-6 flex flex-col justify-center gap-4'>
@@ -88,7 +102,10 @@ export default function HomeSection({}: Props) {
 
       <div className='fixed bottom-12 left-1/2 translate-x-[-50%] bg-[#171717] text-white text-base font-medium rounded-full w-72 py-3 flex justify-center items-center'>
         <div className='flex justify-center items-center gap-4'>
-          <button className='flex justify-center items-center'>
+          <button
+            className='flex justify-center items-center'
+            onClick={() => router.push('/chat')}
+          >
             대화 시작하기
           </button>
           <div className='flex justify-center items-center'>
