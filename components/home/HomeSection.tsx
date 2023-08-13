@@ -33,14 +33,14 @@ const gradients = ['from-bomi', 'from-yermi', 'from-gauri', 'from-gyeouri'];
 type Props = {};
 export default function HomeSection({}: Props) {
   const router = useRouter();
-  const [currentIdx, setCurrentIdx] = useState<number>(0);
+  const [currentCharacter, setCurrentIdx] = useState<number>(0);
 
   return (
     <div
       className={cn(
         'w-screen h-screen flex flex-col gap-8 relative overflow-hidden pt-5 bg-gradient-to-b via-transparent to-white',
-        bg_colors[currentIdx],
-        gradients[currentIdx]
+        bg_colors[currentCharacter],
+        gradients[currentCharacter]
       )}
     >
       <div id='header' className='flex justify-between items-center px-6'>
@@ -72,7 +72,7 @@ export default function HomeSection({}: Props) {
           swipeable
           emulateTouch
           transitionTime={500}
-          selectedItem={currentIdx}
+          selectedItem={currentCharacter}
           onChange={(idx) => setCurrentIdx((prev) => idx)}
         >
           {characters.map((character) => (
@@ -104,7 +104,7 @@ export default function HomeSection({}: Props) {
         <div className='flex justify-center items-center gap-4'>
           <button
             className='flex justify-center items-center'
-            onClick={() => router.push('/chat')}
+            onClick={() => router.push(`/chat/${currentCharacter}`)}
           >
             대화 시작하기
           </button>
