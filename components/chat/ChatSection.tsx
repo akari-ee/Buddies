@@ -12,7 +12,7 @@ type msgType = {
 
 type totalStyle = msgType[];
 
-export default function ChatSection({}) {
+export default function ChatSection({ characterId }: { characterId: string }) {
   const [userMsg, setUserMsg] = useState<string[]>([]); // User가 보낸 모든 메시지
   const [inputMsg, setInputMsg] = useState<string>(''); // User가 입력한 메시지
   const [gptMsg, setGptMsg] = useState<string[]>([]); // GPT가 답변한 모든 메시지
@@ -67,20 +67,19 @@ export default function ChatSection({}) {
   // useEffect(() => {
   //   console.log("여기 실행됨.");
 
-    
-
   //   getMessage();
   // }, [userMsg]);
 
   return (
-    <div className='w-full min-h-screen justify-center items-center text-black'>
+    <div className='w-full min-h-screen justify-center items-center text-black relative'>
       <div className='w-full h-full flex flex-col bg-[#FAFAFA]'>
-        <ChatHeader />
+        <ChatHeader characterId={characterId}/>
         <Chats messages={totalMsg} />
         <ChatFooter
           inputMsg={inputMsg}
           inputHandler={inputHandler}
           sendMessageHandler={sendMessageHandler}
+          characterId={characterId}
         />
       </div>
     </div>
