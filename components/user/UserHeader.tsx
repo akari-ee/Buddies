@@ -18,7 +18,7 @@ export default function UserHeader({}: Props) {
         <BiArrowBack size={30} color="white" />
         {/* <Image src={prevBtn} alt='go to prev' width={21} height={17}/> */}
       </button>
-      <button className='rounded-full border border-white w-10 h-10 flex justify-center items-center bg-gradient-to-bl from-inherit via-transparent to-white shadow-md shadow-gray'>
+      <button className='rounded-full border border-white w-10 h-10 flex justify-center items-center bg-gradient-to-bl from-inherit via-transparent to-white shadow-md shadow-gray' onClick={() => router.push('/user/profile')}>
         <Image src={menuBtn} alt='go to menu' width={21} height={17} />
       </button>
     </div>

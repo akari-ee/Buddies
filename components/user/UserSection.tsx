@@ -7,7 +7,7 @@ type Props = {}
 
 export default function UserSection({}: Props) {
   return (
-    <div className='w-screen h-screen relative flex flex-col justify-between overflow-y-scroll px-6 pt-4'>
+    <div className='w-screen h-screen relative flex flex-col justify-between overflow-y-scroll px-6 pt-4 gap-8'>
       <UserHeader />
       <UserTitle />
       <UserInfo />
