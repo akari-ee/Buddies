@@ -1,7 +1,7 @@
-import AuthProvider from '@/components/AuthProvider';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { NextAuthProvider } from '@/components/NextAuthProvider';
 import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -19,16 +19,15 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <head>
-        <script
+      </head>
+      <body className={inter.className}>
+        <Script
+          async
           src='https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js'
           integrity='sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh'
           crossOrigin='anonymous'
-        ></script>
-      </head>
-      <body className={inter.className}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        ></Script>
+        <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
   );
