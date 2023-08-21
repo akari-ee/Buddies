@@ -7,31 +7,13 @@ import {
   User as FirebaseUser,
 } from 'firebase/auth';
 import { auth } from '@/config/firebase';
-import { Claims, filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims';
-
-type User = {
-  uid : string,
-  email : string | null,
-  photoURL : string | null,
-  phoneNumber: string | null,
-  displayName: string | null,
-  customClaims: Claims
-}
-export interface AuthProviderProps {
-  defaultUser: User | null;
-  children: React.ReactNode;
-}
-
-interface UserContextType {
-  user: User | null;
-}
+import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims';
 
 export const AuthContext = createContext<UserContextType>({ user: null });
 
 function toUser(user: FirebaseUser, idTokenResult: IdTokenResult): User {
   return {
     ...user,
-    customClaims: filterStandardClaims(idTokenResult.claims),
   };
 }
 
@@ -49,7 +31,6 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({
     }
 
     const idTokenResult = await firebaseUser.getIdTokenResult();
-    // console.log(idTokenResult);
     setUser(toUser(firebaseUser, idTokenResult));
   };
 
