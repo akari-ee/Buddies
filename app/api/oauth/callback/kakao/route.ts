@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
+// 카카오 로그인 Callback
 export async function POST(req: NextRequest) {
   // console.log("body is ", req.body);
   const url = new URL(req.url); // url 객체 생성
@@ -15,9 +16,11 @@ export async function POST(req: NextRequest) {
     );
 
     const data = res.data;
+    const accessToken = data.access_token;
+    
     return NextResponse.json({
-      data: data,
-    });
+      data: accessToken,
+    })
   } catch (e) {
     return NextResponse.json({
       data: 'fail',

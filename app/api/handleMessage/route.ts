@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
-import openai from '@/app/config/chatgpt';
+import openai from '@/config/chatgpt';
 
-import { Configuration, OpenAIApi } from 'openai';
-
+// GPT API를 이용해 챗봇 대화하기.
 export async function POST(request: Request) {
   // const configuration = new Configuration({
   //   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
@@ -85,7 +84,7 @@ export async function POST(request: Request) {
     }
 
     console.log(messages);
-    const chatCompletion : any = await openai.createChatCompletion({
+    const chatCompletion: any = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: messages,
       temperature: 0.75,
