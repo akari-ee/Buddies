@@ -25,3 +25,36 @@ interface User {
   phoneNumber: string | null,
   displayName: string | null,
 }
+
+interface LogoHeader {
+  serviceTitle: string;
+  isHome: boolean;
+};
+
+interface LoginDialog {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+interface ChatBoxStyle {
+  align: string;
+  bg: string;
+  color: string;
+  radius: string;
+};
+
+interface ChatBox {
+  styles: ChatBoxStyle;
+  message: string;
+  characterId: number;
+}
+
+interface MessageType {
+  type: string;
+  text: string;
+};
+
+interface Message {
+  messages: MessageType[];
+  characterId: number;
+};
