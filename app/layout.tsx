@@ -55,14 +55,14 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <head>
+      </head>
+      <body className={inter.className}>
         {/* <Script
           async
           src='https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js'
           integrity='sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh'
           crossOrigin='anonymous'
         /> */}
-      </head>
-      <body className={inter.className}>
         <AuthProvider defaultUser={user}>{children}</AuthProvider>
       </body>
     </html>
