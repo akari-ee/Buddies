@@ -8,31 +8,47 @@ import {
   signInWithRedirect,
 } from 'firebase/auth';
 import axios from 'axios';
+import { setCookie } from '@/utils/handleCookie';
+import {
+  handleUserInfo,
+  saveUserInfoInToFirebaseDatabase,
+} from '@/utils/handleUserInfo';
 
 export default function KakaoTalk() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const authCode = searchParams.get('code');
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [idToken, setIdToken] = useState<string | null>(null);
 
-  const firebaseLogin = () => {
+  const firebaseLogin = async () => {
     const provider = new OAuthProvider('oidc.kakao');
-    // signInWithRedirect(auth, provider);
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log(result);
-        const credential = OAuthProvider.credentialFromResult(result);
-        const accessToken = credential?.accessToken;
-        const idToken = credential?.idToken;
-        console.log('Firebase AccessToken', accessToken);
-        console.log('Firebase IdToken', idToken);
-        getKakaoUserInfo(accessToken ? accessToken : '');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    router.push('/home');
+    const firebaseAuth = auth;
+
+    try {
+      await signInWithPopup(firebaseAuth, provider)
+        .then(async (result) => {
+          const credential = OAuthProvider.credentialFromResult(result);
+          const accessToken = credential?.accessToken;
+          const idToken = credential?.idToken;
+          const uid = result.user.uid;
+          const providerId = result.providerId;
+
+          setCookie('uid', uid, 365); // 로그인 시 쿠키에 uid 저장
+          // Firebase에 유저정보 저장
+          saveUserInfoInToFirebaseDatabase(
+            handleUserInfo(result.user, providerId)
+          );
+          getKakaoUserInfo(accessToken ? accessToken : '');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      router.replace('/home');
+    } catch (e) {
+      console.log(e);
+      router.push('/login');
+    }
   };
 
   const getKakaoUserInfo = async (token: string) => {
@@ -40,50 +56,19 @@ export default function KakaoTalk() {
       console.log('token is empty');
       return;
     }
-    await axios('https://kapi.kakao.com/v2/user/me', {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((res) => {
-      console.log(res.data);
-    });
+    const res = await axios.get(
+      `/api/oauth/callback/kakaoUserInfo?token=${token}`
+    );
+    const data = res.data;
+    console.log('userInfo returned from api: ', data);
   };
 
   const loginHandler = async (code: string | string[]) => {
-    // api route로 post 요청 시 안됨
-    // api route 사용하지 않으면 잘됨
-
-    // Route Handler 테스트용
-    // const res = await fetch(`/api/oauth/callback/kakao`, {
-    //   method: 'POST',
-    // });
-
-    // const data = await res.json();
-    // console.log('data returned from api: ', data);
-
-
     const res = await axios.post(`/api/oauth/callback/kakao?code=${code}`);
 
     const data = res.data;
-    console.log("data returned from api: ", data);
-    // setAccessToken(data.access_token);
-    // setIdToken(data.id_token);
-
-    // try {
-    //   await axios('https://kauth.kakao.com/oauth/token', {
-    //     method: 'post',
-    //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    //     data: `grant_type=authorization_code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_KEY}&redirect_uri=${window.location.origin}/kakaotalk&code=${code}`,
-    //   }).then((res: any) => {
-    //     const data = res.data;
-    //     console.log('getKakaoToken data', data);
-    //     console.log('Kakao IdToken', data.id_token);
-    //     console.log('Kakao AccessToken', data.access_token);
-    //     setAccessToken(data.access_token);
-    //     setIdToken(data.id_token);
-    //   });
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    setAccessToken(data.access_token);
+    console.log('data returned from api: ', data);
   };
 
   useEffect(() => {
@@ -92,10 +77,9 @@ export default function KakaoTalk() {
     }
   }, [authCode]);
 
-  // useEffect(() => {
-  //   firebaseLogin();
-  // }, [idToken]);
+  useEffect(() => {
+    firebaseLogin();
+  }, [accessToken]);
 
-  useEffect(() => {}, [accessToken]);
   return <div>page</div>;
 }
