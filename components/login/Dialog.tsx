@@ -3,15 +3,15 @@
 import React, { useRef, useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { signInAnonymously } from 'firebase/auth';
-import { auth } from '../../app/config/firebase';
-import { usePathname, useRouter } from 'next/navigation';
+import { auth } from '../../config/firebase';
+import { useRouter } from 'next/navigation';
+import { setCookie } from '@/utils/handleCookie';
+import {
+  handleUserInfo,
+  saveUserInfoInToFirebaseDatabase,
+} from '@/utils/handleUserInfo';
 
-type LoginDialogProps = {
-  isOpen: boolean;
-  onClose: () => void;
-};
-
-export default function LoginDialog({ isOpen, onClose }: LoginDialogProps) {
+export default function LoginDialog({ isOpen, onClose }: LoginDialog) {
   let completeButtonRef = useRef(null);
   const router = useRouter();
 
@@ -19,7 +19,9 @@ export default function LoginDialog({ isOpen, onClose }: LoginDialogProps) {
     await signInAnonymously(auth)
       .then((data) => {
         console.log(data);
-        router.push('/home');
+        setCookie('uid', data.user.uid, 365);
+        saveUserInfoInToFirebaseDatabase(handleUserInfo(data.user, 'anonymous'));
+        router.replace('/home');
       })
       .catch((err) => {
         console.log(err);
