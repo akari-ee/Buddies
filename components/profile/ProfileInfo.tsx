@@ -1,10 +1,31 @@
 import React from 'react';
 import { GrNext } from '@react-icons/all-files/gr/GrNext';
 import BgmSwitch from './BgmSwitch';
-
+import { useRouter } from 'next/navigation';
+import { getAuth } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
+import { delCookie } from '@/utils/handleCookie';
 type Props = {};
 
 export default function ProfileInfo({}: Props) {
+  const router = useRouter();
+
+  const logoutHandler = async () => {
+    const auth = getAuth();
+    delCookie('uid');
+
+    await signOut(auth)
+      .then((res) => {
+        // Sign-out successful.
+        console.log('Sign out success! ', res);
+        router.replace('/');
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log('Sign out Failed! ', error);
+      });
+  };
+
   return (
     <div className='flex flex-col justify-center grow gap-10'>
       <div className='flex items-center gap-2 rounded-lg border border-gray-300 p-4'>
@@ -12,30 +33,35 @@ export default function ProfileInfo({}: Props) {
           아바타
         </div>
         <div className='flex flex-col justify-start'>
-          <div>카카오톡으로 로그인</div>
-          <div>49crehbgr@gmail.com</div>
+          <div className='text-sm'>카카오톡으로 로그인</div>
+          <div className='text-xs'>49crehbgr@gmail.com</div>
         </div>
       </div>
-      <div className='rounded-lg space-y-4 text-lg text-[#121212] py-6'>
+      <div className='rounded-lg space-y-4 text-sm text-[#121212] py-6'>
         <div className='flex justify-between items-center'>
           <div>BGM 설정</div>
           <BgmSwitch />
         </div>
-        <div className='flex justify-between items-center'>
+        <div className='flex justify-between items-center cursor-pointer'>
           <div>데이터 백업 설정</div>
-          <GrNext size={14} color='gray'/>
+          <GrNext size={14} color='gray' />
         </div>
-        <div className='flex justify-between items-center'>
+        <div className='flex justify-between items-center cursor-pointer'>
           <div>알림 설정</div>
-          <GrNext size={14} color='gray'/>
+          <GrNext size={14} color='gray' />
         </div>
-        <div className='flex justify-between items-center'>
+        <div className='flex justify-between items-center cursor-pointer'>
           <div>이용약관</div>
-          <GrNext size={14} color='gray'/>
+          <GrNext size={14} color='gray' />
         </div>
         <div className='flex justify-between items-center'>
-          <div>로그아웃</div>
-          <div className='text-sm text-[#999]'>회원 탈퇴</div>
+          <div className='cursor-pointer'>로그아웃</div>
+          <div
+            className='text-sm text-[#999] cursor-pointer'
+            onClick={logoutHandler}
+          >
+            회원 탈퇴
+          </div>
         </div>
       </div>
       <div className='grow flex flex-col justify-end items-center pb-16'>
