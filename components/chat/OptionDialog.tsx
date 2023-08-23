@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { Dialog } from '@headlessui/react';
-import { usePathname, useRouter } from 'next/navigation';
+import React, { Fragment, useRef, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 
 import bomi from '/public/bomi_option.svg';
 import yermi from '/public/yermi_option.svg';
@@ -16,6 +15,7 @@ type OptionDialogProps = {
   isOpen: boolean;
   onClose: () => void;
   curCharacter: number;
+  onChange: (idx: number) => void;
 };
 
 const characters = [
@@ -31,90 +31,110 @@ const border_colors = [
   'border-gauri',
   'border-gyeouri',
 ];
+
 export default function OptionDialog({
   isOpen,
   onClose,
   curCharacter,
+  onChange,
 }: OptionDialogProps) {
   let completeButtonRef = useRef(null);
-  const router = useRouter();
 
   const [selectedCharacter, setSelectedCharacter] =
     useState<number>(curCharacter);
   const [isCheckOpen, setIsCheckOpen] = useState(false);
-  // const [isChanged, setIsChanged] = useState<null | boolean>(null);
 
   const openDialog = () => {
     setIsCheckOpen((prev) => !prev);
   };
-  const closeDialog = () => {
-    // setIsChanged(prev => flag);
+  const closeDialog = (e: boolean) => {
     setIsCheckOpen((prev) => !prev);
+    if (e) {
+      onChange(selectedCharacter);
+      onClose();
+    }
   };
 
   return (
-    <Dialog
-      initialFocus={completeButtonRef}
-      open={isOpen}
-      onClose={onClose}
-      className='relative z-5'
-    >
-      <div className='fixed inset-0 bg-[#00000080]' aria-hidden='true' />
-      <div className='fixed bottom-0 h-80 w-screen flex items-center justify-center border-gray-800'>
-        <Dialog.Panel className='w-full h-full max-w-lg rounded-t-lg bg-white p-6 flex flex-col justify-between md:max-w-xl'>
-          <Dialog.Title className='flex'>
-            <div id='title' className='space-y-1'>
-              <p className='font-bold text-lg text-[#171717]'>
-                대화상대를 변경할까요?
-              </p>
-              <p className='text-sm text-[#444]'>
-                이야기를 나누고 싶은{' '}
-                <span className='font-bold'>버디를 선택해보세요.</span>
-              </p>
-            </div>
-          </Dialog.Title>
-          <div
-            id='character_list'
-            className='flex justify-between items-center space-y-2'
+    <Transition.Root show={isOpen} as={Fragment}>
+      <Dialog
+        as='div'
+        initialFocus={completeButtonRef}
+        open={isOpen}
+        onClose={onClose}
+        className='relative z-5'
+      >
+        {/* The backdrop, rendered as a fixed sibling to the panel container */}
+        <div className='fixed inset-0 bg-[#00000080] z-0' aria-hidden='true' />
+        {/* Full-screen container to center the panel */}
+        <div className='fixed bottom-0 h-80 w-screen flex items-center justify-center border-gray-800'>
+          {/* The actual dialog panel  */}
+          <Transition.Child
+            as={Fragment}
+            enter='transform transition ease-in-out duration-500 sm:duration-700'
+            enterFrom='translate-y-full'
+            enterTo='translate-y-0'
+            leave='transform transition ease-in-out duration-500 sm:duration-700'
+            leaveFrom='translate-y-0'
+            leaveTo='translate-y-full'
           >
-            {characters.map((character, idx) => (
+            <Dialog.Panel className='w-full h-full max-w-lg rounded-t-lg bg-white p-6 flex flex-col justify-between md:max-w-xl'>
+              <Dialog.Title className='flex'>
+                <div id='title' className='space-y-1'>
+                  <p className='font-bold text-lg text-[#171717]'>
+                    대화상대를 변경할까요?
+                  </p>
+                  <p className='text-sm text-[#444]'>
+                    이야기를 나누고 싶은{' '}
+                    <span className='font-bold'>버디를 선택해보세요.</span>
+                  </p>
+                </div>
+              </Dialog.Title>
               <div
-                className={cn(
-                  'w-16 h-16 relative rounded-full border-4 border-double p-3',
-                  border_colors[idx],
-                  selectedCharacter !== idx ? 'opacity-30' : ''
-                )}
-                onClick={() => setSelectedCharacter((prev) => idx)}
+                id='character_list'
+                className='flex justify-between items-center space-y-2'
               >
-                <Image
-                  src={character.src}
-                  alt={character.name}
-                  layout='fill'
-                  objectFit='contain'
-                  className={cn('rounded-full', bg_colors[idx])}
-                />
+                {characters.map((character, idx) => (
+                  <div
+                    key={character.name}
+                    className={cn(
+                      'w-16 h-16 relative rounded-full border-4 border-double p-3',
+                      border_colors[idx],
+                      selectedCharacter !== idx ? 'opacity-30' : ''
+                    )}
+                    onClick={() => setSelectedCharacter((prev) => idx)}
+                  >
+                    <Image
+                      src={character.src}
+                      alt={character.name}
+                      layout='fill'
+                      objectFit='contain'
+                      className={cn('rounded-full', bg_colors[idx])}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className='h-12 flex justify-center bg-[#171717] text-white text-sm rounded-full mb-8'>
-            <button
-              className='w-full h-full rounded-full'
-              onClick={() => {
-                openDialog();
-                
-              }}
-            >
-              선택완료
-            </button>
-          </div>
-        </Dialog.Panel>
-      </div>
-      <ReCheckDialog
-        isOpen={isCheckOpen}
-        onClose={closeDialog}
-        selectedCharacter={characters[selectedCharacter]}
-        characterIdx={selectedCharacter}
-      />
-    </Dialog>
+              <div className='h-12 flex justify-center bg-[#171717] text-white text-sm rounded-full mb-8'>
+                <button
+                  className='w-full h-full rounded-full'
+                  onClick={() => {
+                    openDialog();
+                  }}
+                  ref={completeButtonRef}
+                >
+                  선택완료
+                </button>
+              </div>
+            </Dialog.Panel>
+          </Transition.Child>
+        </div>
+        <ReCheckDialog
+          isOpen={isCheckOpen}
+          onClose={closeDialog}
+          selectedCharacter={characters[selectedCharacter]}
+          characterIdx={selectedCharacter}
+        />
+      </Dialog>
+    </Transition.Root>
   );
 }
