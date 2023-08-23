@@ -5,10 +5,21 @@ import { useRouter } from 'next/navigation';
 import { getAuth } from 'firebase/auth';
 import { signOut } from 'firebase/auth';
 import { delCookie } from '@/utils/handleCookie';
+import { useAuth } from '../client-auth-provider';
+import { handleProviderId } from '@/utils/handleProviderId';
+import Image from 'next/image';
 type Props = {};
 
 export default function ProfileInfo({}: Props) {
+  const user = useAuth().user;
+  console.log(user);
   const router = useRouter();
+  const [profile, setProfile] = React.useState<Profile>({
+    name: user?.displayName || '익명 사용자',
+    email: user?.email || '익명 이메일',
+    photoURL: user?.photoURL || '',
+    provider: handleProviderId(user?.email || '') || '',
+  });
 
   const logoutHandler = async () => {
     const auth = getAuth();
@@ -29,12 +40,12 @@ export default function ProfileInfo({}: Props) {
   return (
     <div className='flex flex-col justify-center grow gap-10'>
       <div className='flex items-center gap-2 rounded-lg border border-gray-300 p-4'>
-        <div className='rounded-full border border-gray-500 w-12 h-12'>
-          아바타
+        <div className='rounded-full border border-gray-500 w-12 h-12 relative'>
+          <Image src={profile.photoURL} alt='profile' layout='fill' objectFit='contain' className='rounded-full'/>
         </div>
         <div className='flex flex-col justify-start'>
-          <div className='text-sm'>카카오톡으로 로그인</div>
-          <div className='text-xs'>49crehbgr@gmail.com</div>
+          <div className='text-sm'>{profile.provider} 로그인</div>
+          <div className='text-xs'>{profile.email}</div>
         </div>
       </div>
       <div className='rounded-lg space-y-4 text-sm text-[#121212] py-6'>
@@ -55,13 +66,10 @@ export default function ProfileInfo({}: Props) {
           <GrNext size={14} color='gray' />
         </div>
         <div className='flex justify-between items-center'>
-          <div className='cursor-pointer'>로그아웃</div>
-          <div
-            className='text-sm text-[#999] cursor-pointer'
-            onClick={logoutHandler}
-          >
-            회원 탈퇴
+          <div className='cursor-pointer' onClick={logoutHandler}>
+            로그아웃
           </div>
+          <div className='text-sm text-[#999] cursor-pointer'>회원 탈퇴</div>
         </div>
       </div>
       <div className='grow flex flex-col justify-end items-center pb-16'>
