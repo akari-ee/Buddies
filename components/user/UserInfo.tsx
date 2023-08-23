@@ -5,8 +5,6 @@ import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import './Calendar.css';
 
-
-
 import { FcNext } from '@react-icons/all-files/fc/FcNext';
 import CharacterCarousel from './CharacterCarousel';
 
