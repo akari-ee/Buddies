@@ -8,7 +8,7 @@ export const handleUserInfo = (
     providerId: providerId,
     name: userInfo.displayName,
     email: userInfo.email,
-    eamilVerified: userInfo.emailVerified,
+    emailVerified: userInfo.emailVerified,
     isAnonymous: userInfo.isAnonymous,
     phoneNumber: userInfo.phoneNumber,
     uid: userInfo.uid,
