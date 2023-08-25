@@ -4,7 +4,7 @@ import sendBtn from '/public/send_btn.svg';
 import Image from 'next/image';
 import { RiSendPlaneFill } from '@react-icons/all-files/ri/RiSendPlaneFill';
 import { cn } from '@/utils/extendClass';
-
+import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 type Props = {
   inputMsg: string;
   inputHandler: (input: string) => void;
@@ -36,7 +36,7 @@ export default function ChatFooter({
         }}
       />
       <button className={cn('rounded-full relative w-10 h-10 flex justify-center items-center', bg_colors[Number(characterId)])}>
-        <RiSendPlaneFill size={22} color="white" />
+        <PaperAirplaneIcon className='w-6 h-6 text-white' />
       </button>
     </div>
   );

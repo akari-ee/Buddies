@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -43,6 +45,9 @@ module.exports = {
           DEFAULT: '#ADADF1',
         }
       },
+      fontFamily: {
+        'apple' : ['AppleSDGothicNeo', ...defaultTheme.fontFamily.sans],
+      }
     },
     
     fontFamily: {

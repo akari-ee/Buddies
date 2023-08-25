@@ -1,16 +1,17 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
-import prevBtn from '/public/prev_btn.svg';
+import React, { useEffect, useState } from 'react';
+
 import { useRouter } from 'next/navigation';
+import { cn } from '@/utils/extendClass';
+import OptionDialog from './OptionDialog';
+import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 
 import bomi from '/public/bomi_option.svg';
 import yermi from '/public/yermi_option.svg';
 import gauri from '/public/gauri_option.svg';
 import gyeouri from '/public/gyeouri_option.svg';
-import { cn } from '@/utils/extendClass';
-import OptionDialog from './Dialog';
 
 const characters = [
   { name: '보미', src: bomi },
@@ -25,7 +26,10 @@ export default function ChatHeader({ characterId }: { characterId: string }) {
   const [selectedCharacter, setSelectedCharacter] = useState<number>(
     Number(characterId)
   );
+  const [changedIdx, setChangedIdx] = useState<number>(-1);
+
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const openDialog = () => {
     setIsOpen((prev) => !prev);
@@ -33,22 +37,31 @@ export default function ChatHeader({ characterId }: { characterId: string }) {
   const closeDialog = () => {
     setIsOpen((prev) => !prev);
   };
+  const indexHandler = (idx: number) => {
+    setChangedIdx((prev) => idx);
+  };
 
-  const router = useRouter();
+  useEffect(() => {
+    if (changedIdx !== -1) {
+      router.replace(`/chat/${changedIdx}`);
+    } 
+    setIsOpen(false);
+  }, [changedIdx]);
 
   return (
     <div className='w-screen flex h-[calc(100vh*0.1)] rounded-b-xl shadow-[#6d6d6d1a]/10 shadow-md px-5'>
       <div className='w-full flex justify-between items-center'>
         <div className='flex justify-center items-center'>
           <button onClick={() => router.back()}>
-            <Image src={prevBtn} alt='go to prev' width={21} height={17} />
+            {/* <Image src={prevBtn} alt='go to prev' width={21} height={17} /> */}
+            <ArrowLeftIcon className='w-8 h-8' />
           </button>
         </div>
-        <div className='flex justify-between items-center space-x-3'>
+        <div className='flex justify-between items-center space-x-3 cursor-pointer'>
           <div>BGM | ON</div>
           <div
             className={cn(
-              'rounded-full w-10 h-10 relative overflow-hidden',
+              'rounded-full w-12 h-12 relative overflow-hidden cursor-pointer ',
               bg_colors[selectedCharacter]
             )}
             onClick={openDialog}
@@ -63,7 +76,12 @@ export default function ChatHeader({ characterId }: { characterId: string }) {
           </div>
         </div>
       </div>
-      <OptionDialog isOpen={isOpen} onClose={closeDialog} curCharacter={Number(selectedCharacter)}/>
+      <OptionDialog
+        isOpen={isOpen}
+        onClose={closeDialog}
+        curCharacter={Number(selectedCharacter)}
+        onChange={indexHandler}
+      />
     </div>
   );
 }

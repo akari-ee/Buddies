@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useContext, useEffect } from 'react';
-import { useAuth } from '../AuthProvider';
 import Login from './Login';
 import Image from 'next/image';
 import service_title from '/public/service_title_black.svg';
@@ -11,8 +10,6 @@ import CharacterCarousel from './CharacterCarousel';
 import Logo from '../UI/Logo';
 
 type Props = {};
-
-import { useUser, withUser, withUserTokenSSR } from 'next-firebase-auth';
 
 export default function LoginSection({}: Props) {
   useEffect(() => {

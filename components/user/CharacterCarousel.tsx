@@ -24,6 +24,7 @@ export default function CharacterCarousel({}: Props) {
         showArrows={false}
         showIndicators={false}
         showStatus={false}
+        showThumbs={false}
         swipeable
         emulateTouch
         transitionTime={500}

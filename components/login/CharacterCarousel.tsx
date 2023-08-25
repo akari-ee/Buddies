@@ -20,11 +20,12 @@ const characters = [
 
 export default function CharacterCarousel({}: Props) {
   return (
-    <div className='h-[800px]'>
+    <div className=''>
       <Carousel
         showArrows={false}
         showIndicators={false}
         showStatus={false}
+        showThumbs={false}
         swipeable
         emulateTouch
         transitionTime={500}

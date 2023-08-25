@@ -21,7 +21,7 @@ export default function ChatSection({ characterId }: { characterId: string }) {
   const getMessage = async () => {
     console.log('getMessage 실행');
     try {
-      const response = await fetch('/api/handleMessage', {
+      const response = await fetch('/api/completion', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,17 +64,11 @@ export default function ChatSection({ characterId }: { characterId: string }) {
     setInputMsg((prev) => value);
   };
 
-  // useEffect(() => {
-  //   console.log("여기 실행됨.");
-
-  //   getMessage();
-  // }, [userMsg]);
-
   return (
     <div className='w-full min-h-screen justify-center items-center text-black relative'>
       <div className='w-full h-full flex flex-col bg-[#FAFAFA]'>
         <ChatHeader characterId={characterId}/>
-        <Chats messages={totalMsg} />
+        <Chats messages={totalMsg} characterId={Number(characterId)}/>
         <ChatFooter
           inputMsg={inputMsg}
           inputHandler={inputHandler}

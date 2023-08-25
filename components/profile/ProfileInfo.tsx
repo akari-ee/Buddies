@@ -1,5 +1,4 @@
 import React from 'react';
-import { GrNext } from '@react-icons/all-files/gr/GrNext';
 import BgmSwitch from './BgmSwitch';
 import { useRouter } from 'next/navigation';
 import { getAuth } from 'firebase/auth';
@@ -7,6 +6,7 @@ import { signOut } from 'firebase/auth';
 import { delCookie } from '@/utils/handleCookie';
 import { useAuth } from '../client-auth-provider';
 import { handleProviderId } from '@/utils/handleProviderId';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 type Props = {};
 
@@ -39,31 +39,31 @@ export default function ProfileInfo({}: Props) {
 
   return (
     <div className='flex flex-col justify-center grow gap-10'>
-      <div className='flex items-center gap-2 rounded-lg border border-gray-300 p-4'>
+      <div className='flex items-center gap-2 rounded-lg p-4 shadow-md'>
         <div className='rounded-full border border-gray-500 w-12 h-12 relative'>
           <Image src={profile.photoURL} alt='profile' layout='fill' objectFit='contain' className='rounded-full'/>
         </div>
         <div className='flex flex-col justify-start'>
           <div className='text-sm'>{profile.provider} 로그인</div>
-          <div className='text-xs'>{profile.email}</div>
+          <div className='text-xs text-[#999999]'>{profile.email}</div>
         </div>
       </div>
-      <div className='rounded-lg space-y-4 text-sm text-[#121212] py-6'>
+      <div className='rounded-lg space-y-4 text-sm text-[#121212] py-6  font-apple'>
         <div className='flex justify-between items-center'>
           <div>BGM 설정</div>
           <BgmSwitch />
         </div>
         <div className='flex justify-between items-center cursor-pointer'>
           <div>데이터 백업 설정</div>
-          <GrNext size={14} color='gray' />
+          <ChevronRightIcon className='w-4 h-4 text-[#AAAAAA]' />
         </div>
         <div className='flex justify-between items-center cursor-pointer'>
           <div>알림 설정</div>
-          <GrNext size={14} color='gray' />
+          <ChevronRightIcon className='w-4 h-4 text-[#AAAAAA]' />
         </div>
         <div className='flex justify-between items-center cursor-pointer'>
           <div>이용약관</div>
-          <GrNext size={14} color='gray' />
+          <ChevronRightIcon className='w-4 h-4 text-[#AAAAAA]' />
         </div>
         <div className='flex justify-between items-center'>
           <div className='cursor-pointer' onClick={logoutHandler}>

@@ -5,16 +5,20 @@ import {
   OAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { auth } from '@/config/firebase';
 import { RiKakaoTalkFill } from '@react-icons/all-files/ri/RiKakaoTalkFill';
 import { FcGoogle } from '@react-icons/all-files/fc/FcGoogle';
-
 import LoginDialog from './Dialog';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { setCookie } from '@/utils/handleCookie';
+import {
+  handleUserInfo,
+  saveUserInfoInToFirebaseDatabase,
+} from '@/utils/handleUserInfo';
+import { useAuth } from '../client-auth-provider';
 
 type Props = {};
-
 
 declare global {
   interface Window {
@@ -35,29 +39,9 @@ const scope = [
 ].join(',');
 
 export default function Login({}: Props) {
-  useEffect(() => {
-    console.log('window.Kakao: ', window.Kakao);
-    if (window.Kakao) {
-      if (!window.Kakao.isInitialized()) {
-        window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
-        console.log('after Init: ', window.Kakao.isInitialized());
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (window.Kakao) {
-      if (!window.Kakao.isInitialized()) {
-        window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
-        console.log('after Init: ', window.Kakao.isInitialized());
-      }
-    }
-  }, [window.Kakao]);
-  
   const router = useRouter();
   // 카카로 로그인 Handler
   const [isOpen, setIsOpen] = useState(false);
-  const [accessToken, setAccessToken] = useState<string>('');
 
   const openDialog = () => {
     setIsOpen((prev) => !prev);
@@ -66,47 +50,8 @@ export default function Login({}: Props) {
     setIsOpen((prev) => !prev);
   };
 
-  const firebaseLogin = (email: string) => {
-    const provider = new OAuthProvider('oidc.kakao');
-    // signInWithRedirect(auth, provider);
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log(result);
-        const credential = OAuthProvider.credentialFromResult(result);
-        const accessToken = credential?.accessToken;
-        const idToken = credential?.idToken;
-        // console.log('Firebase AccessToken', accessToken);
-        // console.log('Firebase IdToken', idToken);
-        // getKakaoUserInfo(accessToken ? accessToken : '');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    router.push('/home');
-  };
-
-  // useEffect(() => {
-  //   async function myFunction() {
-  //     const csrfToken = await getCsrfToken();
-  //     console.log(csrfToken);
-  //     getKakaoUserInfo(csrfToken ? csrfToken : '');
-  //     setAccessToken(csrfToken ? csrfToken : '');
-  //   }
-
-  //   if (session?.user) {
-  //     const userInfo = session.user;
-  //     console.log('Session ', userInfo);
-  //     myFunction();
-  //     firebaseLogin(userInfo.email ? userInfo.email : '');
-  //   }
-  // }, [session]);
-
   const kakaoLoginHandler = () => {
     // signIn('kakao');
-    // if(!Kakao?.isInitialized()) {
-    //   console.log(Kakao.isInitialized())
-    //   Kakao?.init(process.env.NEXT_PUBLIC_KAKAO_REST_KEY);
-    // }
     window.Kakao.Auth.authorize({
       redirectUri,
       scope,
@@ -116,19 +61,25 @@ export default function Login({}: Props) {
 
   // 구글 로그인 Handler
   const googleLoginHandler = async () => {
+    // const res = await axios.post('http://localhost:3000/api/auth/firebase');
+
+    // const data = res.data;
+    // console.log(data);
     console.log('Google Logining');
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider)
       .then((data) => {
-        console.log(data);
-        router.push('/home');
+        const providerId = data.providerId;
+        saveUserInfoInToFirebaseDatabase(handleUserInfo(data.user, providerId)); // Firebase에 유저정보 저장
+        setCookie('uid', data.user.uid, 365);
+
+        // setCookie('uid', data.user.uid);
+        router.replace('/home');
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  
 
   return (
     <div className='w-full flex flex-col justify-center items-center space-y-6 mb-20'>

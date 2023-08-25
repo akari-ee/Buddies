@@ -2,11 +2,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { auth } from '@/config/firebase';
-import {
-  signInWithPopup,
-  OAuthProvider,
-  signInWithRedirect,
-} from 'firebase/auth';
+import { signInWithPopup, OAuthProvider } from 'firebase/auth';
 import axios from 'axios';
 import { setCookie } from '@/utils/handleCookie';
 import {
@@ -38,17 +34,18 @@ export default function KakaoTalk() {
           saveUserInfoInToFirebaseDatabase(
             handleUserInfo(result.user, providerId)
           );
-          getKakaoUserInfo(accessToken ? accessToken : '');
+          await getKakaoUserInfo(accessToken ? accessToken : '');
         })
         .catch((error) => {
           console.log(error);
         });
-
-      router.replace('/home');
     } catch (e) {
       console.log(e);
-      router.push('/login');
+      router.replace('/login');
+      router.refresh();
     }
+    router.replace('/home');
+    router.refresh();
   };
 
   const getKakaoUserInfo = async (token: string) => {

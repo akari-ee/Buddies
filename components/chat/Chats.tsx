@@ -3,15 +3,6 @@
 import React, { useEffect, useRef } from 'react';
 import ChatBox from './ChatBox';
 
-type MessageType = {
-  type: string;
-  text: string;
-};
-
-type MessageProps = {
-  messages: MessageType[]
-}
-
 const gptStyle = {
   align: 'items-start',
   bg: 'bg-gray-100',
@@ -33,14 +24,18 @@ const AlwaysScrollToBottom = () => {
   return <div ref={elementRef} />;
 };
 
-export default function Chats({ messages }: MessageProps) {
+export default function Chats({ messages, characterId }: Message) {
   return (
     <div className='w-full h-[calc(100vh*0.8)] overflow-y-scroll flex flex-col p-3'>
       {messages.map((message, index) => {
         if (message.type === 'user') {
-          return <ChatBox key={index} styles={userStyle} message={message.text} />;
+          return (
+            <ChatBox key={index} styles={userStyle} message={message.text} characterId={characterId}/>
+          );
         } else {
-          return <ChatBox key={index} styles={gptStyle} message={message.text} />;
+          return (
+            <ChatBox key={index} styles={gptStyle} message={message.text} characterId={-1}/>
+          );
         }
       })}
       <AlwaysScrollToBottom />
