@@ -250,7 +250,6 @@ export const runtime = 'edge';
 
 export async function POST(request: Request) {
   const { uid, id, messages } = await request.json();
-  // console.log(messages);
   if (id === 0) {
     character = '보미';
     chatWith = prompt['보미'];
@@ -264,7 +263,6 @@ export async function POST(request: Request) {
     character = '겨울이';
     chatWith = prompt['겨울이'];
   }
-
   messages.forEach((message: any) => {
     chatWith.push(message);
   });
@@ -272,7 +270,7 @@ export async function POST(request: Request) {
   const response: any = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     stream: true,
-    messages: chatWith,
+    messages: messages,
     temperature: 0.5,
     top_p: 0.5,
   });

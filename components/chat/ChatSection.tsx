@@ -28,14 +28,12 @@ export default function ChatSection({ characterId }: { characterId: string }) {
   const uid = user?.uid;
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
-      
       body: {
         uid: uid,
         id: Number(characterId),
       },
       api: '/api/chat',
     });
-  
 
   return (
     <div className='w-full min-h-screen justify-center items-center text-black relative'>
