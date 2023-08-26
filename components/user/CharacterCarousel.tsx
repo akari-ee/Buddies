@@ -31,7 +31,7 @@ export default function CharacterCarousel({}: Props) {
         width='100%'
       >
         {characters.map((character) => (
-          <div className='w-full h-[500px] px-5 flex flex-col justify-evenly items-center border-[1px] border-white rounded-lg'>
+          <div key={character.name} className='w-full h-[500px] px-5 flex flex-col justify-evenly items-center border-[1px] border-white rounded-lg'>
             <div id='character-image' className='w-52 h-52 relative'>
               <Image
                 key={character.name}
