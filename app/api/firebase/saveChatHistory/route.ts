@@ -21,11 +21,12 @@ export async function POST(req: NextRequest) {
     `Users/${uid}/ChatHistory/${todayDate}/${prompt}`,
     curTime
   ); // ChatHistory 컬렉션 가져오고, 날짜로 문서 이름 설정
+  data[data.length - 1]['timestamp'] = dayjs().format('YYYY-MM-DD HH:mm:ss');
+
   const chatSnap = await getDoc(chatRef);
     console.log(data.createdAt);
   if (chatSnap.exists()) {
     // 있으면 기존 문서에 대화 기록 추가
-    data[data.length - 1]['timestamp'] = dayjs().format('YYYY-MM-DD HH:mm:ss');
     await updateDoc(
       doc(db, `Users/${uid}/ChatHistory/${todayDate}/${prompt}`, curTime),
       {
