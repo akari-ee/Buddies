@@ -4,7 +4,7 @@ import { Configuration, OpenAIApi } from 'openai-edge';
 import {
   saveChatHistoryInToFirebaseDatabase,
   saveCompletionInToFirebaseDatabase,
-} from '@/utils/handleChatHistory';
+} from '@/utils/handleFirebaseDatabase';
 
 // GPT API를 이용해 챗봇 대화하기.
 const configuration = new Configuration({
@@ -270,7 +270,7 @@ export async function POST(request: Request) {
   const response: any = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     stream: true,
-    messages: messages,
+    messages: chatWith,
     temperature: 0.5,
     top_p: 0.5,
   });
