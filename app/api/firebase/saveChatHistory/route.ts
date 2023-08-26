@@ -14,8 +14,6 @@ import dayjs from 'dayjs';
 
 export async function POST(req: NextRequest) {
   const { data, uid, prompt } = await req.json();
-  console.log('uid is: ', uid);
-  console.log('data is: ', data);
   const todayDate = dayjs().format('YY-MM-DD');
   const curTime = dayjs().format('HH');
   const chatRef = doc(
@@ -24,9 +22,10 @@ export async function POST(req: NextRequest) {
     curTime
   ); // ChatHistory 컬렉션 가져오고, 날짜로 문서 이름 설정
   const chatSnap = await getDoc(chatRef);
-
+    console.log(data.createdAt);
   if (chatSnap.exists()) {
     // 있으면 기존 문서에 대화 기록 추가
+    data[data.length - 1]['timestamp'] = dayjs().format('YYYY-MM-DD HH:mm:ss');
     await updateDoc(
       doc(db, `Users/${uid}/ChatHistory/${todayDate}/${prompt}`, curTime),
       {
@@ -37,9 +36,12 @@ export async function POST(req: NextRequest) {
       message: 'Firestore ChatHistory Saving SUCCESS!',
     });
   } else {
-    await setDoc(doc(db, `Users/${uid}/ChatHistory/${todayDate}/${prompt}`, curTime), {
-      user: [data[data.length - 1]],
-    });
+    await setDoc(
+      doc(db, `Users/${uid}/ChatHistory/${todayDate}/${prompt}`, curTime),
+      {
+        user: [data[data.length - 1]],
+      }
+    );
     return NextResponse.json({ message: 'Firestore Chat Saving SUCCESS!' });
   }
   return NextResponse.json({ message: 'Firestore Chat Saving Failed!' });

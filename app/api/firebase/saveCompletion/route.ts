@@ -27,11 +27,14 @@ export async function POST(req: NextRequest) {
 
   if (chatSnap.exists()) {
     // 있으면 기존 문서에 대화 기록 추가
-
     await updateDoc(
       doc(db, `Users/${uid}/ChatHistory/${todayDate}/${prompt}`, curTime),
       {
-        gpt: arrayUnion({ content: completion, role: 'assistant' }),
+        gpt: arrayUnion({
+          content: completion,
+          role: 'assistant',
+          timestamp: dayjs().format('YYYY.MM.DD HH:mm:ss'),
+        }),
       }
     );
     return NextResponse.json({
@@ -45,6 +48,7 @@ export async function POST(req: NextRequest) {
           {
             content: completion,
             role: 'assistant',
+            timestamp: dayjs().format('YYYY.MM.DD HH:mm:ss'),
           },
         ],
       }
