@@ -2,7 +2,7 @@ interface UserInfo {
   providerId: string | null;
   name: string;
   email: string;
-  eamilVerified: boolean;
+  emailVerified: boolean;
   isAnonymous: boolean;
   phoneNumber: string | null;
   uid: string;
@@ -47,11 +47,14 @@ interface ChatBox {
   styles: ChatBoxStyle;
   message: string;
   characterId: number;
+  timestamp: string;
 }
 
 interface MessageType {
-  type: string;
-  text: string;
+  role: string;
+  id: string;
+  content: string;
+  createdAt?: Date;
 }
 
 interface Message {

@@ -1,80 +1,73 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ChatHeader from './ChatHeader';
 import Chats from './Chats';
-import ChatFooter from './ChatFooter';
+import ChatBox from './ChatBox';
+import { cn } from '@/utils/extendClass';
+import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+import { useChat, useCompletion } from 'ai/react';
+import { useAuth } from '../client-auth-provider';
 
 type msgType = {
   type: string;
   text: string;
 };
 
-type totalStyle = msgType[];
+const bg_colors = ['bg-bomi', 'bg-yermi', 'bg-gauri', 'bg-gyeouri'];
+
+// any 타입 고쳐야 함.
+const AlwaysScrollToBottom = () => {
+  const elementRef: any = useRef();
+  useEffect(() => elementRef.current.scrollIntoView());
+  return <div ref={elementRef} />;
+};
 
 export default function ChatSection({ characterId }: { characterId: string }) {
-  const [userMsg, setUserMsg] = useState<string[]>([]); // User가 보낸 모든 메시지
-  const [inputMsg, setInputMsg] = useState<string>(''); // User가 입력한 메시지
-  const [gptMsg, setGptMsg] = useState<string[]>([]); // GPT가 답변한 모든 메시지
-  const [totalMsg, setTotalMsg] = useState<totalStyle>([]);
-
-  const getMessage = async () => {
-    console.log('getMessage 실행');
-    try {
-      const response = await fetch('/api/completion', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userMessages: userMsg,
-          gptMessages: gptMsg,
-        }),
-      });
-
-      const data = await response.json();
-      // GPT가 답변한 메시지를 gptMsg에 추가
-      setGptMsg((prev) => [...prev, data.assistant]);
-
-      setTotalMsg((prev) => [...prev, { type: 'gpt', text: data.assistant }]);
-      console.log(data);
-      console.log(totalMsg);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const sendMessageHandler = useCallback(() => {
-    if (!inputMsg.trim().length) {
-      return;
-    }
-    console.log('send message');
-
-    const data = inputMsg;
-    setUserMsg((prev) => [...prev, data]);
-    console.log(userMsg);
-
-    setTotalMsg((prev) => [...prev, { type: 'user', text: data }]);
-    setInputMsg('');
-
-    getMessage();
-  }, [inputMsg]);
-
-  const inputHandler = (value: string) => {
-    setInputMsg((prev) => value);
-  };
+  const user = useAuth().user;
+  const uid = user?.uid;
+  const { messages, input, isLoading, handleInputChange, handleSubmit } =
+    useChat({
+      body: {
+        uid: uid,
+        id: Number(characterId),
+      },
+      api: '/api/chat',
+    });
 
   return (
     <div className='w-full min-h-screen justify-center items-center text-black relative'>
       <div className='w-full h-full flex flex-col bg-[#FAFAFA]'>
-        <ChatHeader characterId={characterId}/>
-        <Chats messages={totalMsg} characterId={Number(characterId)}/>
-        <ChatFooter
-          inputMsg={inputMsg}
-          inputHandler={inputHandler}
-          sendMessageHandler={sendMessageHandler}
-          characterId={characterId}
-        />
+        {/* Chat Header */}
+        <ChatHeader characterId={characterId} />
+        {/*  */}
+        {/* Chat Section */}
+        <Chats messages={messages} characterId={Number(characterId)} />
+        {/*  */}
+        {/* Chat Footer */}
+        <div className='w-full h-[calc(100vh*0.1)] px-6 py-4 rounded-t-2xl bg-white shadow-2xl shadow-[#6d6d6dd9]'>
+          <form
+            onSubmit={handleSubmit}
+            className='flex justify-between items-center space-x-2'
+          >
+            <input
+              placeholder='입력'
+              className='grow border-none bg-[#F1F1F1] rounded-full h-10 pl-6'
+              value={input}
+              onChange={handleInputChange}
+            />
+            <button
+              className={cn(
+                'rounded-full relative w-10 h-10 flex justify-center items-center',
+                bg_colors[Number(characterId)]
+              )}
+              disabled={isLoading}
+              type='submit'
+            >
+              <PaperAirplaneIcon className='w-6 h-6 text-white' />
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

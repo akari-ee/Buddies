@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
     if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
       return NextResponse.redirect(new URL('/login', request.url)); // 로그인 페이지로 이동
     }
-    return NextResponse.next();
+    // return NextResponse.next();
   }
   // return res;
   // return authentication(request, {
