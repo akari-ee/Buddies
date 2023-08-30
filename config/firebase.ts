@@ -4,6 +4,9 @@ import { getAnalytics } from 'firebase/analytics';
 import { getAuth } from 'firebase/auth';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { getFirestore } from 'firebase/firestore';
+import * as admin from 'firebase-admin';
+import { initFirestore } from '@auth/firebase-adapter';
+import { cert } from 'firebase-admin/app';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -15,6 +18,23 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
 };
+
+const firebaseAdminConfig = {
+  privateKey: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n') as string,
+  clientEmail: process.env.NEXT_PUBLIC_FIREBASE_CLIENT_EMAIL,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+};
+
+// if (!admin.apps.length) {
+//   admin.initializeApp({
+//     credential: admin.credential.cert(firebaseAdminConfig),
+//     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+//   });
+// }
+
+const firestore = initFirestore({
+  credential: cert(firebaseAdminConfig),
+});
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -48,4 +68,4 @@ const db = getFirestore(app);
 
 // requestPermission(messaging);
 
-export { app, auth, db };
+export { app, auth, db, firestore };
