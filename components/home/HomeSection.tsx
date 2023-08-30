@@ -20,8 +20,8 @@ import gauri from '/public/gauri_planet.svg';
 import gyeouri from '/public/gyeouri_planet.svg';
 import arrow from '/public/btn_right_arrow.svg';
 import { cn } from '@/utils/extendClass';
-import { useAuth } from '../client-auth-provider';
 import CharacterSwiper from './CharacterSwiper';
+import { useSession } from 'next-auth/react';
 
 const characters = [
   { name: '보미', src: bomi_desc, ch_src: bomi },
@@ -35,6 +35,8 @@ const gradients = ['from-bomi', 'from-yermi', 'from-gauri', 'from-gyeouri'];
 type Props = {};
 
 export default function HomeSection({}: Props) {
+  const {data: session, status} = useSession();
+  console.log('Home Session is: ', session);
   const router = useRouter();
   const [currentCharacter, setCurrentIdx] = useState<number>(0);
   const indexHandler = (idx: number) => {

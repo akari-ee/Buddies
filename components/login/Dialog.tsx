@@ -20,12 +20,15 @@ export default function LoginDialog({ isOpen, onClose }: LoginDialog) {
       .then((data) => {
         console.log(data);
         setCookie('uid', data.user.uid, 365);
-        saveUserInfoInToFirebaseDatabase(handleUserInfo(data.user, 'anonymous'));
-        router.replace('/home');
+        saveUserInfoInToFirebaseDatabase(
+          handleUserInfo(data.user, 'anonymous')
+        );
       })
       .catch((err) => {
         console.log(err);
+        router.replace('/login');
       });
+    router.replace('/home');
   };
 
   return (

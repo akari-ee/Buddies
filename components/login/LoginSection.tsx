@@ -7,22 +7,28 @@ import BackgroundCircles from './BackgroundCircles';
 import Logo from '../UI/Logo';
 import CharacterSwiper from './CharacterSwiper';
 import { useSession } from 'next-auth/react';
-import { OAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  GoogleAuthProvider,
+  OAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth';
 import { auth } from '@/config/firebase';
 import { setCookie } from '@/utils/handleCookie';
 import {
   handleUserInfo,
   saveUserInfoInToFirebaseDatabase,
 } from '@/utils/handleUserInfo';
+import { useRouter } from 'next/navigation';
 
 type Props = {};
 
 export default function LoginSection({}: Props) {
   const { data: session, status } = useSession();
+  const router = useRouter();
   console.log(session);
 
   useEffect(() => {
-    const firebaseLogin = async () => {
+    const kakaoWithFirebase = async () => {
       const provider = new OAuthProvider('oidc.kakao');
       const firebaseAuth = auth;
       try {
@@ -45,14 +51,36 @@ export default function LoginSection({}: Props) {
           });
       } catch (e) {
         console.log(e);
-        // router.replace('/login');
-        // router.refresh();
+        router.replace('/login');
+        router.refresh();
       }
-      // router.replace('/home');
-      // router.refresh();
+      router.replace('/home');
+      router.refresh();
+    };
+    const googleWithFirebase = async () => {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider)
+        .then((data) => {
+          const providerId = data.providerId;
+          saveUserInfoInToFirebaseDatabase(
+            handleUserInfo(data.user, providerId)
+          ); // Firebase에 유저정보 저장
+          setCookie('uid', data.user.uid, 365);
+        })
+        .catch((err) => {
+          console.log(err);
+          router.replace('/login');
+          router.refresh();
+        });
+      router.replace('/home');
+      router.refresh();
     };
     if (status === 'authenticated') {
-      firebaseLogin();
+      if (session.provider === 'kakao') {
+        kakaoWithFirebase();
+      } else if (session.provider === 'google') {
+        googleWithFirebase();
+      }
     }
   }, []);
 

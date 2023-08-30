@@ -12,7 +12,7 @@ export default function Home() {
     return () => clearTimeout(timer); // 컴포넌트가 언마운트되면 타이머를 제거
   }, []);
   return showSplash ? (
-    <Splash />
+    <Splash showSplash={showSplash} />
   ) : (
     <div className='w-screen h-screen flex flex-col items-start shrink-0 min-w-full'>
       <section id='login_section'>
