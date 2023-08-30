@@ -1,17 +1,66 @@
 'use client';
 
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Login from './Login';
-import Image from 'next/image';
 import service_title from '/public/service_title_black.svg';
-import bomi from '/public/bomi.svg';
 import BackgroundCircles from './BackgroundCircles';
-import CharacterCarousel from './CharacterCarousel';
 import Logo from '../UI/Logo';
+import CharacterSwiper from './CharacterSwiper';
+import { useSession } from 'next-auth/react';
+import { OAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '@/config/firebase';
+import { setCookie } from '@/utils/handleCookie';
+import {
+  handleUserInfo,
+  saveUserInfoInToFirebaseDatabase,
+} from '@/utils/handleUserInfo';
 
 type Props = {};
 
 export default function LoginSection({}: Props) {
+  // const [status, setStatus] = useState(false);
+  // const { data: session } = useSession();
+  // console.log(session);
+  // useEffect(() => {
+  //   if (session && session.user) {
+  //     setStatus(true);
+  //   }
+  // }, []);
+  // useEffect(() => {
+  //   const firebaseLogin = async () => {
+  //     const provider = new OAuthProvider('oidc.kakao');
+  //     const firebaseAuth = auth;
+
+  //     try {
+  //       await signInWithPopup(firebaseAuth, provider)
+  //         .then(async (result) => {
+  //           const credential = OAuthProvider.credentialFromResult(result);
+  //           const accessToken = credential?.accessToken;
+  //           const idToken = credential?.idToken;
+  //           const uid = result.user.uid;
+  //           const providerId = result.providerId;
+
+  //           setCookie('uid', uid, 365); // 로그인 시 쿠키에 uid 저장
+  //           // Firebase에 유저정보 저장
+  //           saveUserInfoInToFirebaseDatabase(
+  //             handleUserInfo(result.user, providerId)
+  //           );
+  //         })
+  //         .catch((error) => {
+  //           console.log(error);
+  //         });
+  //     } catch (e) {
+  //       console.log(e);
+  //       // router.replace('/login');
+  //       // router.refresh();
+  //     }
+  //     // router.replace('/home');
+  //     // router.refresh();
+  //   };
+  //   if (status) {
+  //     firebaseLogin();
+  //   }
+  // }, [status]);
   useEffect(() => {
     const kakaoSDK = document.createElement('script');
     kakaoSDK.async = false;
@@ -55,7 +104,7 @@ export default function LoginSection({}: Props) {
           </div>
         </div>
       </div>
-      <CharacterCarousel />
+      <CharacterSwiper />
       <Login />
       <BackgroundCircles />
     </div>

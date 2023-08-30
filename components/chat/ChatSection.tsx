@@ -7,7 +7,6 @@ import ChatBox from './ChatBox';
 import { cn } from '@/utils/extendClass';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { useChat, useCompletion } from 'ai/react';
-import { useAuth } from '../client-auth-provider';
 
 type msgType = {
   type: string;
@@ -24,12 +23,10 @@ const AlwaysScrollToBottom = () => {
 };
 
 export default function ChatSection({ characterId }: { characterId: string }) {
-  const user = useAuth().user;
-  const uid = user?.uid;
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
       body: {
-        uid: uid,
+        uid: "",
         id: Number(characterId),
       },
       api: '/api/chat',
