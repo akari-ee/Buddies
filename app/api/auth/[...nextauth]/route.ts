@@ -3,6 +3,7 @@ import { FirestoreAdapter } from '@auth/firebase-adapter';
 import NextAuth from 'next-auth';
 import { Adapter } from 'next-auth/adapters';
 import KakaoProvider from 'next-auth/providers/kakao';
+import GoogleProvider from 'next-auth/providers/google';
 
 const authOptions = NextAuth({
   adapter: FirestoreAdapter(firestore) as Adapter,
@@ -11,7 +12,12 @@ const authOptions = NextAuth({
       clientId: process.env.NEXT_PUBLIC_KAKAO_REST_KEY!,
       clientSecret: process.env.NEXT_PUBLIC_KAKAO_SECRET_KEY!,
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    })
   ],
+
   session: {
     strategy: 'jwt',
   },
@@ -29,7 +35,6 @@ const authOptions = NextAuth({
       session.accessToken = token.accessToken;
       session.user.id = token.id || token.sub;
       session.provider = token.provider;
-      console.log('session: ', session);
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
