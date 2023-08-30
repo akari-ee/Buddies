@@ -6,6 +6,7 @@ import { Tokens } from 'next-firebase-auth-edge/lib/auth';
 import { UserInfo } from 'firebase/auth';
 import { getTokens } from 'next-firebase-auth-edge/lib/next/tokens';
 import { cookies } from 'next/headers';
+import AuthSession from '../components/AuthSession';
 
 const mapTokensToUser = ({ decodedToken }: Tokens): UserInfo => {
   const {
@@ -41,18 +42,18 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const tokens = await getTokens(cookies(), {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY as string,
-    serviceAccount: {
-      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID as string,
-      privateKey: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KE as string,
-      clientEmail: process.env.NEXT_PUBLIC_FIREBASE_CLIENT_EMAIL as string,
-    },
-    cookieName: 'AuthToken',
-    cookieSignatureKeys: ['secret1', 'secret2'],
-  });
+  // const tokens = await getTokens(cookies(), {
+  //   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY as string,
+  //   serviceAccount: {
+  //     projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID as string,
+  //     privateKey: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KE as string,
+  //     clientEmail: process.env.NEXT_PUBLIC_FIREBASE_CLIENT_EMAIL as string,
+  //   },
+  //   cookieName: 'AuthToken',
+  //   cookieSignatureKeys: ['secret1', 'secret2'],
+  // });
 
-  const user = tokens ? mapTokensToUser(tokens) : null;
+  // const user = tokens ? mapTokensToUser(tokens) : null;
   return (
     <html lang='en'>
       <head></head>
@@ -63,7 +64,8 @@ export default async function RootLayout({
           integrity='sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh'
           crossOrigin='anonymous'
         /> */}
-        <AuthProvider defaultUser={user}>{children}</AuthProvider>
+        {/* <AuthProvider defaultUser={user}>{children}</AuthProvider> */}
+        <AuthSession>{children}</AuthSession>
       </body>
     </html>
   );
