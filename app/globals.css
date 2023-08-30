@@ -4,7 +4,8 @@
 
 @font-face {
   font-family: 'PyeongChangPeace-Bold';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2') format('woff2');
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2')
+    format('woff2');
   font-weight: 700;
   font-style: normal;
 }
@@ -17,3 +18,26 @@ body {
   box-sizing: border-box;
 }
 
+.swiper {
+  --swiper-theme-color: #fff;
+}
+
+.swiper-button-next {
+  transform: translate(0, -450%);
+  /* transform: translate(-70%, -450%); */
+}
+
+.swiper-button-prev {
+  transform: translate(0, -450%);
+}
+
+/* .swiper-button-prev,
+.swiper-button-next {
+  width: 10px;
+  height: 10px;
+} */
+
+/* .swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 20px;
+} */
