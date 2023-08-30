@@ -12,7 +12,32 @@ const authOptions = NextAuth({
       clientSecret: process.env.NEXT_PUBLIC_KAKAO_SECRET_KEY!,
     }),
   ],
-  callbacks: {},
+  session: {
+    strategy: 'jwt',
+  },
+  callbacks: {
+    async jwt({ token, account, profile }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token;
+        token.provider = account.provider;
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      session.accessToken = token.accessToken;
+      session.user.id = token.id || token.sub;
+      session.provider = token.provider;
+      console.log('session: ', session);
+      return session;
+    },
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log('user: ', user);
+      console.log('account2: ', account);
+      return true;
+    },
+  },
 });
 
 export { authOptions as GET, authOptions as POST, authOptions };
