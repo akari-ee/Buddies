@@ -14,7 +14,7 @@ import dayjs from 'dayjs';
 
 export async function POST(req: NextRequest) {
   const { data, email, prompt } = await req.json();
-  if (email === undefined || email.length === 0 || email === null) {
+  if (email === undefined || email === null) {
     return NextResponse.json({
       message: 'Firestore Chat Saving Failed! User is Anonymous!',
     });
