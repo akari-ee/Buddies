@@ -35,7 +35,7 @@ async function getChatList(characterId: string) {
     return [];
   }
 
-  const res = await fetch('https://buddies-next-js.vercel.app/api/firebase/getChatList', {
+  const res = await fetch('/api/firebase/getChatList', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
