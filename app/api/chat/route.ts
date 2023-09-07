@@ -286,7 +286,7 @@ export async function POST(request: Request) {
     onStart: async () => {
       // await saveChatHistoryInToFirebaseDatabase(email, character, messages);
       await fetch(
-        'https://buddies-next-js.vercel.app/api/firebase/saveChatHistory',
+        '/api/firebase/saveChatHistory',
         {
           method: 'POST',
           headers: {
@@ -304,7 +304,7 @@ export async function POST(request: Request) {
     onCompletion: async (completion: string) => {
       // await saveCompletionInToFirebaseDatabase(email, character, completion);
       await fetch(
-        'https://buddies-next-js.vercel.app/api/firebase/saveCompletion',
+        '/api/firebase/saveCompletion',
         {
           method: 'POST',
           headers: {
