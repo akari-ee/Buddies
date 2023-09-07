@@ -15,7 +15,7 @@ const authOptions = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    })
+    }),
   ],
 
   session: {
@@ -38,8 +38,6 @@ const authOptions = NextAuth({
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
-      console.log('user: ', user);
-      console.log('account2: ', account);
       return true;
     },
   },
