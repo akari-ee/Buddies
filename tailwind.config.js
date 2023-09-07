@@ -32,26 +32,25 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        'bomi': {
+        bomi: {
           DEFAULT: '#A4DD5A',
         },
-        'yermi': {
+        yermi: {
           DEFAULT: '#79DCEF',
         },
-        'gauri': {
+        gauri: {
           DEFAULT: '#FFD622',
         },
-        'gyeouri': {
+        gyeouri: {
           DEFAULT: '#ADADF1',
-        }
+        },
       },
-      fontFamily: {
-        'apple' : ['AppleSDGothicNeo', ...defaultTheme.fontFamily.sans],
-      }
     },
-    
+
     fontFamily: {
       PyeongChangPeace: ['PyeongChangPeace-Bold'],
+      roboto: ['var(--font-roboto)'],
+      apple: ['AppleSDGothicNeo', ...defaultTheme.fontFamily.sans],
     },
   },
   plugins: [],
