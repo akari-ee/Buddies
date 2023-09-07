@@ -1,12 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { getApp, getApps, initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
 import { getAuth } from 'firebase/auth';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { getFirestore } from 'firebase/firestore';
-import * as admin from 'firebase-admin';
-import { initFirestore } from '@auth/firebase-adapter';
-import { cert } from 'firebase-admin/app';
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
