@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const saveChatHistoryInToFirebaseDatabase = async (
-  uid: string,
+  email: string,
   character: string,
   chat: any
 ) => {
@@ -13,7 +13,7 @@ export const saveChatHistoryInToFirebaseDatabase = async (
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ data: chat, uid: uid, prompt: character }),
+        body: JSON.stringify({ data: chat, email: email, prompt: character }),
       }
     );
     const data = await res.json();
@@ -24,7 +24,7 @@ export const saveChatHistoryInToFirebaseDatabase = async (
 };
 
 export const saveCompletionInToFirebaseDatabase = async (
-  uid: string,
+  email: string,
   character: string,
   completion: string
 ) => {
@@ -36,7 +36,7 @@ export const saveCompletionInToFirebaseDatabase = async (
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ completion: completion, uid: uid, prompt: character}),
+        body: JSON.stringify({ completion: completion, email: email, prompt: character}),
       }
     );
     const data = await res.json();
