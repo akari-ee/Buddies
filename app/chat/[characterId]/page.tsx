@@ -26,14 +26,17 @@ export default async function Chat({
 async function getChatList(characterId: string) {
   const session: unknown = await getServerSession(authOptions);
   // unknown 에러 방지
-  if (
-    (session as { user: { name: string; email: string; image: string } })
-      .user === undefined ||
-    (session as { user: { name: string; email: string; image: string } })
-      .user === null
-  ) {
+  if (session.user === null || session.user === undefined) {
     return [];
   }
+  // if (
+  //   (session as { user: { name: string; email: string; image: string } })
+  //     .user === undefined ||
+  //   (session as { user: { name: string; email: string; image: string } })
+  //     .user === null
+  // ) {
+  //   return [];
+  // }
   
   const email = (
     session as { user: { name: string; email: string; image: string } }
