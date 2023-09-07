@@ -18,10 +18,10 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function UserInfo() {
   const [value, onChange] = useState<Value>(new Date());
-  
+
   return (
     <div className='w-full flex flex-col justify-between'>
-      <div className='mb-4'>
+      <div className='mb-4 font-roboto'>
         <Calendar onChange={onChange} value={value} />
       </div>
       <div className='h-[56px] flex justify-between items-center px-6 border border-white rounded-md shadow-lg mb-20'>
@@ -38,7 +38,9 @@ export default function UserInfo() {
           <p>이번주는 어떤 버디와 가장 대화를 많이 했을까요?</p>
         </div>
       </div>
-      <CharacterSwiper />
+      <div className='flex justify-center'>
+        <CharacterSwiper />
+      </div>
     </div>
   );
 }

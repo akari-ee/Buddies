@@ -15,7 +15,7 @@ export default function Splash({ showSplash }: { showSplash: boolean }) {
       leaveFrom='opacity-100'
       leaveTo='opacity-0'
     >
-      <div className='h-screen flex flex-col justify-center items-center bg-[#171717] space-y-3 z-99'>
+      <div className='h-screen flex flex-col justify-center items-center bg-[#171717] space-y-3 z-50'>
         <Image src={logo} alt='logo' />
         <Image src={serviceName} alt='service_name' />
       </div>

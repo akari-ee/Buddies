@@ -16,7 +16,7 @@ export default function UserSection({}: Props) {
   };
 
   return (
-    <div className='w-screen h-screen relative flex flex-col justify-between overflow-y-scroll px-6 pt-4 gap-8'>
+    <div className='w-screen h-screen relative flex flex-col justify-between overflow-y-scroll px-6 pt-4 gap-8 overflow-x-clip'>
       <UserHeader handleSlideOver={handleSlideOver}/>
       <UserTitle />
       <UserInfo />
