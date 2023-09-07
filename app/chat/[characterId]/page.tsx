@@ -25,24 +25,16 @@ export default async function Chat({
 
 async function getChatList(characterId: string) {
   const session: unknown = await getServerSession(authOptions);
-  // unknown 에러 방지
-  if (session.user === null || session.user === undefined) {
+  // 익명(비회원) 사용자는 챗봇 대화기록을 저장하지 않는다.
+  if (session === null || session === undefined) {
     return [];
   }
-  // if (
-  //   (session as { user: { name: string; email: string; image: string } })
-  //     .user === undefined ||
-  //   (session as { user: { name: string; email: string; image: string } })
-  //     .user === null
-  // ) {
-  //   return [];
-  // }
   
+  // unknown 에러 방지
   const email = (
     session as { user: { name: string; email: string; image: string } }
   ).user.email;
 
-  // // 익명(비회원) 사용자는 챗봇 대화기록을 저장하지 않는다.
   // if (email === undefined || email === null || email.length === 0) {
   //   return [];
   // }
