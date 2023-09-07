@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
   const { email, characterId } = await req.json();
   let chatList: any = [];
   const chatSnap = await getDocs(collection(db, `Users/${email}/ChatHistory`));
-  console.log(chatSnap.size);
   const promises = chatSnap.docs.map(async (sub) => {
     // sub = ChatHistory의 하위 문서(Document)를 의미한다.
     const promptSnap = await getDocs(
