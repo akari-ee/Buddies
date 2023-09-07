@@ -284,25 +284,25 @@ export async function POST(request: Request) {
   // Convert the response into a friendly text-stream
   const stream = OpenAIStream(response, {
     onStart: async () => {
-      // await saveChatHistoryInToFirebaseDatabase(email, character, messages);
-      await fetch(
-        '/api/firebase/saveChatHistory',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            data: messages,
-            email: email,
-            prompt: character,
-          }),
-        }
-      );
+      await saveChatHistoryInToFirebaseDatabase(email, character, messages);
+      // await fetch(
+      //   '/api/firebase/saveChatHistory',
+      //   {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify({
+      //       data: messages,
+      //       email: email,
+      //       prompt: character,
+      //     }),
+      //   }
+      // );
       // const data = await res.json();
     },
     onCompletion: async (completion: string) => {
-      // await saveCompletionInToFirebaseDatabase(email, character, completion);
+      await saveCompletionInToFirebaseDatabase(email, character, completion);
       await fetch(
         '/api/firebase/saveCompletion',
         {
