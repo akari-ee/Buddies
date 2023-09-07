@@ -22,9 +22,7 @@ export default function UserHeader({ handleSlideOver }: Props) {
         className='rounded-full border border-white w-10 h-10 flex justify-center items-center bg-gradient-to-bl from-inherit via-transparent to-white shadow-md shadow-gray'
         onClick={handleSlideOver}
       >
-        {/* <Image src={menuBtn} alt='go to menu' width={21} height={17} /> */}
         <EllipsisVerticalIcon className='h-6 w-6 text-white' aria-hidden='true' />
-        {/* <EllipsisVerticalIcon className='h-6 w-6 text-white' aria-hidden='true' /> */}
       </button>
     </div>
   );

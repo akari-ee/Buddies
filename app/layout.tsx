@@ -1,12 +1,12 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { AuthProvider } from '@/components/client-auth-provider';
 import { Tokens } from 'next-firebase-auth-edge/lib/auth';
 import { UserInfo } from 'firebase/auth';
 import { getTokens } from 'next-firebase-auth-edge/lib/next/tokens';
 import { cookies } from 'next/headers';
 import AuthSession from '../components/AuthSession';
+import { Roboto } from 'next/font/google';
 
 const mapTokensToUser = ({ decodedToken }: Tokens): UserInfo => {
   const {
@@ -30,6 +30,11 @@ const mapTokensToUser = ({ decodedToken }: Tokens): UserInfo => {
 };
 
 const inter = Inter({ subsets: ['latin'] });
+const roboto = Roboto({
+  weight: ['100', '300', '400', '500', '700', '900'],
+  subsets: ['latin'],
+  variable: '--font-roboto',
+});
 
 export const metadata: Metadata = {
   title: 'Buddies',
@@ -55,9 +60,9 @@ export default async function RootLayout({
 
   // const user = tokens ? mapTokensToUser(tokens) : null;
   return (
-    <html lang='en'>
+    <html lang='en' className={`${inter.className} ${roboto.variable}`}>
       <head></head>
-      <body className={inter.className}>
+      <body >
         {/* <Script
           async
           src='https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js'

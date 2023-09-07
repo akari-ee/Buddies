@@ -4,9 +4,9 @@ import logo from '/public/logo.svg';
 import serviceName from '/public/service_title_white.svg';
 import { Transition } from '@headlessui/react';
 
-export default function Splash({ showSplash }) {
+export default function Splash({ showSplash }: { showSplash: boolean }) {
   return (
-    <Transition.Root
+    <Transition
       show={showSplash}
       enter='transition-opacity duration-1000'
       enterFrom='opacity-0'
@@ -15,10 +15,10 @@ export default function Splash({ showSplash }) {
       leaveFrom='opacity-100'
       leaveTo='opacity-0'
     >
-      <div className='h-screen flex flex-col justify-center items-center bg-[#171717] space-y-3 z-99'>
+      <div className='h-screen flex flex-col justify-center items-center bg-[#171717] space-y-3 z-50'>
         <Image src={logo} alt='logo' />
         <Image src={serviceName} alt='service_name' />
       </div>
-    </Transition.Root>
+    </Transition>
   );
 }

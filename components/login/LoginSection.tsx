@@ -7,76 +7,80 @@ import BackgroundCircles from './BackgroundCircles';
 import Logo from '../UI/Logo';
 import CharacterSwiper from './CharacterSwiper';
 import { useSession } from 'next-auth/react';
-import { OAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  GoogleAuthProvider,
+  OAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth';
 import { auth } from '@/config/firebase';
 import { setCookie } from '@/utils/handleCookie';
 import {
   handleUserInfo,
   saveUserInfoInToFirebaseDatabase,
 } from '@/utils/handleUserInfo';
+import { useRouter } from 'next/navigation';
 
 type Props = {};
 
 export default function LoginSection({}: Props) {
-  // const [status, setStatus] = useState(false);
-  // const { data: session } = useSession();
-  // console.log(session);
-  // useEffect(() => {
-  //   if (session && session.user) {
-  //     setStatus(true);
-  //   }
-  // }, []);
-  // useEffect(() => {
-  //   const firebaseLogin = async () => {
-  //     const provider = new OAuthProvider('oidc.kakao');
-  //     const firebaseAuth = auth;
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  //     try {
-  //       await signInWithPopup(firebaseAuth, provider)
-  //         .then(async (result) => {
-  //           const credential = OAuthProvider.credentialFromResult(result);
-  //           const accessToken = credential?.accessToken;
-  //           const idToken = credential?.idToken;
-  //           const uid = result.user.uid;
-  //           const providerId = result.providerId;
-
-  //           setCookie('uid', uid, 365); // 로그인 시 쿠키에 uid 저장
-  //           // Firebase에 유저정보 저장
-  //           saveUserInfoInToFirebaseDatabase(
-  //             handleUserInfo(result.user, providerId)
-  //           );
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //         });
-  //     } catch (e) {
-  //       console.log(e);
-  //       // router.replace('/login');
-  //       // router.refresh();
-  //     }
-  //     // router.replace('/home');
-  //     // router.refresh();
-  //   };
-  //   if (status) {
-  //     firebaseLogin();
-  //   }
-  // }, [status]);
   useEffect(() => {
-    const kakaoSDK = document.createElement('script');
-    kakaoSDK.async = false;
-    kakaoSDK.src = `https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js`;
-    kakaoSDK.integrity = `sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh`;
-    kakaoSDK.crossOrigin = `anonymous`;
-    document.head.appendChild(kakaoSDK);
+    const kakaoWithFirebase = async () => {
+      const provider = new OAuthProvider('oidc.kakao');
+      const firebaseAuth = auth;
+      try {
+        await signInWithPopup(firebaseAuth, provider)
+          .then(async (result) => {
+            const credential = OAuthProvider.credentialFromResult(result);
+            const accessToken = credential?.accessToken;
+            const idToken = credential?.idToken;
+            const uid = result.user.uid;
+            const providerId = result.providerId;
 
-    const onLoadKakaoAPI = () => {
-      if (!window.Kakao.isInitialized()) {
-        window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
-        console.log('after Init: ', window.Kakao.isInitialized());
+            setCookie('uid', result.user.email!, 365); // 로그인 시 쿠키에 uid 저장
+            // Firebase에 유저정보 저장
+            saveUserInfoInToFirebaseDatabase(
+              handleUserInfo(result.user, providerId)
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } catch (e) {
+        console.log(e);
+        router.replace('/login');
+        router.refresh();
       }
+      router.replace('/home');
+      router.refresh();
     };
-
-    kakaoSDK.addEventListener('load', onLoadKakaoAPI);
+    const googleWithFirebase = async () => {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider)
+        .then((data) => {
+          const providerId = data.providerId;
+          saveUserInfoInToFirebaseDatabase(
+            handleUserInfo(data.user, providerId)
+          ); // Firebase에 유저정보 저장
+          setCookie('uid', data.user.email!, 365);
+        })
+        .catch((err) => {
+          console.log(err);
+          router.replace('/login');
+          router.refresh();
+        });
+      router.replace('/home');
+      router.refresh();
+    };
+    if (status === 'authenticated') {
+      if (session.provider === 'kakao') {
+        kakaoWithFirebase();
+      } else if (session.provider === 'google') {
+        googleWithFirebase();
+      }
+    }
   }, []);
 
   return (

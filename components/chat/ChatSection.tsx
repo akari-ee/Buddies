@@ -7,6 +7,11 @@ import ChatBox from './ChatBox';
 import { cn } from '@/utils/extendClass';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { useChat, useCompletion } from 'ai/react';
+import { useSession } from 'next-auth/react';
+import { auth } from '@/config/firebase';
+import { handleChatList } from '@/utils/handleChatList';
+import { randomBytes, randomUUID } from 'crypto';
+import { Message } from 'ai';
 
 type msgType = {
   type: string;
@@ -22,25 +27,31 @@ const AlwaysScrollToBottom = () => {
   return <div ref={elementRef} />;
 };
 
-export default function ChatSection({ characterId }: { characterId: string }) {
+export default function ChatSection({
+  characterId,
+  loadedChatList,
+}: {
+  characterId: string;
+  loadedChatList: Message[];
+}) {
+  const { data: session, status } = useSession();
+  const email = session?.user.email;
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
       body: {
-        uid: "",
+        email: email,
         id: Number(characterId),
       },
+      initialMessages: loadedChatList,
       api: '/api/chat',
     });
-
   return (
     <div className='w-full min-h-screen justify-center items-center text-black relative'>
       <div className='w-full h-full flex flex-col bg-[#FAFAFA]'>
         {/* Chat Header */}
         <ChatHeader characterId={characterId} />
-        {/*  */}
         {/* Chat Section */}
         <Chats messages={messages} characterId={Number(characterId)} />
-        {/*  */}
         {/* Chat Footer */}
         <div className='w-full h-[calc(100vh*0.1)] px-6 py-4 rounded-t-2xl bg-white shadow-2xl shadow-[#6d6d6dd9]'>
           <form

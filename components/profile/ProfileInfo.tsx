@@ -1,30 +1,32 @@
 import React from 'react';
 import BgmSwitch from './BgmSwitch';
 import { useRouter } from 'next/navigation';
-import { getAuth } from 'firebase/auth';
 import { signOut } from 'firebase/auth';
 import { delCookie } from '@/utils/handleCookie';
-import { useAuth } from '../client-auth-provider';
 import { handleProviderId } from '@/utils/handleProviderId';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { signOut as signout } from 'next-auth/react';
+import { auth } from '@/config/firebase';
 type Props = {};
 
 export default function ProfileInfo({}: Props) {
-  const user = useAuth().user;
-  console.log(user);
   const router = useRouter();
+  const { data: session } = useSession();
+  console.log(session);
+  const user = session?.user;
+
   const [profile, setProfile] = React.useState<Profile>({
-    name: user?.displayName || '익명 사용자',
+    name: user?.name || '익명 사용자',
     email: user?.email || '익명 이메일',
-    photoURL: user?.photoURL || '',
-    provider: handleProviderId(user?.email || '') || '',
+    photoURL: user?.image || '',
+    provider: handleProviderId(session?.provider || ''),
   });
 
   const logoutHandler = async () => {
-    const auth = getAuth();
     delCookie('uid');
-
+    await signout();
     await signOut(auth)
       .then((res) => {
         // Sign-out successful.
@@ -41,7 +43,13 @@ export default function ProfileInfo({}: Props) {
     <div className='flex flex-col justify-center grow gap-10'>
       <div className='flex items-center gap-2 rounded-lg p-4 shadow-md'>
         <div className='rounded-full border border-gray-500 w-12 h-12 relative'>
-          <Image src={profile.photoURL} alt='profile' layout='fill' objectFit='contain' className='rounded-full'/>
+          <Image
+            src={profile.photoURL}
+            alt='profile'
+            layout='fill'
+            objectFit='contain'
+            className='rounded-full'
+          />
         </div>
         <div className='flex flex-col justify-start'>
           <div className='text-sm'>{profile.provider} 로그인</div>

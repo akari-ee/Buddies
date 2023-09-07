@@ -19,7 +19,11 @@ const characters = [
   { name: '가으리', src: gauri_desc, ch_src: gauri },
   { name: '겨우리', src: gyeouri_desc, ch_src: gyeouri },
 ];
-export default function CharacterSwiper({onChange} : {onChange: (idx: number) => void}) {
+export default function CharacterSwiper({
+  onChange,
+}: {
+  onChange: (idx: number) => void;
+}) {
   return (
     <div className='w-full'>
       <Swiper
@@ -31,13 +35,13 @@ export default function CharacterSwiper({onChange} : {onChange: (idx: number) =>
         onSlideChange={(swiper) => {
           onChange(swiper.activeIndex);
         }}
-        onSwiper={(swiper) => console.log(swiper)}
+        // onSwiper={}
       >
         {characters.map((character) => (
           <SwiperSlide key={character.name}>
             <div key={character.name} className=''>
               <div className='flex flex-col justify-center items-center'>
-                <div className='w-72 h-96 scale-110 md:w-96 md:h-96'>
+                <div className='w-72 h-64 scale-110 md:w-96 md:h-96'>
                   <Image
                     key={character.name}
                     src={character.src}

@@ -40,10 +40,10 @@ export default function CharacterSwiper() {
         // centeredSlides={true}
         // centeredSlidesBounds={true}
         onSlideChange={(swiper) => {}}
-        onSwiper={(swiper) => console.log(swiper)}
+        // onSwiper={(swiper) => console.log(swiper)}
       >
         {characters.map((character) => (
-          <SwiperSlide>
+          <SwiperSlide key={character.name}>
             <div
               key={character.name}
               className='w-full h-[500px] pt-7 flex flex-col justify-between items-center rounded-lg bg-gradient bg-gradient-to-tr from-white via-cyan-50 to-transparent backdrop-blur-2xl shadow-2xl border-1 border-white/50'

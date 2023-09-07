@@ -115,7 +115,7 @@ let prompt: any = {
       content: '나는 배고프면 화가 나! HANGRY!!! 맛있는거 먹자!😋',
     },
   ],
-  가을이: [
+  가으리: [
     {
       role: 'system',
       content:
@@ -184,7 +184,7 @@ let prompt: any = {
         '그럼요. 지금은 어두운 흙 속의 씨앗이지만, 머지않아 꼭 꽃을 피우고 행복이라는 열매를 맺을 거예요. 걱정 마세요. 당신도 할 수 있어요!',
     },
   ],
-  겨울이: [
+  겨우리: [
     {
       role: 'system',
       content:
@@ -249,7 +249,9 @@ let character: string = '';
 export const runtime = 'edge';
 
 export async function POST(request: Request) {
-  const { uid, id, messages } = await request.json();
+  const { email, id, messages, initialMessages } = await request.json();
+  // console.log('messages in routes: ', messages);
+  console.log('initial message is ', initialMessages)
   if (id === 0) {
     character = '보미';
     chatWith = prompt['보미'];
@@ -257,16 +259,21 @@ export async function POST(request: Request) {
     character = '여르미';
     chatWith = prompt['여르미'];
   } else if (id === 2) {
-    character = '가을이';
-    chatWith = prompt['가을이'];
+    character = '가으리';
+    chatWith = prompt['가으리'];
   } else if (id === 3) {
-    character = '겨울이';
-    chatWith = prompt['겨울이'];
+    character = '겨우리';
+    chatWith = prompt['겨우리'];
   }
+
+  // initialMessages.forEach((message: any) => {
+  //   chatWith.push(message);
+  // });
+
   messages.forEach((message: any) => {
     chatWith.push(message);
   });
-
+  
   const response: any = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     stream: true,
@@ -284,11 +291,10 @@ export async function POST(request: Request) {
   // const stream = OpenAIStream(response);
   const stream = OpenAIStream(response, {
     onStart: async () => {
-      await saveChatHistoryInToFirebaseDatabase(uid, character, messages);
+      await saveChatHistoryInToFirebaseDatabase(email, character, messages);
     },
     onCompletion: async (completion: string) => {
-      console.log(completion);
-      await saveCompletionInToFirebaseDatabase(uid, character, completion);
+      await saveCompletionInToFirebaseDatabase(email, character, completion);
     },
   });
   // Respond with the stream

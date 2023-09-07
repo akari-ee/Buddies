@@ -17,7 +17,6 @@ import {
   saveUserInfoInToFirebaseDatabase,
 } from '@/utils/handleUserInfo';
 import { signIn } from 'next-auth/react';
-import { useAuth } from '../client-auth-provider';
 
 type Props = {};
 
@@ -26,18 +25,6 @@ declare global {
     Kakao: any;
   }
 }
-
-const redirectUri = `http://localhost:3000/oauth/callback/kakao`;
-const scope = [
-  'profile_nickname',
-  'profile_image',
-  'account_email',
-  'gender',
-  'age_range',
-  'birthday',
-  'friends',
-  'openid',
-].join(',');
 
 export default function Login({}: Props) {
   const router = useRouter();
@@ -51,32 +38,13 @@ export default function Login({}: Props) {
     setIsOpen((prev) => !prev);
   };
 
-  const kakaoLoginHandler = () => {
-    signIn('kakao');
-    // signIn('kakao');
-    // window.Kakao.Auth.authorize({
-    //   redirectUri,
-    //   scope,
-    // });
-    // console.log('Kakao Logining');
+  const kakaoLoginHandler = async () => {
+    await signIn('kakao');
   };
 
   // 구글 로그인 Handler
   const googleLoginHandler = async () => {
-    console.log('Google Logining');
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider)
-      .then((data) => {
-        const providerId = data.providerId;
-        saveUserInfoInToFirebaseDatabase(handleUserInfo(data.user, providerId)); // Firebase에 유저정보 저장
-        // setCookie('uid', data.user.uid, 365);
-
-        // setCookie('uid', data.user.uid);
-        router.replace('/home');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    await signIn('google');
   };
 
   return (

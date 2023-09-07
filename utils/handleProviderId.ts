@@ -1,11 +1,5 @@
-export function handleProviderId(email: string) {
-  if (email === '' || typeof email === null) {
-    return '익명'
-  } 
-  else if (email.includes('@gmail')) {
-    return '구글'
-  }
-  else if (email.includes('@kakao')) {
-    return '카카오톡'
-  }
+export function handleProviderId(provider: string) {
+  if (provider === 'google') return '구글';
+  else if (provider === 'kakao') return '카카오';
+  else return '익명';
 }
