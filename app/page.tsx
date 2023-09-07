@@ -3,6 +3,7 @@
 import LoginSection from '@/components/login/LoginSection';
 import Splash from '@/components/UI/Splash';
 import { useEffect, useState } from 'react';
+
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
   useEffect(() => {
