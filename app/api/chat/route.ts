@@ -303,20 +303,20 @@ export async function POST(request: Request) {
     },
     onCompletion: async (completion: string) => {
       await saveCompletionInToFirebaseDatabase(email, character, completion);
-      await fetch(
-        '/api/firebase/saveCompletion',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            completion: completion,
-            email: email,
-            prompt: character,
-          }),
-        }
-      );
+      // await fetch(
+      //   '/api/firebase/saveCompletion',
+      //   {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify({
+      //       completion: completion,
+      //       email: email,
+      //       prompt: character,
+      //     }),
+      //   }
+      // );
       // const data = await res.json();
     },
   });
