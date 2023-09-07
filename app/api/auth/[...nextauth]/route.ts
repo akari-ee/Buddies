@@ -1,12 +1,9 @@
-import { firestore } from '@/config/firebase';
-import { FirestoreAdapter } from '@auth/firebase-adapter';
 import NextAuth from 'next-auth';
-import { Adapter } from 'next-auth/adapters';
 import KakaoProvider from 'next-auth/providers/kakao';
 import GoogleProvider from 'next-auth/providers/google';
 
 const authOptions = NextAuth({
-  adapter: FirestoreAdapter(firestore) as Adapter,
+  // adapter: FirestoreAdapter(firestore) as Adapter,
   providers: [
     KakaoProvider({
       clientId: process.env.KAKAO_REST_KEY!,

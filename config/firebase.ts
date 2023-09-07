@@ -19,11 +19,11 @@ const firebaseConfig = {
   measurementId: process.env.MEASUREMENT_ID,
 };
 
-const firebaseAdminConfig = {
-  privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n') as string,
-  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-};
+// const firebaseAdminConfig = {
+//   privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n') as string,
+//   clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+//   projectId: process.env.FIREBASE_PROJECT_ID,
+// };
 
 // if (!admin.apps.length) {
 //   admin.initializeApp({
@@ -32,9 +32,9 @@ const firebaseAdminConfig = {
 //   });
 // }
 
-const firestore = initFirestore({
-  credential: cert(firebaseAdminConfig),
-});
+// const firestore = initFirestore({
+//   credential: cert(firebaseAdminConfig),
+// });
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -68,4 +68,4 @@ const db = getFirestore(app);
 
 // requestPermission(messaging);
 
-export { app, auth, db, firestore };
+export { app, auth, db };
