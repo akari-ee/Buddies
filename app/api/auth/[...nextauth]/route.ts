@@ -1,6 +1,6 @@
 import { firestore } from '@/config/firebase';
 import { FirestoreAdapter } from '@auth/firebase-adapter';
-import NextAuth, { Session } from 'next-auth';
+import NextAuth from 'next-auth';
 import { Adapter } from 'next-auth/adapters';
 import KakaoProvider from 'next-auth/providers/kakao';
 import GoogleProvider from 'next-auth/providers/google';
