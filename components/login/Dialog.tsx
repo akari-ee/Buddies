@@ -19,7 +19,7 @@ export default function LoginDialog({ isOpen, onClose }: LoginDialog) {
     await signInAnonymously(auth)
       .then((data) => {
         console.log(data);
-        setCookie('uid', data.user.uid, 365);
+        setCookie('uid', data.user.email || 'anonymous', 365);
         saveUserInfoInToFirebaseDatabase(
           handleUserInfo(data.user, 'anonymous')
         );

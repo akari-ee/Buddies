@@ -25,7 +25,6 @@ type Props = {};
 export default function LoginSection({}: Props) {
   const { data: session, status } = useSession();
   const router = useRouter();
-  console.log(session);
 
   useEffect(() => {
     const kakaoWithFirebase = async () => {
@@ -40,7 +39,7 @@ export default function LoginSection({}: Props) {
             const uid = result.user.uid;
             const providerId = result.providerId;
 
-            setCookie('uid', uid, 365); // 로그인 시 쿠키에 uid 저장
+            setCookie('uid', result.user.email!, 365); // 로그인 시 쿠키에 uid 저장
             // Firebase에 유저정보 저장
             saveUserInfoInToFirebaseDatabase(
               handleUserInfo(result.user, providerId)
@@ -65,7 +64,7 @@ export default function LoginSection({}: Props) {
           saveUserInfoInToFirebaseDatabase(
             handleUserInfo(data.user, providerId)
           ); // Firebase에 유저정보 저장
-          setCookie('uid', data.user.uid, 365);
+          setCookie('uid', data.user.email!, 365);
         })
         .catch((err) => {
           console.log(err);
