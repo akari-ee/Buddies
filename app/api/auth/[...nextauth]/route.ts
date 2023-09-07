@@ -1,6 +1,6 @@
 import { firestore } from '@/config/firebase';
 import { FirestoreAdapter } from '@auth/firebase-adapter';
-import NextAuth from 'next-auth';
+import NextAuth, { Session } from 'next-auth';
 import { Adapter } from 'next-auth/adapters';
 import KakaoProvider from 'next-auth/providers/kakao';
 import GoogleProvider from 'next-auth/providers/google';
@@ -32,9 +32,9 @@ const authOptions = NextAuth({
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token and user id from a provider.
-      session.accessToken = token.accessToken;
+      (session as { accessToken: unknown }).accessToken = token.accessToken;
       session.user.id = token.id || token.sub;
-      session.provider = token.provider;
+      (session as { provider: unknown }).provider = token.provider;
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {

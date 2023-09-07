@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import service_title from '/public/service_title_white.svg';
 import Logo from '../UI/Logo';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import './styles.css';
 import { useRouter } from 'next/navigation';
 import { UserIcon } from '@heroicons/react/24/solid';
 import { BellIcon } from '@heroicons/react/20/solid';
