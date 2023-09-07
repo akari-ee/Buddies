@@ -45,5 +45,8 @@
     "tls": false,
     "net": false,
     "child_process": false
+  },
+  "devDependencies": {
+    "request": "^2.88.2"
   }
 }
