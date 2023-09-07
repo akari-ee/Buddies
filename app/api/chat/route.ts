@@ -249,7 +249,7 @@ export const runtime = 'edge';
 
 export async function POST(request: Request) {
   const { email, id, messages, initialMessages } = await request.json();
-  console.log('initial message is ', initialMessages)
+  console.log('initial message is ', initialMessages);
   if (id === 0) {
     character = '보미';
     chatWith = prompt['보미'];
@@ -267,7 +267,7 @@ export async function POST(request: Request) {
   messages.forEach((message: any) => {
     chatWith.push(message);
   });
-  
+
   const response: any = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     stream: true,
@@ -284,10 +284,40 @@ export async function POST(request: Request) {
   // Convert the response into a friendly text-stream
   const stream = OpenAIStream(response, {
     onStart: async () => {
-      await saveChatHistoryInToFirebaseDatabase(email, character, messages);
+      // await saveChatHistoryInToFirebaseDatabase(email, character, messages);
+      await fetch(
+        'https://buddies-next-js.vercel.app/api/firebase/saveChatHistory',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            data: messages,
+            email: email,
+            prompt: character,
+          }),
+        }
+      );
+      // const data = await res.json();
     },
     onCompletion: async (completion: string) => {
-      await saveCompletionInToFirebaseDatabase(email, character, completion);
+      // await saveCompletionInToFirebaseDatabase(email, character, completion);
+      await fetch(
+        'https://buddies-next-js.vercel.app/api/firebase/saveCompletion',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            completion: completion,
+            email: email,
+            prompt: character,
+          }),
+        }
+      );
+      // const data = await res.json();
     },
   });
   // Respond with the stream
