@@ -13,14 +13,27 @@ import { db } from '@/config/firebase';
 import dayjs from 'dayjs';
 
 export async function POST(req: NextRequest) {
-  const { completion, uid, prompt } = await req.json();
+  const { completion, email, prompt } = await req.json();
+  if (email === undefined || email.length === 0 || email === null) {
+    return NextResponse.json({
+      message: 'Firestore Chat Saving Failed! User is Anonymous!',
+    });
+  }
   const todayDate = dayjs().format('YY-MM-DD');
   const curTime = dayjs().format('HH');
-  // const userRef = doc(db, 'Users', res.data.uid);
-  // const userSnap = await getDoc(userRef);
+
+  const dateRef = doc(db, `Users/${email}/ChatHistory`, todayDate);
+  const dateSnap = await getDoc(dateRef);
+  
+  if (!dateSnap.exists()) {
+    await setDoc(doc(db, `Users/${email}/ChatHistory`, todayDate), {
+      available: true,
+    });
+  }
+  
   const chatRef = doc(
     db,
-    `Users/${uid}/ChatHistory/${todayDate}/${prompt}`,
+    `Users/${email}/ChatHistory/${todayDate}/${prompt}`,
     curTime
   ); // ChatHistory 컬렉션 가져오고, 날짜로 문서 이름 설정
   const chatSnap = await getDoc(chatRef);
@@ -28,7 +41,7 @@ export async function POST(req: NextRequest) {
   if (chatSnap.exists()) {
     // 있으면 기존 문서에 대화 기록 추가
     await updateDoc(
-      doc(db, `Users/${uid}/ChatHistory/${todayDate}/${prompt}`, curTime),
+      doc(db, `Users/${email}/ChatHistory/${todayDate}/${prompt}`, curTime),
       {
         gpt: arrayUnion({
           content: completion,
@@ -42,7 +55,7 @@ export async function POST(req: NextRequest) {
     });
   } else {
     await setDoc(
-      doc(db, `Users/${uid}/ChatHistory/${todayDate}/${prompt}`, curTime),
+      doc(db, `Users/${email}/ChatHistory/${todayDate}/${prompt}`, curTime),
       {
         gpt: [
           {
