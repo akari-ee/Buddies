@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { Configuration, OpenAIApi } from 'openai-edge';
 import {
@@ -8,7 +7,7 @@ import {
 
 // GPT API를 이용해 챗봇 대화하기.
 const configuration = new Configuration({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
@@ -250,7 +249,6 @@ export const runtime = 'edge';
 
 export async function POST(request: Request) {
   const { email, id, messages, initialMessages } = await request.json();
-  // console.log('messages in routes: ', messages);
   console.log('initial message is ', initialMessages)
   if (id === 0) {
     character = '보미';
@@ -265,10 +263,6 @@ export async function POST(request: Request) {
     character = '겨우리';
     chatWith = prompt['겨우리'];
   }
-
-  // initialMessages.forEach((message: any) => {
-  //   chatWith.push(message);
-  // });
 
   messages.forEach((message: any) => {
     chatWith.push(message);
@@ -288,7 +282,6 @@ export async function POST(request: Request) {
     });
   }
   // Convert the response into a friendly text-stream
-  // const stream = OpenAIStream(response);
   const stream = OpenAIStream(response, {
     onStart: async () => {
       await saveChatHistoryInToFirebaseDatabase(email, character, messages);

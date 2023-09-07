@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
-  collection,
   doc,
-  addDoc,
-  serverTimestamp,
   getDoc,
   setDoc,
   updateDoc,

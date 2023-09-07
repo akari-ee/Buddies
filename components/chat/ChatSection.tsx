@@ -1,16 +1,12 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ChatHeader from './ChatHeader';
 import Chats from './Chats';
-import ChatBox from './ChatBox';
 import { cn } from '@/utils/extendClass';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
-import { useChat, useCompletion } from 'ai/react';
+import { useChat } from 'ai/react';
 import { useSession } from 'next-auth/react';
-import { auth } from '@/config/firebase';
-import { handleChatList } from '@/utils/handleChatList';
-import { randomBytes, randomUUID } from 'crypto';
 import { Message } from 'ai';
 
 type msgType = {

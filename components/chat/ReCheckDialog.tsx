@@ -2,7 +2,7 @@
 
 import React, { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 type ReCheckProps = {
   isOpen: boolean;

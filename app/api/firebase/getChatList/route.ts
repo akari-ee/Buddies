@@ -1,5 +1,5 @@
 import { db } from '@/config/firebase';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { NextRequest, NextResponse } from 'next/server';
 // uid, cid 필요
 // `Users/${uid}/ChatHistory/모든 날짜 문서/프롬프트`,
@@ -8,9 +8,6 @@ const ch = ['보미', '여르미', '가으리', '겨우리'];
 
 export async function POST(req: NextRequest) {
   const { email, characterId } = await req.json();
-  // const chatRef = doc(db, `Users/${email}/ChatHistory`, '23-09-06');
-  // const chatSnap = await getDoc(chatRef);
-  // console.log(chatSnap.data());
   let chatList: any = [];
   const chatSnap = await getDocs(collection(db, `Users/${email}/ChatHistory`));
   console.log(chatSnap.size);

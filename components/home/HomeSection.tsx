@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import service_title from '/public/service_title_white.svg';
 import Logo from '../UI/Logo';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -21,7 +21,6 @@ import gyeouri from '/public/gyeouri_planet.svg';
 import arrow from '/public/btn_right_arrow.svg';
 import { cn } from '@/utils/extendClass';
 import CharacterSwiper from './CharacterSwiper';
-import { useSession } from 'next-auth/react';
 
 const characters = [
   { name: '보미', src: bomi_desc, ch_src: bomi },

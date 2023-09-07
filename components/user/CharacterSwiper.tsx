@@ -10,7 +10,6 @@ import yermi from '/public/yermi_planet.svg';
 import gauri from '/public/gauri_planet.svg';
 import gyeouri from '/public/gyeouri_planet.svg';
 import { cn } from '@/utils/extendClass';
-import { useState } from 'react';
 
 const characters = [
   { name: '보미', ch_src: bomi },

@@ -1,21 +1,10 @@
 'use client';
 
-import {
-  GoogleAuthProvider,
-  OAuthProvider,
-  signInWithPopup,
-} from 'firebase/auth';
 import React, { useState } from 'react';
-import { auth } from '@/config/firebase';
 import { RiKakaoTalkFill } from '@react-icons/all-files/ri/RiKakaoTalkFill';
 import { FcGoogle } from '@react-icons/all-files/fc/FcGoogle';
 import LoginDialog from './Dialog';
 import { useRouter } from 'next/navigation';
-import { setCookie } from '@/utils/handleCookie';
-import {
-  handleUserInfo,
-  saveUserInfoInToFirebaseDatabase,
-} from '@/utils/handleUserInfo';
 import { signIn } from 'next-auth/react';
 
 type Props = {};

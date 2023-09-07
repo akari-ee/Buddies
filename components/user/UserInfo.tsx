@@ -6,8 +6,6 @@ import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import Calendar from 'react-calendar';
 import './Calendar.css';
 
-import { FcNext } from '@react-icons/all-files/fc/FcNext';
-import CharacterCarousel from './CharacterCarousel';
 import CharacterSwiper from './CharacterSwiper';
 
 type Props = {};

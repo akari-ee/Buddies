@@ -1,14 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import {
-  collection,
   doc,
-  addDoc,
-  serverTimestamp,
   getDoc,
   setDoc,
 } from 'firebase/firestore';
 import { db } from '@/config/firebase';
-import { randomBytes, randomUUID } from 'crypto';
+import { randomUUID } from 'crypto';
 
 // Firestore에 첫 로그인한 유저 정보 저장하기.
 export async function POST(req: any) {

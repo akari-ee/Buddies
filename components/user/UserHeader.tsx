@@ -1,10 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React from 'react';
 
-import menuBtn from '/public/menu_btn.svg';
 import { ArrowSmallLeftIcon } from '@heroicons/react/24/solid';
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
 type Props = {  

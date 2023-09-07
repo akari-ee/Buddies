@@ -9,8 +9,8 @@ const authOptions = NextAuth({
   adapter: FirestoreAdapter(firestore) as Adapter,
   providers: [
     KakaoProvider({
-      clientId: process.env.NEXT_PUBLIC_KAKAO_REST_KEY!,
-      clientSecret: process.env.NEXT_PUBLIC_KAKAO_SECRET_KEY!,
+      clientId: process.env.KAKAO_REST_KEY!,
+      clientSecret: process.env.KAKAO_SECRET_KEY!,
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
