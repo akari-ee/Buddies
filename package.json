@@ -47,6 +47,7 @@
     "child_process": false
   },
   "devDependencies": {
+    "next-pwa": "^5.6.0",
     "request": "^2.88.2"
   }
 }
