@@ -1,6 +1,7 @@
 //types/next-auth.d.ts
 
-import NextAuth from 'next-auth';
+import NextAuth, { DefaultUser } from 'next-auth';
+import { AdapterUser } from 'next-auth/adapters';
 
 declare module 'next-auth' {
   /**

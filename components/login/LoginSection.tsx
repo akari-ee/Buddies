@@ -10,6 +10,8 @@ import { useSession } from 'next-auth/react';
 import {
   GoogleAuthProvider,
   OAuthProvider,
+  getAuth,
+  getRedirectResult,
   signInWithPopup,
   signInWithRedirect,
 } from 'firebase/auth';
@@ -27,63 +29,90 @@ export default function LoginSection({}: Props) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    const kakaoWithFirebase = async () => {
-      const provider = new OAuthProvider('oidc.kakao');
-      const firebaseAuth = auth;
-      try {
-        await signInWithPopup(firebaseAuth, provider)
-          .then(async (result) => {
-            const credential = OAuthProvider.credentialFromResult(result);
-            const accessToken = credential?.accessToken;
-            const idToken = credential?.idToken;
-            const uid = result.user.uid;
-            const providerId = result.providerId;
+  const kakaoWithFirebase = async () => {
+    const provider = new OAuthProvider('oidc.kakao');
+    const firebaseAuth = auth;
+    try {
+      await signInWithPopup(firebaseAuth, provider)
+        .then(async (result) => {
+          const credential = OAuthProvider.credentialFromResult(result);
+          const accessToken = credential?.accessToken;
+          const idToken = credential?.idToken;
+          const uid = result.user.uid;
+          const providerId = result.providerId;
 
-            setCookie('uid', result.user.email!, 365); // 로그인 시 쿠키에 uid 저장
-            // Firebase에 유저정보 저장
-            saveUserInfoInToFirebaseDatabase(
-              handleUserInfo(result.user, providerId)
-            );
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } catch (e) {
-        console.log(e);
-        router.replace('/login');
-        router.refresh();
-      }
-      router.replace('/home');
-      router.refresh();
-    };
-    // need to change into redirect
-    const googleWithFirebase = async () => {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider)
-        .then((data) => {
-          const providerId = data.providerId;
+          setCookie('uid', result.user.email!, 365); // 로그인 시 쿠키에 uid 저장
+          // Firebase에 유저정보 저장
           saveUserInfoInToFirebaseDatabase(
-            handleUserInfo(data.user, providerId)
-          ); // Firebase에 유저정보 저장
-          setCookie('uid', data.user.email!, 365);
+            handleUserInfo(result.user, providerId)
+          );
         })
-        .catch((err) => {
-          console.log(err);
-          router.replace('/login');
-          router.refresh();
+        .catch((error) => {
+          console.log(error);
         });
-      router.replace('/home');
+    } catch (e) {
+      console.log(e);
+      router.replace('/login');
       router.refresh();
-    };
-    if (status === 'authenticated') {
-      if (session.provider === 'kakao') {
-        kakaoWithFirebase();
-      } else if (session.provider === 'google') {
-        googleWithFirebase();
-      }
     }
+    router.replace('/home');
+    router.refresh();
+  };
+
+  const googleWithFirebase = async () => {
+    const provider = new GoogleAuthProvider();
+    await signInWithRedirect(auth, provider);
+  };
+
+  useEffect(() => {
+    // need to change into redirect
+
+    //   await signInWithPopup(auth, provider)
+    //     .then((data) => {
+    //       const providerId = data.providerId;
+    //       saveUserInfoInToFirebaseDatabase(
+    //         handleUserInfo(data.user, providerId)
+    //       ); // Firebase에 유저정보 저장
+    //       setCookie('uid', data.user.email!, 365);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       router.replace('/login');
+    //       router.refresh();
+    //     });
+    //   router.replace('/home');
+    //   router.refresh();
+    // };
+
+    // if (!session && status === 'authenticated') {
+    //   if (session.provider === 'kakao') {
+    //     kakaoWithFirebase();
+    //   } else if (session.provider === 'google') {
+    //     googleWithFirebase();
+    //   }
+    // }
   }, []);
+
+  // useEffect(() => {
+  //   async () => {
+  //     await getRedirectResult(auth)
+  //       .then((result) => {
+  //         const credential = GoogleAuthProvider.credentialFromResult(result!);
+  //         console.log('result: ', result);
+  //         console.log('credential: ', credential);
+  //         const providerId = credential?.providerId!;
+  //         saveUserInfoInToFirebaseDatabase(
+  //           handleUserInfo(result!.user, providerId)
+  //         );
+  //         setCookie('uid', result!.user.email!, 365);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         router.replace('/login');
+  //       });
+  //   };
+  //   router.replace('/home');
+  // }, []);
 
   return (
     <div className='w-screen h-screen relative flex flex-col justify-between overflow-hidden'>

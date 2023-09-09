@@ -11,7 +11,6 @@ import { randomUUID } from 'crypto';
 export async function POST(req: any) {
   const res = await req.json();
   let email = res.data.email;
-  console.log('email is: ', email);
   if (email === undefined || email === null || email.length === 0) {
     email = randomUUID() + '@anonymous.com';
   }

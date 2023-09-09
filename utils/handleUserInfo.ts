@@ -16,7 +16,7 @@ export const handleUserInfo = (
 };
 export const saveUserInfoInToFirebaseDatabase = async (userInfo: UserInfo) => {
   try {
-    const res = await axios.post('/api/firebase/saveUserInfo', {
+    const res = await axios.post(`/api/firebase/saveUserInfo`, {
       data: userInfo,
     });
     const data = res.data;

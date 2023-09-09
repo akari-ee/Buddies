@@ -1,6 +1,13 @@
 import NextAuth from 'next-auth';
 import KakaoProvider from 'next-auth/providers/kakao';
 import GoogleProvider from 'next-auth/providers/google';
+import {
+  GoogleAuthProvider,
+  OAuthProvider,
+  UserCredential,
+  signInWithCredential,
+} from 'firebase/auth';
+import { auth } from '@/config/firebase';
 
 const authOptions = NextAuth({
   // adapter: FirestoreAdapter(firestore) as Adapter,
@@ -34,6 +41,25 @@ const authOptions = NextAuth({
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
+      const provider = account?.provider;
+      if (provider === 'google') {
+        try {
+          const googleCredential = GoogleAuthProvider.credential(
+            account?.id_token
+          );
+          const userCredential = await signInWithCredential(
+            auth,
+            googleCredential
+          ).catch((error) => {
+            console.log('error: ', error);
+            return false;
+          });
+          return userCredential ? true : false;
+        } catch (error) {
+          console.log('error: ', error);
+          return false;
+        }
+      }
       return true;
     },
   },
