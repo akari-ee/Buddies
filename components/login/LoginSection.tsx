@@ -11,6 +11,7 @@ import {
   GoogleAuthProvider,
   OAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
 } from 'firebase/auth';
 import { auth } from '@/config/firebase';
 import { setCookie } from '@/utils/handleCookie';
@@ -58,6 +59,7 @@ export default function LoginSection({}: Props) {
     };
     const googleWithFirebase = async () => {
       const provider = new GoogleAuthProvider();
+      // await signInWithRedirect(auth, provider);
       await signInWithPopup(auth, provider)
         .then((data) => {
           const providerId = data.providerId;
