@@ -30,6 +30,7 @@ export default async function RootLayout({
       <link rel='apple-touch-icon' href='/images/icon-512x512.png' />
       <meta name='apple-mobile-web-app-capable' content='yes' />
       <meta name='apple-mobile-web-app-status-bar-style' content='black' />
+      <meta name='theme-color' content='#ffffff' />
       <head></head>
       <body>
         <AuthSession>{children}</AuthSession>

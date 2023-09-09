@@ -1,6 +1,7 @@
 {
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "display": "standalone",
-  "scope": "/",
   "start_url": "/",
   "name": "Buddies",
   "short_name": "Buddies",
