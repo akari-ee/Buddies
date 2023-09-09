@@ -33,7 +33,7 @@ export default function CharacterSwiper({}) {
             <div
               key={character.name}
               id='ch-wrapper'
-              className='w-48 h-48 md:w-96 md:h-96 mx-auto relative z-0'
+              className='w-48 h-48 md:w-96 md:h-96 mx-auto relative'
             >
               <Image
                 key={character.name}
