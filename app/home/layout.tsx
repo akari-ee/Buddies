@@ -26,8 +26,7 @@ export default function HomeLayout({
 
   return (
     <>
-      <Splash showSplash={showSplash} />
-      {children}
+      {showSplash ? <Splash showSplash={showSplash} /> : children}
     </>
   );
 }

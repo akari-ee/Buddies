@@ -23,8 +23,7 @@ export default function UserLayout({
 
   return (
     <>
-      <Splash showSplash={showSplash} />
-      {children}
+     {showSplash ? <Splash showSplash={showSplash} /> : children}
     </>
   );
 }

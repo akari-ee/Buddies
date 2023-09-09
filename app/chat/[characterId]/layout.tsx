@@ -24,8 +24,7 @@ export default function ChatLayout({
 
   return (
     <>
-      <Splash showSplash={showSplash} />
-      {children}
+      {showSplash ? <Splash showSplash={showSplash} /> : children}
     </>
   );
 }

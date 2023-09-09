@@ -1,9 +1,7 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import ChatSection from '@/components/chat/ChatSection';
-import { auth } from '@/config/firebase';
 import { handleChatList } from '@/utils/handleChatList';
 import { getServerSession } from 'next-auth';
-import { getSession, useSession } from 'next-auth/react';
 import React from 'react';
 export default async function Chat({
   params,
@@ -29,18 +27,14 @@ async function getChatList(characterId: string) {
   if (session === null || session === undefined) {
     return [];
   }
-  
+
   // unknown 에러 방지
   const email = (
     session as { user: { name: string; email: string; image: string } }
   ).user.email;
 
-  // if (email === undefined || email === null || email.length === 0) {
-  //   return [];
-  // }
-
   const res = await fetch(
-    'https://buddies-next-js.vercel.app/api/firebase/getChatList',
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/firebase/getChatList`,
     {
       method: 'POST',
       headers: {

@@ -7,7 +7,7 @@ export const saveChatHistoryInToFirebaseDatabase = async (
 ) => {
   try {
     const res = await fetch(
-      'https://buddies-next-js.vercel.app/api/firebase/saveChatHistory',
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/firebase/saveChatHistory`,
       {
         method: 'POST',
         headers: {
@@ -30,7 +30,7 @@ export const saveCompletionInToFirebaseDatabase = async (
 ) => {
   try {
     const res = await fetch(
-      'https://buddies-next-js.vercel.app/api/firebase/saveCompletion',
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/firebase/saveCompletion`,
       {
         method: 'POST',
         headers: {
