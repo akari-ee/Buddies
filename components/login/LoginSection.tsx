@@ -57,9 +57,9 @@ export default function LoginSection({}: Props) {
       router.replace('/home');
       router.refresh();
     };
+    // need to change into redirect
     const googleWithFirebase = async () => {
       const provider = new GoogleAuthProvider();
-      // await signInWithRedirect(auth, provider);
       await signInWithPopup(auth, provider)
         .then((data) => {
           const providerId = data.providerId;
