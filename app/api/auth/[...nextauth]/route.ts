@@ -3,8 +3,6 @@ import KakaoProvider from 'next-auth/providers/kakao';
 import GoogleProvider from 'next-auth/providers/google';
 import {
   GoogleAuthProvider,
-  OAuthProvider,
-  UserCredential,
   signInWithCredential,
 } from 'firebase/auth';
 import { auth } from '@/config/firebase';
@@ -40,6 +38,7 @@ const authOptions = NextAuth({
       (session as { provider: unknown }).provider = token.provider;
       return session;
     },
+    // idToken is only available in signIn callbacks
     async signIn({ user, account, profile, email, credentials }) {
       const provider = account?.provider;
       if (provider === 'google') {

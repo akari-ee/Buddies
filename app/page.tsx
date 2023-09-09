@@ -4,9 +4,12 @@ import LoginSection from '@/components/login/LoginSection';
 import Splash from '@/components/UI/Splash';
 import { useEffect, useState } from 'react';
 
-export default function Home() {
+export default function Main() {
   const [showSplash, setShowSplash] = useState(true);
   useEffect(() => {
+    if (!sessionStorage.getItem('isInit')) {
+      sessionStorage.setItem('isInit', 'true');
+    }
     const timer = setTimeout(() => {
       setShowSplash(false);
     }, 3000);

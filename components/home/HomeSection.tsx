@@ -34,9 +34,6 @@ const gradients = ['from-bomi', 'from-yermi', 'from-gauri', 'from-gyeouri'];
 type Props = {};
 
 export default function HomeSection({}: Props) {
-  const { data: session, status } = useSession();
-  console.log(session);
-
   const router = useRouter();
   const [currentCharacter, setCurrentIdx] = useState<number>(0);
   const indexHandler = (idx: number) => {

@@ -7,11 +7,8 @@ import LoginDialog from './Dialog';
 import { useRouter } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
 import {
-  GoogleAuthProvider,
   OAuthProvider,
-  getRedirectResult,
   signInWithPopup,
-  signInWithRedirect,
 } from 'firebase/auth';
 import { auth } from '@/config/firebase';
 import { setCookie } from '@/utils/handleCookie';
@@ -24,7 +21,6 @@ type Props = {};
 
 export default function Login({}: Props) {
   const { data: session, status } = useSession();
-  // console.log(session?.user);
   console.log(session);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,25 +32,6 @@ export default function Login({}: Props) {
   const closeDialog = () => {
     setIsOpen((prev) => !prev);
   };
-  // if (provider === 'kakao') {
-  //   try {
-  //     const provider = new OAuthProvider('oidc.kakao');
-  //     const kakaoCredential = provider.credential(
-  //       account?.access_token as any
-  //     );
-  //     const userCredential = await signInWithCredential(
-  //       auth,
-  //       kakaoCredential
-  //     ).catch((error) => {
-  //       console.log('error: ', error);
-  //       return false;
-  //     });
-  //     return userCredential ? true : false;
-  //   } catch (error) {
-  //     console.log('error: ', error);
-  //     return false;
-  //   }
-  // }
 
   const kakaoWithFirebase = async () => {
     const provider = new OAuthProvider('oidc.kakao');
@@ -78,8 +55,6 @@ export default function Login({}: Props) {
       router.replace('/login');
       router.refresh();
     }
-    router.replace('/home');
-    router.refresh();
   };
 
   const googleWithFirebase = async () => {
@@ -89,9 +64,9 @@ export default function Login({}: Props) {
           email: session?.user?.email!,
           emailVerified: true,
           isAnonymous: false,
-          name: session?.user?.name!,
+          displayName: session?.user?.name!,
           phoneNumber: null,
-          providerId: 'google.com',
+          providerId: 'google',
           uid: session?.user?.id!,
         },
         'google.com'
@@ -119,26 +94,6 @@ export default function Login({}: Props) {
       router.replace('/home');
       router.refresh();
     }
-
-    // getRedirectResult(auth)
-    //   .then(async (result) => {
-    //     const credential = GoogleAuthProvider.credentialFromResult(result!);
-    //     console.log('result: ', result);
-    //     console.log('credential: ', credential);
-    //     const providerId = 'google';
-    //     saveUserInfoInToFirebaseDatabase(
-    //       handleUserInfo(result!.user, providerId)
-    //     );
-    //     setCookie('uid', result!.user.email!, 365);
-    //     await signIn('google');
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     router.replace('/login');
-    //     router.refresh();
-    //   });
-    // router.replace('/home');
-    // router.refresh();
   }, []);
 
   return (
@@ -149,7 +104,6 @@ export default function Login({}: Props) {
           className='rounded-full overflow-hidden h-10 w-10 bg-[#F9E000] flex items-center justify-center text-2xl shadow-md md:w-16 md:h-16 md:text-4xl'
         >
           <RiKakaoTalkFill />
-          {/* <Image src={kakaoTalkLogo} alt='kakaoLogin' width={30} height={30}/> */}
         </button>
 
         <button
