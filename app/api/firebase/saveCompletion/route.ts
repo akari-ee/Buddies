@@ -6,11 +6,6 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
 export async function POST(req: NextRequest) {
-  dayjs.extend(utc);
-  dayjs.extend(timezone);
-  dayjs.locale('ko');
-  dayjs.tz.setDefault('Asia/Seoul');
-
   const { completion, email, prompt } = await req.json();
   if (email === undefined || email.length === 0 || email === null) {
     return NextResponse.json({

@@ -15,11 +15,6 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
 export async function POST(req: NextRequest) {
-  dayjs.extend(utc);
-  dayjs.extend(timezone);
-  dayjs.locale('ko');
-  dayjs.tz.setDefault('Asia/Seoul');
-
   const { data, email, prompt } = await req.json();
   if (email === undefined || email === null) {
     return NextResponse.json({
@@ -52,7 +47,6 @@ export async function POST(req: NextRequest) {
   data[data.length - 1]['timestamp'] = dayjs().utc(true).format('YYYY-MM-DD HH:mm:ss[Z]')
 
   const chatSnap = await getDoc(chatRef); // 해당 문서를 읽어옴
-  console.log(data.createdAt);
   if (chatSnap.exists()) {
     // 문서가 존재한다면, 해당 문서에 데이터를 업데이트한다.
     await updateDoc(
