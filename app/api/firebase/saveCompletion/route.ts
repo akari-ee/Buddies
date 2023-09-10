@@ -10,6 +10,7 @@ import { db } from '@/config/firebase';
 import dayjs from 'dayjs';
 
 export async function POST(req: NextRequest) {
+  dayjs.locale('ko');
   const { completion, email, prompt } = await req.json();
   if (email === undefined || email.length === 0 || email === null) {
     return NextResponse.json({
