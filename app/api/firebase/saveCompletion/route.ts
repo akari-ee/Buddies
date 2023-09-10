@@ -1,16 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  arrayUnion,
-} from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.locale('ko');
+var utcPlugin = require('dayjs/plugin/utc');
+dayjs.extend(utcPlugin);
 
 export async function POST(req: NextRequest) {
-  dayjs.locale('ko');
   const { completion, email, prompt } = await req.json();
   if (email === undefined || email.length === 0 || email === null) {
     return NextResponse.json({
@@ -18,17 +17,18 @@ export async function POST(req: NextRequest) {
     });
   }
   const todayDate = dayjs().format('YY-MM-DD');
-  const curTime = dayjs().format('HH');
+  // const curTime = (Number(dayjs().format('HH')) + 9).toString();
+  const curTime = dayjs().utc().local().format('HH');
 
   const dateRef = doc(db, `Users/${email}/ChatHistory`, todayDate);
   const dateSnap = await getDoc(dateRef);
-  
+
   if (!dateSnap.exists()) {
     await setDoc(doc(db, `Users/${email}/ChatHistory`, todayDate), {
       available: true,
     });
   }
-  
+
   const chatRef = doc(
     db,
     `Users/${email}/ChatHistory/${todayDate}/${prompt}`,

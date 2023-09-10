@@ -11,9 +11,15 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.locale('ko');
+var utcPlugin = require('dayjs/plugin/utc')
+dayjs.extend(utcPlugin)
 
 export async function POST(req: NextRequest) {
-  dayjs.locale('ko');
+
   const { data, email, prompt } = await req.json();
   if (email === undefined || email === null) {
     return NextResponse.json({
@@ -21,7 +27,8 @@ export async function POST(req: NextRequest) {
     });
   }
   const todayDate = dayjs().format('YY-MM-DD');
-  const curTime = dayjs().format('HH');
+  const curTime = dayjs().utc().local().format('HH');
+  console.log('curTime: ', curTime);
 
   const dateRef = doc(db, `Users/${email}/ChatHistory`, todayDate);
   const dateSnap = await getDoc(dateRef);
