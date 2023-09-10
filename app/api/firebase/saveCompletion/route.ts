@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 
 export async function POST(req: NextRequest) {
   const { completion, email, prompt } = await req.json();
@@ -12,12 +10,10 @@ export async function POST(req: NextRequest) {
       message: 'Firestore Chat Saving Failed! User is Anonymous!',
     });
   }
-  const todayDate = dayjs().format('YY-MM-DD');
-  const curTime = dayjs().add(9, 'hour').format('HH')
-  // const curTime =
-  //   process.env.NODE_ENV === 'development'
-  //     ? dayjs().format('HH')
-  //     : dayjs().add(9, 'hour').format('HH');
+  const currentDate =
+    process.env.NODE_ENV === 'development' ? dayjs() : dayjs().add(9, 'hour');
+  const todayDate = currentDate.format('YY-MM-DD');
+  const curTime = currentDate.format('HH');
 
   const dateRef = doc(db, `Users/${email}/ChatHistory`, todayDate);
   const dateSnap = await getDoc(dateRef);
@@ -43,7 +39,7 @@ export async function POST(req: NextRequest) {
         gpt: arrayUnion({
           content: completion,
           role: 'assistant',
-          timestamp: dayjs().add(9, 'hour').format('YYYY-MM-DD HH:mm:ss')
+          timestamp: currentDate.format('YYYY-MM-DD HH:mm:ss'),
         }),
       }
     );
@@ -58,7 +54,7 @@ export async function POST(req: NextRequest) {
           {
             content: completion,
             role: 'assistant',
-            timestamp: dayjs().add(9, 'hour').format('YYYY-MM-DD HH:mm:ss')
+            timestamp: currentDate.format('YYYY-MM-DD HH:mm:ss'),
           },
         ],
       }
