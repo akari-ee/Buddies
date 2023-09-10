@@ -2,10 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import dayjs from 'dayjs';
-
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 dayjs.locale('ko');
-var timezonePlugin = require('dayjs/plugin/timezone');
-dayjs.extend(timezonePlugin);
 dayjs.tz.setDefault('Asia/Seoul');
 
 export async function POST(req: NextRequest) {
