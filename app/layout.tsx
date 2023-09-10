@@ -11,6 +11,7 @@ const roboto = Roboto({
   weight: ['100', '300', '400', '500', '700', '900'],
   subsets: ['latin'],
   variable: '--font-roboto',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang='en' className={`${inter.className} ${roboto.variable}`}>
+      {/* <link rel='preload' as='font' /> */}
       <link rel='manifest' href='/manifest.json' />
       <link rel='apple-touch-icon' href='/images/icon-512x512.png' />
       <meta name='apple-mobile-web-app-capable' content='yes' />
