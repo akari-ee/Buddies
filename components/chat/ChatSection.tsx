@@ -9,8 +9,6 @@ import { useChat } from 'ai/react';
 import { useSession } from 'next-auth/react';
 import { Message } from 'ai';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 
 type msgType = {
   type: string;
@@ -44,8 +42,6 @@ export default function ChatSection({
       initialMessages: loadedChatList,
       api: '/api/chat',
     });
-    dayjs.extend(utc);
-    dayjs.extend(timezone);
   return (
     <div className='w-full min-h-screen justify-center items-center text-black relative'>
       <div className='w-full h-full flex flex-col bg-[#FAFAFA]'>
@@ -60,7 +56,7 @@ export default function ChatSection({
             className='flex justify-between items-center space-x-2'
           >
             <input
-              placeholder={dayjs.tz.guess()}
+              placeholder='메세지를 입력하세요.'
               className='grow border-none bg-[#F1F1F1] rounded-full h-10 pl-6'
               value={input}
               onChange={handleInputChange}
