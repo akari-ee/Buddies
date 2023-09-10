@@ -6,8 +6,6 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
 dayjs.locale('ko');
-var utcPlugin = require('dayjs/plugin/utc');
-dayjs.extend(utcPlugin);
 
 export async function POST(req: NextRequest) {
   const { completion, email, prompt } = await req.json();
@@ -17,8 +15,10 @@ export async function POST(req: NextRequest) {
     });
   }
   const todayDate = dayjs().format('YY-MM-DD');
-  // const curTime = (Number(dayjs().format('HH')) + 9).toString();
-  const curTime = dayjs().locale('ko').format('HH');
+  const curTime =
+    process.env.NODE_ENV === 'development'
+      ? dayjs().format('HH')
+      : dayjs().add(9, 'hour').format('HH');
 
   const dateRef = doc(db, `Users/${email}/ChatHistory`, todayDate);
   const dateSnap = await getDoc(dateRef);
