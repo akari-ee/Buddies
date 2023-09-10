@@ -13,6 +13,9 @@ import { db } from '@/config/firebase';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 dayjs.locale('ko');
 dayjs.tz.setDefault('Asia/Seoul');
 
@@ -24,10 +27,11 @@ export async function POST(req: NextRequest) {
     });
   }
   const todayDate = dayjs().format('YY-MM-DD');
-  const curTime =
-    process.env.NODE_ENV === 'development'
-      ? dayjs().format('HH')
-      : dayjs().add(9, 'hour').format('HH');
+  const curTime = dayjs().format('HH');
+  // const curTime =
+  //   process.env.NODE_ENV === 'development'
+  //     ? dayjs().format('HH')
+  //     : dayjs().add(9, 'hour').format('HH');
 
   const dateRef = doc(db, `Users/${email}/ChatHistory`, todayDate);
   const dateSnap = await getDoc(dateRef);
