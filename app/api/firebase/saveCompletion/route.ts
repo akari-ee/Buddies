@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   dayjs.extend(timezone);
   dayjs.locale('ko');
   dayjs.tz.setDefault('Asia/Seoul');
-  
+
   const { completion, email, prompt } = await req.json();
   if (email === undefined || email.length === 0 || email === null) {
     return NextResponse.json({
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     });
   }
   const todayDate = dayjs().format('YY-MM-DD');
-  const curTime = dayjs().format('HH');
+  const curTime = dayjs().utc(true).format('HH')
   // const curTime =
   //   process.env.NODE_ENV === 'development'
   //     ? dayjs().format('HH')
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         gpt: arrayUnion({
           content: completion,
           role: 'assistant',
-          timestamp: dayjs().format('YYYY.MM.DD HH:mm:ss'),
+          timestamp: dayjs().utc(true).format('YYYY-MM-DD HH:mm:ss[Z]')
         }),
       }
     );
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
           {
             content: completion,
             role: 'assistant',
-            timestamp: dayjs().format('YYYY.MM.DD HH:mm:ss'),
+            timestamp: dayjs().utc(true).format('YYYY-MM-DD HH:mm:ss[Z]')
           },
         ],
       }
