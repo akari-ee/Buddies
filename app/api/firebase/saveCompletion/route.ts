@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     });
   }
   const todayDate = dayjs().format('YY-MM-DD');
-  const curTime = dayjs().utc(true).format('HH')
+  const curTime = dayjs().add(9, 'hour').format('HH')
   // const curTime =
   //   process.env.NODE_ENV === 'development'
   //     ? dayjs().format('HH')
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
         gpt: arrayUnion({
           content: completion,
           role: 'assistant',
-          timestamp: dayjs().utc(true).format('YYYY-MM-DD HH:mm:ss[Z]')
+          timestamp: dayjs().add(9, 'hour').format('YYYY-MM-DD HH:mm:ss')
         }),
       }
     );
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
           {
             content: completion,
             role: 'assistant',
-            timestamp: dayjs().utc(true).format('YYYY-MM-DD HH:mm:ss[Z]')
+            timestamp: dayjs().add(9, 'hour').format('YYYY-MM-DD HH:mm:ss')
           },
         ],
       }

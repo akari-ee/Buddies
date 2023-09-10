@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   }
   // const currentDate = dayjs().format('YYYY-MM-DD HH:mm:ss[ZZ]');
   const todayDate = dayjs().format('YY-MM-DD');
-  const curTime = dayjs().utc(true).format('HH')
+  const curTime = dayjs().add(9, 'hour').format('HH')
   // const curTime =
   //   process.env.NODE_ENV === 'development'
   //     ? dayjs().format('HH')
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     curTime
   ); // ChatHistory 컬렉션 가져오고, 날짜로 문서 이름 설정
 
-  data[data.length - 1]['timestamp'] = dayjs().utc(true).format('YYYY-MM-DD HH:mm:ss[Z]')
+  data[data.length - 1]['timestamp'] = dayjs().add(9, 'hour').format('YYYY-MM-DD HH:mm:ss')
 
   const chatSnap = await getDoc(chatRef); // 해당 문서를 읽어옴
   if (chatSnap.exists()) {
