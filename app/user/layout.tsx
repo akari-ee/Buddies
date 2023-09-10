@@ -21,9 +21,5 @@ export default function UserLayout({
     }
   }, []);
 
-  return (
-    <>
-     {showSplash ? <Splash showSplash={showSplash} /> : children}
-    </>
-  );
+  return <>{showSplash ? <Splash showSplash={showSplash} /> : children}</>;
 }
