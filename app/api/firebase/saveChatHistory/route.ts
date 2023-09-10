@@ -11,13 +11,14 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 
 dayjs.locale('ko');
+var utcPlugin = require('dayjs/plugin/utc');
+var timezonePlugin = require('dayjs/plugin/timezone');
+dayjs.extend(timezonePlugin);
+dayjs.tz.setDefault('Asia/Seoul');
 
 export async function POST(req: NextRequest) {
-
   const { data, email, prompt } = await req.json();
   if (email === undefined || email === null) {
     return NextResponse.json({
@@ -44,6 +45,7 @@ export async function POST(req: NextRequest) {
     `Users/${email}/ChatHistory/${todayDate}/${prompt}`,
     curTime
   ); // ChatHistory 컬렉션 가져오고, 날짜로 문서 이름 설정
+
   data[data.length - 1]['timestamp'] = dayjs().format('YYYY-MM-DD HH:mm:ss');
 
   const chatSnap = await getDoc(chatRef); // 해당 문서를 읽어옴
