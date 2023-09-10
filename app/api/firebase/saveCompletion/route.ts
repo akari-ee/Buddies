@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   }
   const todayDate = dayjs().format('YY-MM-DD');
   // const curTime = (Number(dayjs().format('HH')) + 9).toString();
-  const curTime = dayjs().utc().local().format('HH');
+  const curTime = dayjs().locale('ko').format('HH');
 
   const dateRef = doc(db, `Users/${email}/ChatHistory`, todayDate);
   const dateSnap = await getDoc(dateRef);
