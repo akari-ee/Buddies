@@ -14,12 +14,12 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.locale('ko');
-dayjs.tz.setDefault('Asia/Seoul');
-
 export async function POST(req: NextRequest) {
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
+  dayjs.locale('ko');
+  dayjs.tz.setDefault('Asia/Seoul');
+  
   const { data, email, prompt } = await req.json();
   if (email === undefined || email === null) {
     return NextResponse.json({
