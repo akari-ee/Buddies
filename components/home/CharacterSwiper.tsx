@@ -3,15 +3,15 @@ import { EffectCoverflow, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-import bomi_desc from '/public/bomi_desc.svg';
-import yermi_desc from '/public/yermi_desc.svg';
-import gauri_desc from '/public/gauri_desc.svg';
-import gyeouri_desc from '/public/gyeouri_desc.svg';
+import bomi_desc from '/public/bomi_desc.png';
+import yermi_desc from '/public/yermi_desc.png';
+import gauri_desc from '/public/gauri_desc.png';
+import gyeouri_desc from '/public/gyeouri_desc.png';
 import Image from 'next/image';
-import bomi from '/public/bomi_planet.svg';
-import yermi from '/public/yermi_planet.svg';
-import gauri from '/public/gauri_planet.svg';
-import gyeouri from '/public/gyeouri_planet.svg';
+import bomi from '/public/bomi_planet.png';
+import yermi from '/public/yermi_planet.png';
+import gauri from '/public/gauri_planet.png';
+import gyeouri from '/public/gyeouri_planet.png';
 
 const characters = [
   { name: '보미', src: bomi_desc, ch_src: bomi },
@@ -35,11 +35,12 @@ export default function CharacterSwiper({
         onSlideChange={(swiper) => {
           onChange(swiper.activeIndex);
         }}
+        style={{ overflowY: 'visible' }}
         // onSwiper={}
       >
         {characters.map((character) => (
           <SwiperSlide key={character.name}>
-            <div key={character.name} className=''>
+            <div key={character.name}>
               <div className='flex flex-col justify-center items-center'>
                 <div className='w-72 h-64 scale-110 md:w-96 md:h-96'>
                   <Image
