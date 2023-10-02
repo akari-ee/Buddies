@@ -5,11 +5,15 @@ import 'swiper/css/navigation';
 import 'swiper/css/effect-cards';
 
 import Image from 'next/image';
-import bomi from '/public/bomi_planet.svg';
-import yermi from '/public/yermi_planet.svg';
-import gauri from '/public/gauri_planet.svg';
-import gyeouri from '/public/gyeouri_planet.svg';
+import bomi from '/public/bomi_planet.png';
+import yermi from '/public/yermi_planet.png';
+import gauri from '/public/gauri_planet.png';
+import gyeouri from '/public/gyeouri_planet.png';
 import { cn } from '@/utils/extendClass';
+
+type Props = {
+  chatUsageData: any;
+};
 
 const characters = [
   { name: '보미', ch_src: bomi },
@@ -19,7 +23,7 @@ const characters = [
 ];
 const text_colors = ['text-bomi', 'text-yermi', 'text-gauri', 'text-gyeouri'];
 
-export default function CharacterSwiper() {
+export default function CharacterSwiper({ chatUsageData }: Props) {
   return (
     <div className='w-full lg:max-w-xl'>
       <Swiper
@@ -55,8 +59,8 @@ export default function CharacterSwiper() {
                   key={character.name}
                   src={character.ch_src}
                   alt={character.name}
-                  layout='fill'
-                  objectFit='contain'
+                  fill={true}
+                  sizes='(max-width: 640px) 100vw, 640px'
                 />
               </div>
               <div
@@ -80,7 +84,7 @@ export default function CharacterSwiper() {
                 </div>
                 <div className='flex flex-col justify-center items-center'>
                   <p>총 대화수</p>
-                  <p className='font-bold'>3134개</p>
+                  <p className='font-bold'>{chatUsageData[character.name]}</p>
                 </div>
               </div>
               <div className='text-sm flex justify-center px-7 text-center'>
