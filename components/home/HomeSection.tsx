@@ -7,27 +7,13 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useRouter } from 'next/navigation';
 import { UserIcon } from '@heroicons/react/24/solid';
 import { BellIcon } from '@heroicons/react/20/solid';
-
-import bomi_desc from '/public/bomi_desc.svg';
-import yermi_desc from '/public/yermi_desc.svg';
-import gauri_desc from '/public/gauri_desc.svg';
-import gyeouri_desc from '/public/gyeouri_desc.svg';
 import Image from 'next/image';
-import bomi from '/public/bomi_planet.svg';
-import yermi from '/public/yermi_planet.svg';
-import gauri from '/public/gauri_planet.svg';
-import gyeouri from '/public/gyeouri_planet.svg';
 import arrow from '/public/btn_right_arrow.svg';
 import { cn } from '@/utils/extendClass';
 import CharacterSwiper from './CharacterSwiper';
-import { useSession } from 'next-auth/react';
+import { useRecoilState } from 'recoil';
+import { promptState } from '@/store/atoms';
 
-const characters = [
-  { name: '보미', src: bomi_desc, ch_src: bomi },
-  { name: '여르미', src: yermi_desc, ch_src: yermi },
-  { name: '가으리', src: gauri_desc, ch_src: gauri },
-  { name: '겨우리', src: gyeouri_desc, ch_src: gyeouri },
-];
 const bg_colors = ['bg-bomi', 'bg-yermi', 'bg-gauri', 'bg-gyeouri'];
 const gradients = ['from-bomi', 'from-yermi', 'from-gauri', 'from-gyeouri'];
 
@@ -36,8 +22,11 @@ type Props = {};
 export default function HomeSection({}: Props) {
   const router = useRouter();
   const [currentCharacter, setCurrentIdx] = useState<number>(0);
+  const [prompt, setPrompt] = useRecoilState(promptState);
+
   const indexHandler = (idx: number) => {
     setCurrentIdx(idx);
+    setPrompt(idx);
   };
 
   return (
@@ -72,7 +61,7 @@ export default function HomeSection({}: Props) {
           <p className='font-bold'>버디를 선택해보세요.</p>
         </div>
       </div>
-      <div className='grow flex flex-col justify-center'>
+      <div className='grow flex flex-col justify-center flex-1'>
         <CharacterSwiper onChange={indexHandler} />
       </div>
 
