@@ -1,10 +1,9 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Tokens } from 'next-firebase-auth-edge/lib/auth';
-import { UserInfo } from 'firebase/auth';
 import AuthSession from '../components/AuthSession';
 import { Roboto } from 'next/font/google';
+import RecoilRootWrapper from './RecoilRootWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 const roboto = Roboto({
@@ -35,7 +34,9 @@ export default async function RootLayout({
       <meta name='theme-color' content='#ffffff' />
       <head></head>
       <body>
-        <AuthSession>{children}</AuthSession>
+        <AuthSession>
+          <RecoilRootWrapper>{children}</RecoilRootWrapper>
+        </AuthSession>
       </body>
     </html>
   );
