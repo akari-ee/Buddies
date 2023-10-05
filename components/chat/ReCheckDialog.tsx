@@ -9,7 +9,6 @@ type ReCheckProps = {
   onClose: (flag: boolean) => void;
   selectedCharacter: {
     name: string;
-    src: string;
   };
   characterIdx: number;
 };

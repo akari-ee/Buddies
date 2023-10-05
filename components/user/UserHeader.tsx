@@ -17,7 +17,7 @@ export default function UserHeader({ handleSlideOver }: Props) {
         <ArrowSmallLeftIcon className='h-8 w-8 text-white' aria-hidden='true' />
       </button>
       <button
-        className='rounded-full border border-white w-10 h-10 flex justify-center items-center bg-gradient-to-bl from-inherit via-transparent to-white shadow-md shadow-gray'
+        className='rounded-full border border-white w-10 h-10 flex justify-center items-center bg-gradient-to-bl from-inherit via-transparent to-white/30 shadow-md shadow-gray'
         onClick={handleSlideOver}
       >
         <EllipsisVerticalIcon className='h-6 w-6 text-white' aria-hidden='true' />

@@ -19,11 +19,12 @@ export async function POST(req: NextRequest) {
       )
     ); // sub.id = 날짜, 해당 날짜에서 사용한 캐릭터(챗봇)와의 대화내용을 가져온다.
     promptSnap.forEach((sub) => {
-      // sub2.id = 캐릭터 이름, sub2.data() = 캐릭터와의 대화내용
+      // sub.id = 캐릭터 이름, sub.data() = 캐릭터와의 대화내용
       chatList.push(sub.data());
     });
   });
 
   await Promise.all(promises); // 모든 프로미스가 끝날 때까지 기다린다.(비동기 처리)
+
   return NextResponse.json({ data: chatList });
 }

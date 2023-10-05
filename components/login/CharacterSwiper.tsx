@@ -3,10 +3,10 @@ import { Pagination, Scrollbar, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-import bomi from '/public/bomi.svg';
-import yermi from '/public/yermi.svg';
-import gauri from '/public/gauri.svg';
-import gyeouri from '/public/gyeouri.svg';
+import bomi from '/public/bomi.png';
+import yermi from '/public/yermi.png';
+import gauri from '/public/gauri.png';
+import gyeouri from '/public/gyeouri.png';
 import Image from 'next/image';
 
 const characters = [

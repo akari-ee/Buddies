@@ -8,7 +8,6 @@ import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { useChat } from 'ai/react';
 import { useSession } from 'next-auth/react';
 import { Message } from 'ai';
-import dayjs from 'dayjs';
 
 type msgType = {
   type: string;

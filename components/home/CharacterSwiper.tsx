@@ -36,27 +36,26 @@ export default function CharacterSwiper({
           onChange(swiper.activeIndex);
         }}
         style={{ overflowY: 'visible' }}
-        // onSwiper={}
       >
         {characters.map((character) => (
           <SwiperSlide key={character.name}>
             <div key={character.name}>
               <div className='flex flex-col justify-center items-center'>
-                <div className='w-72 h-64 scale-110 md:w-96 md:h-96'>
+                <div className='w-72 h-64 scale-110 md:w-96 md:h-96 relative'>
                   <Image
                     key={character.name}
                     src={character.src}
                     alt={character.name}
-                    layout='fill'
+                    fill={true}
                     objectFit='contain'
                   />
                 </div>
-                <div className='w-96 h-96 scale-150 md:scale-159'>
+                <div className='w-96 h-96 scale-150 md:scale-159 relative'>
                   <Image
                     key={character.name}
                     src={character.ch_src}
                     alt={character.name}
-                    layout='fill'
+                    fill={true}
                     objectFit='contain'
                   />
                 </div>

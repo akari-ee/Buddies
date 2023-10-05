@@ -8,7 +8,7 @@ import { authOptions } from './app/api/auth/[...nextauth]/route';
 import { getSession } from 'next-auth/react';
 import { getToken } from 'next-auth/jwt';
 
-const PUBLIC_PATHS = ['/home', '/chat', '/user', '/user/profile', '/chat/0'];
+const PUBLIC_PATHS = ['/home', '/chat', '/user', '/user/profile', '/chat/0', '/chat/1', '/chat/2', '/chat/3'];
 
 export async function middleware(req: NextRequest) {
   // getSession

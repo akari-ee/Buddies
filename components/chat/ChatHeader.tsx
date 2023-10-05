@@ -8,10 +8,10 @@ import { cn } from '@/utils/extendClass';
 import OptionDialog from './OptionDialog';
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 
-import bomi from '/public/bomi_option.svg';
-import yermi from '/public/yermi_option.svg';
-import gauri from '/public/gauri_option.svg';
-import gyeouri from '/public/gyeouri_option.svg';
+import bomi from '/public/bomi_option.png';
+import yermi from '/public/yermi_option.png';
+import gauri from '/public/gauri_option.png';
+import gyeouri from '/public/gyeouri_option.png';
 
 const characters = [
   { name: '보미', src: bomi },
@@ -57,8 +57,8 @@ export default function ChatHeader({ characterId }: { characterId: string }) {
             <ArrowLeftIcon className='w-8 h-8' />
           </button>
         </div>
-        <div className='flex justify-between items-center space-x-3 cursor-pointer'>
-          <div>BGM | ON</div>
+        <div className='flex justify-between items-center space-x-3'>
+          <div className='cursor-pointer'>BGM | ON</div>
           <div
             className={cn(
               'rounded-full w-12 h-12 relative overflow-hidden cursor-pointer ',
@@ -69,9 +69,9 @@ export default function ChatHeader({ characterId }: { characterId: string }) {
             <Image
               src={characters[selectedCharacter].src}
               alt={characters[selectedCharacter].name}
-              layout='fill'
-              objectFit='contain'
-              className='rounded-full'
+              fill={true}
+              sizes='(min-width: 360px) 100%'
+              className='rounded-full scale-150'
             />
           </div>
         </div>

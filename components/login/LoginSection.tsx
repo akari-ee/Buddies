@@ -1,33 +1,15 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Login from './Login';
 import service_title from '/public/service_title_black.svg';
 import BackgroundCircles from './BackgroundCircles';
 import Logo from '../UI/Logo';
 import CharacterSwiper from './CharacterSwiper';
-import { useSession } from 'next-auth/react';
-import {
-  GoogleAuthProvider,
-  OAuthProvider,
-  getAuth,
-  getRedirectResult,
-  signInWithPopup,
-  signInWithRedirect,
-} from 'firebase/auth';
-import { auth } from '@/config/firebase';
-import { setCookie } from '@/utils/handleCookie';
-import {
-  handleUserInfo,
-  saveUserInfoInToFirebaseDatabase,
-} from '@/utils/handleUserInfo';
-import { useRouter } from 'next/navigation';
 
 type Props = {};
 
 export default function LoginSection({}: Props) {
-  const router = useRouter();
-
   return (
     <div className='w-screen h-screen relative flex flex-col justify-between overflow-hidden'>
       <div className='flex flex-col items-start'>

@@ -3,10 +3,10 @@
 import React, { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-import bomi from '/public/bomi_option.svg';
-import yermi from '/public/yermi_option.svg';
-import gauri from '/public/gauri_option.svg';
-import gyeouri from '/public/gyeouri_option.svg';
+import bomi from '/public/bomi_option.png';
+import yermi from '/public/yermi_option.png';
+import gauri from '/public/gauri_option.png';
+import gyeouri from '/public/gyeouri_option.png';
 import Image from 'next/image';
 import { cn } from '@/utils/extendClass';
 import ReCheckDialog from './ReCheckDialog';
@@ -92,13 +92,13 @@ export default function OptionDialog({
               </Dialog.Title>
               <div
                 id='character_list'
-                className='flex justify-between items-center space-y-2'
+                className='flex justify-evenly items-center'
               >
                 {characters.map((character, idx) => (
                   <div
                     key={character.name}
                     className={cn(
-                      'w-16 h-16 relative rounded-full border-4 border-double p-3',
+                      'w-16 h-16 md:w-20 md:h-20 relative rounded-full cursor-pointer',
                       border_colors[idx],
                       selectedCharacter !== idx ? 'opacity-30' : ''
                     )}
@@ -107,16 +107,17 @@ export default function OptionDialog({
                     <Image
                       src={character.src}
                       alt={character.name}
-                      layout='fill'
-                      objectFit='contain'
-                      className={cn('rounded-full', bg_colors[idx])}
+                      fill={true}
+                      className={cn('rounded-full scale-110 shadow-lg', bg_colors[idx])
+                      
+                    }
                     />
                   </div>
                 ))}
               </div>
               <div className='h-12 flex justify-center bg-[#171717] text-white text-sm rounded-full mb-8'>
                 <button
-                  className='w-full h-full rounded-full'
+                  className='w-full h-full rounded-full shadow-lg'
                   onClick={() => {
                     openDialog();
                   }}

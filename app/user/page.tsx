@@ -11,7 +11,7 @@ import { getSession } from 'next-auth/react';
 
 type Props = {};
 const bg_colors = ['bg-bomi', 'bg-yermi', 'bg-gauri', 'bg-gyeouri'];
-
+const gradients = ['from-bomi via-bomi/70', 'from-yermi via-yermi/70', 'from-gauri via-gauri/70', 'from-gyeouri via-gyeouri/70'];
 export default async function User({}: Props) {
   const [chatUsageData, setChatUsageData] = useState({
     '보미': 0,
@@ -19,7 +19,7 @@ export default async function User({}: Props) {
     '가으리': 0,
     '겨우리': 0,
   });
-  // bg-gauri bg-gradient-to-b  from-gauri via-gauri/20 to-white
+  // bg-gauri bg-gradient-to-b from-gauri via-gauri/20 to-white
   // const chatUsageData = await getChatUsage();
   const value = useRecoilValue(promptState);
   const getChatUsage = useCallback(async () => {
@@ -55,7 +55,7 @@ export default async function User({}: Props) {
   return (
     <div
       className={cn(
-        'w-screen h-screen flex flex-col items-start shrink-0 min-w-full', bg_colors[value]
+        'w-screen h-screen flex flex-col items-start shrink-0 min-w-full bg-gradient-to-b to-white', bg_colors[value], gradients[value]
       )}
     >
       <section id='login_section' className=''>

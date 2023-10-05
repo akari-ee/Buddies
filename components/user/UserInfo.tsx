@@ -11,15 +11,13 @@ import Image from 'next/image';
 
 import hotTopicIcon from '/public/hotTopicIcon.svg';
 
-type Props = {};
-
 type ValuePiece = Date | null;
-
 type Value = ValuePiece | [ValuePiece, ValuePiece];
+type Props = { chatUsageData: any };
 
-export default function UserInfo() {
+export default function UserInfo({ chatUsageData }: Props) {
   const [value, onChange] = useState<Value>(new Date());
-
+  
   return (
     <div className='w-full flex flex-col justify-between'>
       <div className='mb-4 font-roboto'>
@@ -43,7 +41,7 @@ export default function UserInfo() {
         </div>
       </div>
       <div className='flex justify-center'>
-        <CharacterSwiper />
+        <CharacterSwiper chatUsageData={chatUsageData} />
       </div>
     </div>
   );

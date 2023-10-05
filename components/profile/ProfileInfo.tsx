@@ -14,7 +14,6 @@ type Props = {};
 export default function ProfileInfo({}: Props) {
   const router = useRouter();
   const { data: session } = useSession();
-  console.log(session);
   const user = session?.user;
 
   const [profile, setProfile] = React.useState<Profile>({

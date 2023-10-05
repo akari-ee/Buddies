@@ -33,7 +33,7 @@ async function getChatList(characterId: string) {
     session as { user: { name: string; email: string; image: string } }
   ).user.email;
 
-  const res = await fetch(
+  const chatListResponse = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/firebase/getChatList`,
     {
       method: 'POST',
@@ -45,7 +45,7 @@ async function getChatList(characterId: string) {
     }
   );
 
-  const data = await res.json();
-  const initialMessages = handleChatList(data.data);
+  const chatListData = await chatListResponse.json();
+  const initialMessages = handleChatList(chatListData.data);
   return initialMessages;
 }
