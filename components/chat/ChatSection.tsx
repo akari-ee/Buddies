@@ -1,13 +1,16 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ChatHeader from './ChatHeader';
 import Chats from './Chats';
 import { cn } from '@/utils/extendClass';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { useChat } from 'ai/react';
 import { useSession } from 'next-auth/react';
-import { Message } from 'ai';
+import { AIStream, Message } from 'ai';
+import dayjs from 'dayjs';
+import { useRecoilState } from 'recoil';
+import { chatState } from '@/store/atoms';
 
 type msgType = {
   type: string;
@@ -32,15 +35,58 @@ export default function ChatSection({
 }) {
   const { data: session, status } = useSession();
   const email = session?.user.email;
-  const { messages, input, isLoading, handleInputChange, handleSubmit } =
-    useChat({
-      body: {
-        email: email,
-        id: Number(characterId),
+  const [inputMessage, setInputMessage] = useState('');
+  const [messages, setMessages] = useRecoilState(chatState);
+  // const { messages, input, isLoading, handleInputChange, handleSubmit } =
+  //   useChat({
+  //     body: {
+  //       email: email,
+  //       id: Number(characterId),
+  //     },
+  //     initialMessages: loadedChatList,
+  //     api: '/api/chat',
+  //   });
+
+  const postMessage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const text = inputMessage;
+
+    setInputMessage('');
+
+    const createdAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
+    const role = 'user';
+    const id = crypto.randomUUID();
+
+    const userChat = {
+      id: id,
+      role: role,
+      content: text,
+      createdAt: createdAt,
+    };
+
+    setMessages([...messages, userChat]);
+
+    const res = await fetch('http://127.0.0.1:5000/queryJson', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      initialMessages: loadedChatList,
-      api: '/api/chat',
+      body: JSON.stringify({
+        user: text,
+      }),
     });
+
+    const assistantChat = await res.json();
+
+    setMessages([...messages, userChat, assistantChat]);
+
+    console.log('messages:', messages);
+  };
+
+  const handleInputText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputMessage(e.target.value);
+  };
+
   return (
     <div className='w-full min-h-screen justify-center items-center text-black relative'>
       <div className='w-full h-full flex flex-col bg-[#FAFAFA]'>
@@ -51,21 +97,21 @@ export default function ChatSection({
         {/* Chat Footer */}
         <div className='w-full h-[calc(100vh*0.1)] px-6 py-4 rounded-t-2xl bg-white shadow-2xl shadow-[#6d6d6dd9]'>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={postMessage}
             className='flex justify-between items-center space-x-2'
           >
             <input
               placeholder='메세지를 입력하세요.'
               className='grow border-none bg-[#F1F1F1] rounded-full h-10 pl-6'
-              value={input}
-              onChange={handleInputChange}
+              value={inputMessage}
+              onChange={handleInputText}
             />
             <button
               className={cn(
                 'rounded-full relative w-10 h-10 flex justify-center items-center',
                 bg_colors[Number(characterId)]
               )}
-              disabled={isLoading}
+              disabled={false}
               type='submit'
             >
               <PaperAirplaneIcon className='w-6 h-6 text-white' />
