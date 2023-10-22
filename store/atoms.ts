@@ -7,3 +7,9 @@ export const promptState = atom({
   default: 0,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const chatState = atom({
+  key: 'chatState',
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
