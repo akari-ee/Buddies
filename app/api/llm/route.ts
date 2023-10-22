@@ -1,21 +1,16 @@
-import { OpenAI } from 'langchain/llms/openai';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { ConversationSummaryBufferMemory } from 'langchain/memory';
-import { ConversationChain, LLMChain } from 'langchain/chains';
-import {
-  ChatPromptTemplate,
-  HumanMessagePromptTemplate,
-  MessagesPlaceholder,
-  SystemMessagePromptTemplate,
-} from 'langchain/prompts';
-
+import { LLMChain } from 'langchain/chains';
 import {
   promptSpring,
   promptSummer,
   promptAutumn,
   promptWinter,
 } from '@/config/prompts';
+import { NextResponse } from 'next/server';
+import dayjs from 'dayjs';
 
+const characters = ['spring', 'summer', 'autumn', 'winter'];
 /* 1~3은 유저 당 한번만 실행되면 된다. */
 // API Key 설정
 const chatModel = new ChatOpenAI({
@@ -66,5 +61,21 @@ const llms = {
 //   text: text,
 // });
 export async function POST(request: Request) {
-  
+  const { user, characterId } = await request.json();
+  const characterName = characters[characterId];
+
+  const response = await llms[characterName].predict({
+    text: user,
+  });
+
+  const createdAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  const role = 'assistant';
+  const id = crypto.randomUUID();
+
+  return NextResponse.json({
+    id: id,
+    role: role,
+    content: response,
+    createdAt: createdAt,
+  });
 }

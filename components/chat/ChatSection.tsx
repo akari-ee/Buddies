@@ -37,15 +37,6 @@ export default function ChatSection({
   const email = session?.user.email;
   const [inputMessage, setInputMessage] = useState('');
   const [messages, setMessages] = useRecoilState(chatState);
-  // const { messages, input, isLoading, handleInputChange, handleSubmit } =
-  //   useChat({
-  //     body: {
-  //       email: email,
-  //       id: Number(characterId),
-  //     },
-  //     initialMessages: loadedChatList,
-  //     api: '/api/chat',
-  //   });
 
   const postMessage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -66,21 +57,19 @@ export default function ChatSection({
 
     setMessages([...messages, userChat]);
 
-    const res = await fetch('http://127.0.0.1:5000/queryJson', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/llm`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         user: text,
+        characterId: Number(characterId),
       }),
     });
-
     const assistantChat = await res.json();
-
+    console.log(assistantChat);
     setMessages([...messages, userChat, assistantChat]);
-
-    console.log('messages:', messages);
   };
 
   const handleInputText = (e: React.ChangeEvent<HTMLInputElement>) => {
