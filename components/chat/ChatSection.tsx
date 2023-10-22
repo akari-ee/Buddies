@@ -38,6 +38,12 @@ export default function ChatSection({
   const [inputMessage, setInputMessage] = useState('');
   const [messages, setMessages] = useRecoilState(chatState);
 
+  // const { messages, input, handleInputChange, handleSubmit } = useChat(
+  //   {
+  //     api: '/api/llm',
+  //   }
+  // );
+
   const postMessage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const text = inputMessage;
@@ -71,6 +77,9 @@ export default function ChatSection({
     console.log(assistantChat);
     setMessages([...messages, userChat, assistantChat]);
   };
+  useEffect(() => {
+    console.log(messages);
+  }, []);
 
   const handleInputText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputMessage(e.target.value);
