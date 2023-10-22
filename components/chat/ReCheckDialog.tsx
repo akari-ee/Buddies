@@ -3,6 +3,8 @@
 import React, { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
+import { useRecoilState } from 'recoil';
+import { promptState } from '@/store/atoms';
 
 type ReCheckProps = {
   isOpen: boolean;
@@ -19,6 +21,7 @@ export default function ReCheckDialog({
   selectedCharacter,
   characterIdx,
 }: ReCheckProps) {
+  const [prompt, setPrompt] = useRecoilState(promptState);
   let completeButtonRef = useRef(null);
   const router = useRouter();
   return (
@@ -66,6 +69,7 @@ export default function ReCheckDialog({
                 <button
                   className='w-full h-full'
                   onClick={() => {
+                    setPrompt(characterIdx);
                     onClose(true);
                   }}
                 >
