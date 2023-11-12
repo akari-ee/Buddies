@@ -1,16 +1,13 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ChatHeader from './ChatHeader';
 import Chats from './Chats';
 import { cn } from '@/utils/extendClass';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { useChat } from 'ai/react';
 import { useSession } from 'next-auth/react';
-import { AIStream, Message } from 'ai';
-import dayjs from 'dayjs';
-import { useRecoilState } from 'recoil';
-import { chatState } from '@/store/atoms';
+import { Message } from 'ai';
 
 type msgType = {
   type: string;
@@ -18,13 +15,6 @@ type msgType = {
 };
 
 const bg_colors = ['bg-bomi', 'bg-yermi', 'bg-gauri', 'bg-gyeouri'];
-
-// any 타입 고쳐야 함.
-const AlwaysScrollToBottom = () => {
-  const elementRef: any = useRef();
-  useEffect(() => elementRef.current.scrollIntoView());
-  return <div ref={elementRef} />;
-};
 
 export default function ChatSection({
   characterId,
