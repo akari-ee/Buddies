@@ -1,16 +1,10 @@
 import {
   ChatPromptTemplate,
-  PromptTemplate,
   SystemMessagePromptTemplate,
   AIMessagePromptTemplate,
   HumanMessagePromptTemplate,
-  FewShotPromptTemplate,
-  ChatMessagePromptTemplate,
   MessagesPlaceholder,
-  PipelinePromptTemplate,
 } from 'langchain/prompts';
-import { AIMessage, HumanMessage, SystemMessage } from 'langchain/schema';
-import { format } from 'path';
 
 const systemSpring = `
   네 이름은 보미이다. 
