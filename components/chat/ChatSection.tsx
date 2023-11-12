@@ -35,55 +35,15 @@ export default function ChatSection({
 }) {
   const { data: session, status } = useSession();
   const email = session?.user.email;
-  const [inputMessage, setInputMessage] = useState('');
-  const [messages, setMessages] = useRecoilState(chatState);
 
-  // const { messages, input, handleInputChange, handleSubmit } = useChat(
-  //   {
-  //     api: '/api/llm',
-  //   }
-  // );
-
-  const postMessage = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    const text = inputMessage;
-
-    setInputMessage('');
-
-    const createdAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
-    const role = 'user';
-    const id = crypto.randomUUID();
-
-    const userChat = {
-      id: id,
-      role: role,
-      content: text,
-      createdAt: createdAt,
-    };
-
-    setMessages([...messages, userChat]);
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/llm`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user: text,
-        characterId: Number(characterId),
-      }),
-    });
-    const assistantChat = await res.json();
-    console.log(assistantChat);
-    setMessages([...messages, userChat, assistantChat]);
-  };
-  useEffect(() => {
-    console.log(messages);
-  }, []);
-
-  const handleInputText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputMessage(e.target.value);
-  };
+  const { messages ,input, handleInputChange, handleSubmit } = useChat({
+    api: '/api/llm',
+    body: {
+      characterId: Number(characterId),
+      email: email,
+    },
+    initialMessages: loadedChatList,
+  });
 
   return (
     <div className='w-full min-h-screen justify-center items-center text-black relative'>
@@ -92,17 +52,18 @@ export default function ChatSection({
         <ChatHeader characterId={characterId} />
         {/* Chat Section */}
         <Chats messages={messages} characterId={Number(characterId)} />
+        
         {/* Chat Footer */}
         <div className='w-full h-[calc(100vh*0.1)] px-6 py-4 rounded-t-2xl bg-white shadow-2xl shadow-[#6d6d6dd9]'>
           <form
-            onSubmit={postMessage}
+            onSubmit={handleSubmit}
             className='flex justify-between items-center space-x-2'
           >
             <input
               placeholder='메세지를 입력하세요.'
               className='grow border-none bg-[#F1F1F1] rounded-full h-10 pl-6'
-              value={inputMessage}
-              onChange={handleInputText}
+              value={input}
+              onChange={handleInputChange}
             />
             <button
               className={cn(
