@@ -1,6 +1,10 @@
 import { ChatOpenAI } from 'langchain/chat_models/openai';
-import { ConversationSummaryBufferMemory } from 'langchain/memory';
-import { LLMChain } from 'langchain/chains';
+import {
+  ChatMessageHistory,
+  ConversationSummaryBufferMemory,
+} from 'langchain/memory';
+import { ConversationChain, LLMChain } from 'langchain/chains';
+import { CallbackManager } from 'langchain/callbacks';
 import {
   promptSpring,
   promptSummer,
@@ -8,11 +12,21 @@ import {
   promptWinter,
 } from '@/config/prompts';
 import { NextResponse } from 'next/server';
-import { Message as VercelChatMessage, StreamingTextResponse, LangChainStream } from 'ai';
+import {
+  Message as VercelChatMessage,
+  StreamingTextResponse,
+  LangChainStream,
+  OpenAIStream,
+} from 'ai';
 import { BytesOutputParser } from 'langchain/schema/output_parser';
 import { PromptTemplate } from 'langchain/prompts';
-import { llms } from '@/config/langchain';
+import { chatModel, llms } from '@/config/langchain';
 import dayjs from 'dayjs';
+import { AIMessage, ChainValues, HumanMessage } from 'langchain/schema';
+import {
+  saveChatHistoryInToFirebaseDatabase,
+  saveCompletionInToFirebaseDatabase,
+} from '@/utils/handleFirebaseDatabase';
 
 export const runtime = 'edge';
 
@@ -27,41 +41,36 @@ const formatMessage = (message: VercelChatMessage) => {
 };
 
 export async function POST(request: Request) {
-  // const body = await request.json();
-  // const messages = body.messages ?? [];
-  // const formattedPreviousMessages = messages.slice(0, -1).map(formatMessage);
-  // const currentMessageContent = messages[messages.length - 1].content;
-  // const id = body.characterId;
-  // const characterName = characters[id];
-
-  const { user, characterId } = await request.json();
+  const { email, characterId, messages, initialMessages } =
+    await request.json();
+  const currentMessageContent = messages[messages.length - 1].content;
   const characterName = characters[characterId];
-  // const { stream, handlers } = LangChainStream();
-  const response = await llms[characterName].predict({
-    text: user,
-  });
-  
 
-  // const outputParser = new BytesOutputParser();
-  // const chain = autumn.pipe(outputParser);
-
-  // console.log('hwisik: ', chain);
-  
-  const createdAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
-  const role = 'assistant';
-  const id = crypto.randomUUID();
-
-  return NextResponse.json({
-    id: id,
-    role: role,
-    content: response,
-    createdAt: createdAt,
+  const { stream, handlers } = LangChainStream({
+    onStart: async () => {
+      await saveChatHistoryInToFirebaseDatabase(email, '가으리', messages);
+    },
+    onCompletion: async (completion: string) => {
+      console.log('onCompletion: ', completion);
+      await saveCompletionInToFirebaseDatabase(email, '가으리', completion);
+    },
   });
 
-  // const stream = await chain.stream({
-  //   chat_history: formattedPreviousMessages.join('\n'),
-  //   input: currentMessageContent,
-  // });
+  llms[characterName].run(currentMessageContent, [handlers]);
 
-  // return new StreamingTextResponse(stream);
+  // must call without await
+  llms[characterName]
+    .call(
+      {
+        input: currentMessageContent,
+      },
+      (messages as Message[]).map((m: any) =>
+        m.role === 'assistant'
+          ? new AIMessage(m.content)
+          : new HumanMessage(m.content)
+      ),
+      [handlers]
+    );
+  
+  return new StreamingTextResponse(stream);
 }
