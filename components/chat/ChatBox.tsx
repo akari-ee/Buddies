@@ -27,8 +27,3 @@ export default function ChatBox({
     </div>
   );
 }
-
-// padding='8px 14px'
-// fontSize='14px'
-// fontFamily='Spoqa Han Sans Neo'
-// fontWeight='400'
