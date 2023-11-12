@@ -8,6 +8,7 @@ import {
   promptWinter,
 } from '@/config/prompts';
 
+// 인덱스 시그니처
 interface Chain {
   [key: string]: LLMChain | ConversationChain;
 }

@@ -4,7 +4,7 @@ import {
   LangChainStream,
 } from 'ai';
 import { BytesOutputParser } from 'langchain/schema/output_parser';
-import { llms } from '@/config/langchain';
+import { llms } from '@/config/langchainModel';
 import {
   saveChatHistoryInToFirebaseDatabase,
   saveCompletionInToFirebaseDatabase,
