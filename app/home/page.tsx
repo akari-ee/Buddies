@@ -1,6 +1,6 @@
-import React from 'react'
-import HomeSection from '@/components/home/HomeSection'
-type Props = {}
+import React from 'react';
+import HomeSection from '@/app/home/_components/HomeSection';
+type Props = {};
 
 export default function Home({}: Props) {
   return (
@@ -9,5 +9,5 @@ export default function Home({}: Props) {
         <HomeSection />
       </section>
     </div>
-  )
+  );
 }

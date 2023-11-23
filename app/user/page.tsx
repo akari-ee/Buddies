@@ -1,6 +1,6 @@
 'use client';
 
-import UserSection from '@/components/user/UserSection';
+import UserSection from '@/app/user/_components/user/UserSection';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -11,13 +11,18 @@ import { getSession } from 'next-auth/react';
 
 type Props = {};
 const bg_colors = ['bg-bomi', 'bg-yermi', 'bg-gauri', 'bg-gyeouri'];
-const gradients = ['from-bomi via-bomi/70', 'from-yermi via-yermi/70', 'from-gauri via-gauri/70', 'from-gyeouri via-gyeouri/70'];
+const gradients = [
+  'from-bomi via-bomi/70',
+  'from-yermi via-yermi/70',
+  'from-gauri via-gauri/70',
+  'from-gyeouri via-gyeouri/70',
+];
 export default async function User({}: Props) {
   const [chatUsageData, setChatUsageData] = useState({
-    '보미': 0,
-    '여르미': 0,
-    '가으리': 0,
-    '겨우리': 0,
+    보미: 0,
+    여르미: 0,
+    가으리: 0,
+    겨우리: 0,
   });
   // bg-gauri bg-gradient-to-b from-gauri via-gauri/20 to-white
   // const chatUsageData = await getChatUsage();
@@ -51,11 +56,13 @@ export default async function User({}: Props) {
 
   useEffect(() => {
     getChatUsage();
-  }, [])
+  }, []);
   return (
     <div
       className={cn(
-        'w-screen h-screen flex flex-col items-start shrink-0 min-w-full bg-gradient-to-b to-white', bg_colors[value], gradients[value]
+        'w-screen h-screen flex flex-col items-start shrink-0 min-w-full bg-gradient-to-b to-white',
+        bg_colors[value],
+        gradients[value]
       )}
     >
       <section id='login_section' className=''>

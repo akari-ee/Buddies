@@ -1,6 +1,6 @@
 'use client';
 
-import Splash from '@/components/UI/Splash';
+import Splash from '@/app/_components/ui/Splash';
 import { useEffect, useState } from 'react';
 
 export default function UserLayout({

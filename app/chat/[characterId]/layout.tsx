@@ -1,6 +1,6 @@
 'use client';
 
-import Splash from '@/components/UI/Splash';
+import Splash from '@/app/_components/ui/Splash';
 import { useEffect, useState } from 'react';
 
 export default function ChatLayout({
@@ -22,9 +22,5 @@ export default function ChatLayout({
   //   }
   // }, []);
 
-  return (
-    <>
-      {showSplash ? <Splash showSplash={showSplash} /> : children}
-    </>
-  );
+  return <>{showSplash ? <Splash showSplash={showSplash} /> : children}</>;
 }

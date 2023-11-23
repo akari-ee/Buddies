@@ -1,6 +1,6 @@
 'use client';
 
-import Splash from '@/components/UI/Splash';
+import Splash from '@/app/_components/ui/Splash';
 import { useEffect, useState } from 'react';
 
 export default function HomeLayout({
@@ -19,12 +19,8 @@ export default function HomeLayout({
   //     }, 3000); // 3초 후에 setShowSplash(false)가 실행되면서 스플래시 화면이 사라짐
 
   //     return () => clearTimeout(timer); // 컴포넌트가 언마운트되면 타이머를 제거
-  //   } 
+  //   }
   // }, []);
 
-  return (
-    <>
-      {showSplash ? <Splash showSplash={showSplash} /> : children}
-    </>
-  );
+  return <>{showSplash ? <Splash showSplash={showSplash} /> : children}</>;
 }

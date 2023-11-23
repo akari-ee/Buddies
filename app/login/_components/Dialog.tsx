@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { signInAnonymously } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { auth } from '../../../config/firebase';
 import { useRouter } from 'next/navigation';
 import { setCookie } from '@/utils/handleCookie';
 import {
@@ -37,7 +37,10 @@ export default function LoginDialog({ isOpen, onClose }: LoginDialog) {
       onClose={onClose}
       className='relative z-50'
     >
-      <div className='fixed inset-0 bg-[#0000003e] backdrop-blur-sm' aria-hidden='true' />
+      <div
+        className='fixed inset-0 bg-[#0000003e] backdrop-blur-sm'
+        aria-hidden='true'
+      />
       <div className='fixed inset-0 flex items-center justify-center p-6 border-gray-800'>
         <Dialog.Panel className='w-full max-w-lg rounded-lg bg-white p-10 flex flex-col justify-center items-center md:max-w-xl md:p-16'>
           <Dialog.Title className='flex flex-col justify-center items-center text-center font-bold text-lg mb-6 md:text-2xl'>
