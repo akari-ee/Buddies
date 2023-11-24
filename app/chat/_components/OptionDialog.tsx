@@ -3,13 +3,11 @@
 import React, { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-import bomi from '/public/bomi_option.png';
-import yermi from '/public/yermi_option.png';
-import gauri from '/public/gauri_option.png';
-import gyeouri from '/public/gyeouri_option.png';
+
 import Image from 'next/image';
 import { cn } from '@/utils/extendClass';
 import ReCheckDialog from './ReCheckDialog';
+import { bg_colors, border_colors, charactersDialogOption, ring_colors } from '@/app/_constant/constant';
 
 type OptionDialogProps = {
   isOpen: boolean;
@@ -17,20 +15,6 @@ type OptionDialogProps = {
   curCharacter: number;
   onChange: (idx: number) => void;
 };
-
-const characters = [
-  { name: '보미', src: bomi },
-  { name: '여르미', src: yermi },
-  { name: '가으리', src: gauri },
-  { name: '겨우리', src: gyeouri },
-];
-const bg_colors = ['bg-bomi', 'bg-yermi', 'bg-gauri', 'bg-gyeouri'];
-const border_colors = [
-  'border-bomi',
-  'border-yermi',
-  'border-gauri',
-  'border-gyeouri',
-];
 
 export default function OptionDialog({
   isOpen,
@@ -94,13 +78,14 @@ export default function OptionDialog({
                 id='character_list'
                 className='flex justify-evenly items-center'
               >
-                {characters.map((character, idx) => (
+                {charactersDialogOption.map((character, idx) => (
                   <div
                     key={character.name}
                     className={cn(
-                      'w-16 h-16 md:w-20 md:h-20 relative rounded-full cursor-pointer',
+                      'w-16 h-16 md:w-20 md:h-20 relative rounded-full cursor-pointer overflow-hidden ring-1 ring-offset-2',
                       border_colors[idx],
-                      selectedCharacter !== idx ? 'opacity-30' : ''
+                      selectedCharacter !== idx ? 'opacity-30' : '',
+                      ring_colors[idx]
                     )}
                     onClick={() => setSelectedCharacter((prev) => idx)}
                   >
@@ -108,8 +93,11 @@ export default function OptionDialog({
                       src={character.src}
                       alt={character.name}
                       fill={true}
-                      className={cn('rounded-full shadow-lg absolute', bg_colors[idx])
-                    }
+                      objectFit='cover'
+                      className={cn(
+                        'rounded-full scale-[2] shadow-lg absolute -translate-y-2',
+                        bg_colors[idx]
+                      )}
                     />
                   </div>
                 ))}
@@ -131,7 +119,7 @@ export default function OptionDialog({
         <ReCheckDialog
           isOpen={isCheckOpen}
           onClose={closeDialog}
-          selectedCharacter={characters[selectedCharacter]}
+          selectedCharacter={charactersDialogOption[selectedCharacter]}
           characterIdx={selectedCharacter}
         />
       </Dialog>
