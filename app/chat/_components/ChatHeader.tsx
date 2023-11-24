@@ -12,6 +12,7 @@ import bomi from '/public/bomi_option.png';
 import yermi from '/public/yermi_option.png';
 import gauri from '/public/gauri_option.png';
 import gyeouri from '/public/gyeouri_option.png';
+import { text_colors } from '@/app/_constant/constant';
 
 const characters = [
   { name: '보미', src: bomi },
@@ -44,7 +45,7 @@ export default function ChatHeader({ characterId }: { characterId: string }) {
   useEffect(() => {
     if (changedIdx !== -1) {
       router.replace(`/chat/${changedIdx}`);
-    } 
+    }
     setIsOpen(false);
   }, [changedIdx]);
 
@@ -58,7 +59,11 @@ export default function ChatHeader({ characterId }: { characterId: string }) {
           </button>
         </div>
         <div className='flex justify-between items-center space-x-3'>
-          <div className='cursor-pointer'>BGM | ON</div>
+          <div className='cursor-pointer flex gap-1'>
+            <span className={`${text_colors[selectedCharacter]}`}>BGM</span>
+            <span>|</span>
+            <span>ON</span>
+          </div>
           <div
             className={cn(
               'rounded-full w-12 h-12 relative overflow-hidden cursor-pointer ',
