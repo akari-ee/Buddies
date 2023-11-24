@@ -4,7 +4,7 @@ import React from 'react';
 import Login from './Login';
 import service_title from '/public/service_title_black.svg';
 import BackgroundCircles from './BackgroundCircles';
-import Logo from '../UI/Logo';
+import Logo from '@/app/_components/Logo';
 import CharacterSwiper from './CharacterSwiper';
 
 type Props = {};

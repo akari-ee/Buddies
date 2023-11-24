@@ -1,9 +1,9 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import AuthSession from './_components/AuthSession';
+import AuthSession from './_wrapper/AuthSession';
 import { Roboto } from 'next/font/google';
-import RecoilRootWrapper from './_components/RecoilRootWrapper';
+import RecoilRootWrapper from './_wrapper/RecoilRootWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 const roboto = Roboto({

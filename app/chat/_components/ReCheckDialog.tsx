@@ -44,7 +44,7 @@ export default function ReCheckDialog({
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <Dialog.Panel className='w-full relative max-w-lg rounded-lg bg-white pt-10 flex flex-col justify-center gap-3'>
+            <Dialog.Panel className='w-full relative max-w-sm rounded-lg bg-white pt-10 flex flex-col items-center gap-3 h-1/4'>
               <Dialog.Title className='flex flex-col justify-center items-center text-center font-bold text-lg'>
                 <div className='flex flex-col justify-center items-center text-lg font-bold'>
                   <p>대화상대를</p>
@@ -54,20 +54,20 @@ export default function ReCheckDialog({
 
               <div
                 id='dialog-body'
-                className='text-sm text-[#999] flex flex-col justify-center items-center'
+                className='text-sm text-[#999] flex flex-col justify-center items-center flex-grow'
               >
                 <p>대화상대 변경 시 {selectedCharacter.name}와의</p>
                 <p>새로운 대화가 시작되요.</p>
               </div>
               <div className='w-full flex justify-center items-center h-14 border border-t-2 rounded-b-lg'>
                 <button
-                  className='w-full h-full border-r-2'
+                  className='w-full h-full border-r-2 text-[#999999] font-medium'
                   onClick={() => onClose(false)}
                 >
                   아니오
                 </button>
                 <button
-                  className='w-full h-full'
+                  className='w-full h-full font-bold'
                   onClick={() => {
                     setPrompt(characterIdx);
                     onClose(true);

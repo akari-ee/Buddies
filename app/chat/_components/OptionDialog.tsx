@@ -108,8 +108,7 @@ export default function OptionDialog({
                       src={character.src}
                       alt={character.name}
                       fill={true}
-                      className={cn('rounded-full scale-110 shadow-lg', bg_colors[idx])
-                      
+                      className={cn('rounded-full shadow-lg absolute', bg_colors[idx])
                     }
                     />
                   </div>

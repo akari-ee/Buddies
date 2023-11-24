@@ -1,7 +1,7 @@
 'use client';
 
-import LoginSection from '@/app/_components/login/LoginSection';
-import Splash from '@/app/_components/ui/Splash';
+import LoginSection from '@/app/login/_components/LoginSection';
+import Splash from '@/app/_components/Splash';
 import { useEffect, useState } from 'react';
 
 export default function Main() {
