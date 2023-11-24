@@ -40,8 +40,8 @@ export default function CharacterSwiper({
         {characters.map((character) => (
           <SwiperSlide key={character.name}>
             <div key={character.name}>
-              <div className='flex flex-col justify-center items-center'>
-                <div className='w-72 h-64 scale-110 md:w-96 md:h-96 relative'>
+              <div className='flex flex-col justify-center items-center relative'>
+                <div className='w-72 h-72 scale-110 md:w-96 md:h-96 md:scale-[1.5] relative'>
                   <Image
                     key={character.name}
                     src={character.src}
@@ -50,7 +50,7 @@ export default function CharacterSwiper({
                     objectFit='contain'
                   />
                 </div>
-                <div className='w-96 h-96 scale-150 md:scale-159 relative'>
+                <div className='w-96 h-96 scale-150 md:scale-[2.5] relative md:translate-y-56'>
                   <Image
                     key={character.name}
                     src={character.ch_src}
