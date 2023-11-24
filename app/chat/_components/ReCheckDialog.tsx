@@ -44,7 +44,7 @@ export default function ReCheckDialog({
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <Dialog.Panel className='w-full relative max-w-sm rounded-lg bg-white pt-10 flex flex-col items-center gap-3 h-1/4'>
+            <Dialog.Panel className='w-full relative max-w-sm rounded-lg bg-white pt-10 flex flex-col items-center gap-3 h-1/3 md:h-1/4'>
               <Dialog.Title className='flex flex-col justify-center items-center text-center font-bold text-lg'>
                 <div className='flex flex-col justify-center items-center text-lg font-bold'>
                   <p>대화상대를</p>
