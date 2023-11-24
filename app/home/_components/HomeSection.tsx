@@ -13,9 +13,7 @@ import { cn } from '@/utils/extendClass';
 import CharacterSwiper from './CharacterSwiper';
 import { useRecoilState } from 'recoil';
 import { promptState } from '@/store/atoms';
-
-const bg_colors = ['bg-bomi', 'bg-yermi', 'bg-gauri', 'bg-gyeouri'];
-const gradients = ['from-bomi', 'from-yermi', 'from-gauri', 'from-gyeouri'];
+import { bg_colors, gradients } from '@/app/_constant/constant';
 
 type Props = {};
 

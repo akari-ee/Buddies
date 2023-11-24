@@ -32,3 +32,10 @@ export const text_colors = [
   'text-gauri',
   'text-gyeouri',
 ];
+
+export const gradients = [
+  'from-bomi',
+  'from-yermi',
+  'from-gauri',
+  'from-gyeouri',
+];
