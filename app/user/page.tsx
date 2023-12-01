@@ -1,7 +1,7 @@
 import UserSection from '@/app/user/_components/user/UserSection';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 
 export default async function User() {
   // bg-gauri bg-gradient-to-b from-gauri via-gauri/20 to-white

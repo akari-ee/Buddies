@@ -1,4 +1,4 @@
-import LoginSection from '@/app/_components/login/LoginSection';
+import LoginSection from '@/app/login/_components/LoginSection';
 
 export default function Login() {
   return (
