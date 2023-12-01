@@ -5,6 +5,10 @@ import UserTitle from './UserTitle';
 import UserHeader from './UserHeader';
 import UserInfo from './UserInfo';
 import ProfileSlideOver from '../profile/ProfileSlideOver';
+import { cn } from '@/utils/extendClass';
+import { useRecoilValue } from 'recoil';
+import { promptState } from '@/store/atoms';
+import { bg_colors, gradientsFromVia } from '@/app/_constant/constant';
 
 type Props = {
   chatUsageData: any;
@@ -16,13 +20,26 @@ export default function UserSection({ chatUsageData }: Props) {
   const handleSlideOver = () => {
     setIsOpen((prev) => !prev);
   };
+  const value = useRecoilValue(promptState);
 
   return (
-    <div className='w-screen h-screen relative flex flex-col justify-between overflow-y-scroll px-6 pt-4 gap-8 overflow-x-clip'>
-      <UserHeader handleSlideOver={handleSlideOver} />
-      <UserTitle />
-      <UserInfo chatUsageData={chatUsageData} />
-      <ProfileSlideOver open={isOpen} setOpen={handleSlideOver} />
+    <div
+      className={cn(
+        'w-screen h-screen flex flex-col items-start shrink-0 min-w-full bg-gradient-to-b to-white',
+        bg_colors[value],
+        gradientsFromVia[value]
+      )}
+    >
+      <section id='user_section'>
+        <div className='w-screen h-screen relative overflow-y-scroll px-6 pt-4 overflow-x-clip'>
+          <div className='w-full max-w-3xl mx-auto flex flex-col gap-8 '>
+            <UserHeader handleSlideOver={handleSlideOver} />
+            <UserTitle />
+            <UserInfo chatUsageData={chatUsageData} />
+            <ProfileSlideOver open={isOpen} setOpen={handleSlideOver} />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
