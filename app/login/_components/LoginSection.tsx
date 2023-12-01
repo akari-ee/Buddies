@@ -16,12 +16,12 @@ export default function LoginSection({}: Props) {
         <div className='flex flex-col items-start justify-between gap-8 pt-5 pl-6 md:gap-12'>
           <Logo serviceTitle={service_title} isHome={false} />
           <div className='flex flex-col items-start gap-6 md:gap-8'>
-            <div className='font-PyeongChangPeace text-3xl md:text-6xl'>
+            <div className='font-PyeongChangPeace text-[32px] md:text-6xl'>
               <p className='font-light'>Find your</p>
-              <p className='font-bold'>
-                own secret
+              <p>
+                <span className='font-light'>own secret</span>
                 <br />
-                planet
+                <span className='font-bold'>planet</span>
               </p>
             </div>
             <div className='text-[#444444] text-sm md:text-lg'>

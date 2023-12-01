@@ -3,13 +3,37 @@
 @tailwind utilities;
 
 @font-face {
+  font-family: 'PyeongChangPeace';
+  font-weight: 300;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/PyeongChang/PyeongChangPeace-Light.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/PyeongChang/PyeongChangPeace-Light.eot?#iefix') format('embedded-opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/PyeongChang/PyeongChangPeace-Light.woff2') format('woff2'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/PyeongChang/PyeongChangPeace-Light.woff') format('woff'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/PyeongChang/PyeongChangPeace-Light.ttf') format("truetype");
+  font-display: swap;
+} 
+
+@font-face {
+  font-family: 'PyeongChangPeace';
+  font-weight: 700;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/PyeongChang/PyeongChangPeace-Bold.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/PyeongChang/PyeongChangPeace-Bold.eot?#iefix') format('embedded-opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/PyeongChang/PyeongChangPeace-Bold.woff2') format('woff2'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/PyeongChang/PyeongChangPeace-Bold.woff') format('woff'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/PyeongChang/PyeongChangPeace-Bold.ttf') format("truetype");
+  font-display: swap;
+} 
+
+/* @font-face {
   font-family: 'PyeongChangPeace-Bold';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2')
     format('woff2');
-  font-weight: 700;
+  font-weight: 300;
   font-style: normal;
   font-display: swap;
-}
+} */
 
 body {
   box-sizing: border-box;
@@ -37,4 +61,14 @@ body {
 /* .swiper-button-next:after,
 .swiper-button-prev:after {
   font-size: 20px;
+} */
+
+/* react-calendar */
+/* .dot {
+  height: 8px;
+  width: 8px;
+  background-color: #f87171;
+  border-radius: 50%;
+  display: flex;
+  margin-left: 1px;
 } */

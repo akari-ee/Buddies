@@ -42,21 +42,21 @@ export default function LoginDialog({ isOpen, onClose }: LoginDialog) {
         aria-hidden='true'
       />
       <div className='fixed inset-0 flex items-center justify-center p-6 border-gray-800'>
-        <Dialog.Panel className='w-full max-w-lg rounded-lg bg-white p-10 flex flex-col justify-center items-center md:max-w-xl md:p-16'>
+        <Dialog.Panel className='w-full max-w-lg rounded-lg bg-white p-10 flex flex-col justify-center items-center md:max-w-md md:p-16'>
           <Dialog.Title className='flex flex-col justify-center items-center text-center font-bold text-lg mb-6 md:text-2xl'>
             <p>간편한 회원가입으로</p>
             <p>아래 기능을 이용해보세요.</p>
           </Dialog.Title>
-          <ul className='flex flex-col justify-center text-xs list-disc space-y-1 text-[#444444] mb-6 md:text-base md:mb-10'>
+          <ul className='flex flex-col justify-center text-xs list-disc space-y-1 text-[#444444] mb-6 md:text-base md:mb-10 ml-5'>
             <li>
-              챗봇과의 대화기록 저장하고 나에게 꼭 맞는 대화경험을 느껴보세요.
+              챗봇과의 대화기록 저장하고 <span className='font-bold'>나에게 꼭 맞는 대화경험</span>을
+              느껴보세요.
             </li>
             <li>
-              나는 주로 어떤 위로를 필요로 했는지 챗봇별발화량 체크 기능으로
-              확인해볼 수 있어요.
+              나는 주로 어떤 위로를 필요로 했는지 <span className='font-bold'>챗봇별 발화량 체크 기능으로 확인</span>x해볼 수 있어요.
             </li>
-            <li>대화 기반 감정상태 분석 기능 활용해보세요.</li>
-            <li>나에게 의미있게 다가온 핫토픽을 모아보세요.</li>
+            <li>
+              <span className='font-bold'>대화 기반 감정상태 분석 기능</span> 활용해보세요.</li>
           </ul>
 
           <div className='flex flex-col justify-center items-center space-y-4 text-xs md:text-base'>

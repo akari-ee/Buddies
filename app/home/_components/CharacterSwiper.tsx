@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/effect-coverflow';
 
 import bomi_desc from '/public/bomi_desc.png';
 import yermi_desc from '/public/yermi_desc.png';
@@ -35,7 +36,7 @@ export default function CharacterSwiper({
         onSlideChange={(swiper) => {
           onChange(swiper.activeIndex);
         }}
-        style={{ overflowY: 'visible' }}
+        style={{ overflowY: 'visible'}}
       >
         {characters.map((character) => (
           <SwiperSlide key={character.name}>

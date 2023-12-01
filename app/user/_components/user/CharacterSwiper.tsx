@@ -1,27 +1,15 @@
+import Image from 'next/image';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { EffectCards } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-cards';
-
-import Image from 'next/image';
-import bomi from '/public/bomi_planet.png';
-import yermi from '/public/yermi_planet.png';
-import gauri from '/public/gauri_planet.png';
-import gyeouri from '/public/gyeouri_planet.png';
 import { cn } from '@/utils/extendClass';
+import { charactersForUserSwiper, text_colors } from '@/app/_constant/constant';
 
 type Props = {
   chatUsageData: any;
 };
-
-const characters = [
-  { name: '보미', ch_src: bomi },
-  { name: '여르미', ch_src: yermi },
-  { name: '가으리', ch_src: gauri },
-  { name: '겨우리', ch_src: gyeouri },
-];
-const text_colors = ['text-bomi', 'text-yermi', 'text-gauri', 'text-gyeouri'];
 
 export default function CharacterSwiper({ chatUsageData }: Props) {
   return (
@@ -45,11 +33,11 @@ export default function CharacterSwiper({ chatUsageData }: Props) {
         onSlideChange={(swiper) => {}}
         // onSwiper={(swiper) => console.log(swiper)}
       >
-        {characters.map((character) => (
+        {charactersForUserSwiper.map((character, index) => (
           <SwiperSlide key={character.name}>
             <div
               key={character.name}
-              className='w-full h-[500px] pt-7 flex flex-col justify-between items-center rounded-lg bg-gradient bg-gradient-to-tr from-white via-cyan-50 to-transparent backdrop-blur-2xl shadow-2xl border-2 border-black/70'
+              className='w-full h-[500px] pt-7 flex flex-col justify-between items-center rounded-lg bg-gradient bg-gradient-to-tr from-white via-cyan-50 to-transparent backdrop-blur-2xl shadow-2xl'
             >
               <div
                 id='character-image'
@@ -68,7 +56,7 @@ export default function CharacterSwiper({ chatUsageData }: Props) {
                   'font-PyeongChangPeace text-lg bg-white rounded-full shadow-md px-6 py-2'
                 )}
               >
-                <p>{character.name}</p>
+                <p className={cn(text_colors[index], 'font-bold font-PyeongChangPeace')}>{character.name}</p>
               </div>
               <div
                 id='usage-info'
