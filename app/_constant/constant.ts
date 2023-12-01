@@ -3,6 +3,11 @@ import yermi from '/public/yermi_option.png';
 import gauri from '/public/gauri_option.png';
 import gyeouri from '/public/gyeouri_option.png';
 
+import bomiSwiper from '/public/bomi.png';
+import yermiSwiper from '/public/yermi.png';
+import gauriSwiper from '/public/gauri.png';
+import gyeouriSwiper from '/public/gyeouri.png';
+
 export const charactersDialogOption = [
   { name: '보미', src: bomi },
   { name: '여르미', src: yermi },
@@ -38,4 +43,18 @@ export const gradients = [
   'from-yermi',
   'from-gauri',
   'from-gyeouri',
+];
+
+export const gradientsFromVia = [
+  'from-bomi via-bomi/70',
+  'from-yermi via-yermi/70',
+  'from-gauri via-gauri/70',
+  'from-gyeouri via-gyeouri/70',
+];
+
+export const charactersForUserSwiper = [
+  { name: '보미', ch_src: bomiSwiper },
+  { name: '여르미', ch_src: yermiSwiper },
+  { name: '가으리', ch_src: gauriSwiper },
+  { name: '겨우리', ch_src: gyeouriSwiper },
 ];
