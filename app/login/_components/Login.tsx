@@ -21,7 +21,6 @@ type Props = {};
 
 export default function Login({}: Props) {
   const { data: session, status } = useSession();
-  console.log(session);
   const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
