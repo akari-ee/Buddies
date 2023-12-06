@@ -17,7 +17,7 @@ type Props = {
 
 export default function CharacterSwiper({ chatUsageData }: Props) {
   return (
-    <div className='w-full lg:w-[80%] lg:max-w-xl'>
+    <div className='w-full md:w-[80%]'>
       <Swiper
         modules={[EffectCards]}
         speed={1000}
