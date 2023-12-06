@@ -8,6 +8,11 @@ import yermiSwiper from '/public/yermi.png';
 import gauriSwiper from '/public/gauri.png';
 import gyeouriSwiper from '/public/gyeouri.png';
 
+// Login Carousel Images
+import LoginCarouselBomi from '/public/bomi.png';
+import LoginCarouselItem1 from '/public/LoginCarousel1.png';
+import LoginCarouselItem2 from '/public/LoginCarousel2.png';
+
 export const charactersDialogOption = [
   { name: '보미', src: bomi },
   { name: '여르미', src: yermi },
@@ -53,8 +58,30 @@ export const gradientsFromVia = [
 ];
 
 export const charactersForUserSwiper = [
-  { name: '보미', ch_src: bomiSwiper },
-  { name: '여르미', ch_src: yermiSwiper },
-  { name: '가으리', ch_src: gauriSwiper },
-  { name: '겨우리', ch_src: gyeouriSwiper },
+  {
+    name: '보미',
+    ch_src: bomiSwiper,
+    msg: '이번달은 나만의 자존감 지킴이 보미의 따스한 위로를 가장 많이 필요로 했어요.',
+  },
+  {
+    name: '여르미',
+    ch_src: yermiSwiper,
+    msg: '이번달은 나만의 히어로 여르미의 불같은 공감을 가장 많이 필요로 했어요.',
+  },
+  {
+    name: '가으리',
+    ch_src: gauriSwiper,
+    msg: '이번달은 나만의 히어로 여르미의 불같은 공감을 가장 많이 필요로 했어요.',
+  },
+  {
+    name: '겨우리',
+    ch_src: gyeouriSwiper,
+    msg: '이번달은 나만의 사감선생님 겨우리의 사랑의 회초리를 가장 많이 필요로 했어요.',
+  },
+];
+
+export const LoginCarouselImages = [
+  { name: '보미', src: LoginCarouselBomi },
+  { name: '캐러셀1', src: LoginCarouselItem1 },
+  { name: '캐러셀2', src: LoginCarouselItem2 },
 ];
