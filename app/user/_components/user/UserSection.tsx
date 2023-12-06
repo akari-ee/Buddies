@@ -32,7 +32,7 @@ export default function UserSection({ chatUsageData }: Props) {
     >
       <section id='user_section'>
         <div className='w-screen h-screen relative overflow-y-scroll px-6 pt-4 overflow-x-clip'>
-          <div className='w-full max-w-3xl mx-auto flex flex-col gap-8 lg:overflow-hidden'>
+          <div className='w-full max-w-5xl mx-auto flex flex-col gap-8 lg:overflow-hidden'>
             <UserHeader handleSlideOver={handleSlideOver} />
             <UserTitle />
             <UserInfo chatUsageData={chatUsageData} />

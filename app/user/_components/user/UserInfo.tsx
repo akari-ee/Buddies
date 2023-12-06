@@ -1,20 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
-
 import Calendar from 'react-calendar';
 import './Calendar.css';
-
 import CharacterSwiper from './CharacterSwiper';
 import Image from 'next/image';
-
-import hotTopicIcon from '/public/hotTopicIcon.svg';
 import dayjs from 'dayjs';
-import bomi from '@/public/bomi_option.png';
 import yermi from '@/public/yermi_option.png';
-import gauri from '@/public/gauri_option.png';
-import gyeouri from '@/public/gyeouri_option.png';
 import { bg_colors } from '@/app/_constant/constant';
 import { cn } from '@/utils/extendClass';
 
@@ -63,7 +55,7 @@ export default function UserInfo({ chatUsageData }: Props) {
           <p>이번 달은 어떤 버디와 가장 대화를 많이 했을까요?</p>
         </div>
       </div>
-      <div className='flex justify-center'>
+      <div className='flex justify-center mb-20'>
         <CharacterSwiper chatUsageData={chatUsageData} />
       </div>
     </div>
