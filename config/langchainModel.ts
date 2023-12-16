@@ -15,7 +15,7 @@ interface Chain {
 
 /* 1~3은 유저 당 한번만 실행되면 된다. */
 // API Key 설정
-const chatModel = new ChatOpenAI({
+export const chatModel = new ChatOpenAI({
   openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   streaming: true,
 });
@@ -26,7 +26,7 @@ const chatModel = new ChatOpenAI({
 const memory = new ConversationSummaryBufferMemory({
   llm: chatModel,
   memoryKey: "chat_history",
-  chatHistory: new ChatMessageHistory(),
+  chatHistory: new ChatMessageHistory(), // TODO: load from firebase
   maxTokenLimit: 2000,
   returnMessages: true,
 });
