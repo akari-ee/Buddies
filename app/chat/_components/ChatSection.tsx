@@ -26,7 +26,7 @@ export default function ChatSection({
   const { data: session, status } = useSession();
   const email = session?.user.email;
 
-  const { messages ,input, handleInputChange, handleSubmit } = useChat({
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: '/api/llm',
     body: {
       characterId: Number(characterId),
@@ -42,7 +42,7 @@ export default function ChatSection({
         <ChatHeader characterId={characterId} />
         {/* Chat Section */}
         <Chats messages={messages} characterId={Number(characterId)} />
-        
+
         {/* Chat Footer */}
         <div className='w-full h-[calc(100vh*0.1)] px-6 py-4 rounded-t-2xl bg-white shadow-2xl shadow-[#6d6d6dd9]'>
           <form
