@@ -3,14 +3,18 @@ import {
   StreamingTextResponse,
   LangChainStream,
 } from 'ai';
-import { BytesOutputParser } from 'langchain/schema/output_parser';
 import { chatModel, llms } from '@/config/langchainModel';
 import {
   saveChatHistoryInToFirebaseDatabase,
   saveCompletionInToFirebaseDatabase,
 } from '@/utils/handleFirebaseDatabase';
-import { ConversationChain } from 'langchain/chains';
-import { promptAutumn } from '@/config/prompts';
+import { ConversationChain, LLMChain } from 'langchain/chains';
+import {
+  promptAutumn,
+  promptSpring,
+  promptSummer,
+  promptWinter,
+} from '@/config/prompts';
 import {
   ChatMessageHistory,
   ConversationSummaryBufferMemory,
@@ -20,7 +24,7 @@ import { HumanMessage, AIMessage } from 'langchain/schema';
 
 export const runtime = 'edge';
 
-const characters = ['spring', 'summer', 'autumn', 'winter'];
+const characters = ['보미', '여르미', '가으리', '겨우리'];
 
 /**
  * Basic memory formatter that stringifies and passes
@@ -60,6 +64,17 @@ export async function POST(request: Request) {
     returnMessages: true,
   });
 
+  const spring = new LLMChain({
+    llm: chatModel,
+    prompt: promptSpring,
+  });
+
+  // Summer LLM
+  const summer = new LLMChain({
+    llm: chatModel,
+    prompt: promptSummer,
+  });
+
   const autumn = new ConversationChain({
     llm: chatModel,
     prompt: promptAutumn,
@@ -67,35 +82,35 @@ export async function POST(request: Request) {
     memory: memory,
   });
 
+  const winter = new LLMChain({
+    llm: chatModel,
+    prompt: promptWinter,
+  });
+
   const { stream, handlers } = LangChainStream({
     onStart: async () => {
-      await saveChatHistoryInToFirebaseDatabase(email, '가으리', messages);
+      await saveChatHistoryInToFirebaseDatabase(email, characterName, messages);
     },
     onCompletion: async (completion: string) => {
-      await saveCompletionInToFirebaseDatabase(email, '가으리', completion);
+      await saveCompletionInToFirebaseDatabase(
+        email,
+        characterName,
+        completion
+      );
     },
   });
-  // must call without await
-  // 동작
-  autumn.run(currentMessageContent, [handlers]);
-  // .then((res) => console.log('run result: ', res));
 
   // must call without await
-  // 동작안함..
-  // llms[characterName]
-  //   .call(
-  //     {
-  //       input: currentMessageContent,
-  //     },
-  //     (messages as Message[]).map((m: any) =>
-  //       m.role === 'assistant'
-  //         ? new AIMessage(m.content)
-  //         : new HumanMessage(m.content)
-  //     ),
-  //     [handlers]
-  //   ).then((res : any) => {
-  //     console.log('response is: ', res);
-  //   })
+  // 동작
+  if (characterId === 0) {
+    spring.run(currentMessageContent, [handlers]);
+  } else if (characterId === 1) {
+    summer.run(currentMessageContent, [handlers]);
+  } else if (characterId === 2) {
+    autumn.run(currentMessageContent, [handlers]);
+  } else if (characterId === 3) {
+    winter.run(currentMessageContent, [handlers]);
+  }
 
   return new StreamingTextResponse(stream);
 }
