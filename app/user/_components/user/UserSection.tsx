@@ -25,14 +25,14 @@ export default function UserSection({ chatUsageData }: Props) {
   return (
     <div
       className={cn(
-        'w-screen h-screen flex flex-col items-start shrink-0 min-w-full bg-gradient-to-b to-white',
+        'flex flex-col items-start w-screen min-w-full h-screen bg-gradient-to-b to-white shrink-0',
         bg_colors[value],
         gradientsFromVia[value]
       )}
     >
       <section id='user_section'>
-        <div className='w-screen h-screen relative overflow-y-scroll px-6 pt-4 overflow-x-clip'>
-          <div className='w-full max-w-5xl mx-auto flex flex-col gap-8 lg:overflow-hidden'>
+        <div className='overflow-y-scroll relative px-6 pt-4 w-screen h-screen overflow-x-clip'>
+          <div className='flex flex-col gap-8 mx-auto w-full max-w-5xl lg:overflow-hidden'>
             <UserHeader handleSlideOver={handleSlideOver} />
             <UserTitle />
             <UserInfo chatUsageData={chatUsageData} />

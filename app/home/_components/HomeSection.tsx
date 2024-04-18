@@ -14,6 +14,7 @@ import CharacterSwiper from './CharacterSwiper';
 import { useRecoilState } from 'recoil';
 import { promptState } from '@/store/atoms';
 import { bg_colors, gradients } from '@/app/_constant/constant';
+import { requestPermission } from '@/config/firebase';
 
 type Props = {};
 
@@ -30,7 +31,7 @@ export default function HomeSection({}: Props) {
   return (
     <div
       className={cn(
-        'w-screen h-screen flex flex-col gap-8 relative overflow-hidden pt-5 bg-gradient-to-b via-transparent to-white',
+        'flex overflow-hidden relative flex-col gap-8 pt-5 w-screen h-screen bg-gradient-to-b via-transparent to-white',
         bg_colors[currentCharacter],
         gradients[currentCharacter]
       )}
@@ -39,7 +40,7 @@ export default function HomeSection({}: Props) {
         <Logo serviceTitle={service_title} isHome={true} />
         <div
           id='icon-wrapper'
-          className='flex justify-center items-center gap-5 text-white'
+          className='flex gap-5 justify-center items-center text-white'
         >
           <button
             className='border border-white rounded-full flex justify-center items-center w-10 h-10 lg:w-[57px] lg:h-[57px] bg-inherit bg-gradient-to-bl from-inherit via-transparent to-white/30 shadow-md shadow-gray'
@@ -50,9 +51,17 @@ export default function HomeSection({}: Props) {
           <button className='border border-white rounded-full flex justify-center items-center w-10 h-10 lg:w-[57px] lg:h-[57px] bg-inherit  bg-gradient-to-bl from-inherit via-transparent to-white/30 shadow-md shadow-gray'>
             <BellIcon className='w-6 h-6 lg:w-7 lg:h-7' />
           </button>
+          <button
+            className='flex justify-center items-center p-3 w-10 h-10 text-xs rounded-full border border-white cursor-pointer'
+            onClick={() => {
+              requestPermission()
+            }}
+          >
+            Alert
+          </button>
         </div>
       </div>
-      <div className='text-white pl-6 flex flex-col justify-center gap-4'>
+      <div className='flex flex-col gap-4 justify-center pl-6 text-white'>
         <div className='font-PyeongChangPeace font-bold text-[32px] md:text-[42px] '>
           Hello!
         </div>
@@ -61,12 +70,12 @@ export default function HomeSection({}: Props) {
           <p className='font-bold'>버디를 선택해보세요.</p>
         </div>
       </div>
-      <div className='grow flex flex-col justify-center flex-1'>
+      <div className='flex flex-col flex-1 justify-center grow'>
         <CharacterSwiper onChange={indexHandler} />
       </div>
 
       <div className='fixed bottom-12 left-1/2 translate-x-[-50%] bg-[#171717] text-white text-base font-medium rounded-full w-72 py-3 flex justify-center items-center cursor-pointer z-10 shadow-lg drop-shadow-lg'>
-        <div className='flex justify-center items-center gap-4'>
+        <div className='flex gap-4 justify-center items-center'>
           <button
             className='flex justify-center items-center'
             onClick={() => router.push(`/chat/${currentCharacter}`)}

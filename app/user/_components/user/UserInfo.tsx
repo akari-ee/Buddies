@@ -19,7 +19,7 @@ export default function UserInfo({ chatUsageData }: Props) {
   const [mark, setMark] = useState(['2023-11-28', '2023-11-26', '2023-11-23']); // 프롬프트 사용 날짜 표시 위함
 
   return (
-    <div className='w-full flex flex-col justify-between mx-auto max-w-md'>
+    <div className='flex flex-col justify-between mx-auto w-full max-w-md'>
       <div className='mb-16 font-roboto'>
         <Calendar
           onChange={onChange}
@@ -28,7 +28,7 @@ export default function UserInfo({ chatUsageData }: Props) {
           tileContent={({ date, view }) => {
             if (mark.find((x) => x === dayjs(date).format('YYYY-MM-DD'))) {
               return (
-                <div className='flex justify-center items-center absoluteDiv absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full'>
+                <div className='flex absolute top-1/2 left-1/2 justify-center items-center w-full h-full -translate-x-1/2 -translate-y-1/2 absoluteDiv'>
                   <div className='dot w-[30px] h-[30px] relative overflow-hidden rounded-full'>
                     <Image
                       src={yermi}
@@ -49,7 +49,7 @@ export default function UserInfo({ chatUsageData }: Props) {
       </div>
       <div className='flex flex-col gap-1 mb-24 text-[#171717]'>
         <div className=''>
-          <p className='font-PyeongChangPeace text-lg font-bold'>Buddy talk</p>
+          <p className='text-lg font-bold font-PyeongChangPeace'>Buddy talk</p>
         </div>
         <div className='text-sm'>
           <p>이번 달은 어떤 버디와 가장 대화를 많이 했을까요?</p>

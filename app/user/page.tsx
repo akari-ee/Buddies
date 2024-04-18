@@ -4,7 +4,6 @@ import { getServerSession } from 'next-auth';
 import React from 'react';
 
 export default async function User() {
-  // bg-gauri bg-gradient-to-b from-gauri via-gauri/20 to-white
   const chatUsageData = await getChatUsage();
   return <UserSection chatUsageData={chatUsageData} />;
 }
