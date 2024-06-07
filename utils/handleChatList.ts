@@ -13,7 +13,7 @@ export const handleChatList = (chatList: any[]) => {
           content: el.content,
           createdAt: new Date(el.timestamp),
         });
-        if (index < chat.gpt.length) {
+        if (chat.gpt && index < chat.gpt.length) {
           initialMessages.push({
             id: randomBytes(16).toString('hex'),
             role: chat.gpt[index].role,

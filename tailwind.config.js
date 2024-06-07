@@ -48,7 +48,8 @@ module.exports = {
     },
 
     fontFamily: {
-      PyeongChangPeace: ['PyeongChangPeace-Bold'],
+      PyeongChangPeaceBold: ['PyeongChangPeace-Bold'],
+      PyeongChangPeace: ['PyeongChangPeace'],
       roboto: ['var(--font-roboto)'],
       apple: ['AppleSDGothicNeo', ...defaultTheme.fontFamily.sans],
     },

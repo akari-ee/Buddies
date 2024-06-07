@@ -1,5 +1,5 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import ChatSection from '@/components/chat/ChatSection';
+import ChatSection from '@/app/chat/_components/ChatSection'
 import { handleChatList } from '@/utils/handleChatList';
 import { getServerSession } from 'next-auth';
 import React from 'react';

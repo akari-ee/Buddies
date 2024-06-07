@@ -1,11 +1,10 @@
-import LoginSection from "@/components/login/LoginSection";
+import LoginSection from '@/app/login/_components/LoginSection';
 
 export default function Login() {
   return (
-    <div className='w-screen h-screen flex flex-col items-start shrink-0 min-w-full'>
+    <div className='flex flex-col items-start w-screen min-w-full h-screen shrink-0'>
       <section id='login_section'>
         <LoginSection />
-        {/* <Splash /> */}
       </section>
     </div>
   );
