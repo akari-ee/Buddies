@@ -4,7 +4,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import Image from 'next/image';
-import { LoginCarouselImages } from '@/app/_constant/constant';
+import { LoginCarouselImages } from '@/constant/constant';
 
 export default function CharacterSwiper({
   onChange,

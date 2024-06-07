@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import service_title from '/public/service_title_white.svg';
-import Logo from '@/app/_components/Logo';
+import Logo from '@/components/Logo';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useRouter } from 'next/navigation';
 import { UserIcon } from '@heroicons/react/24/solid';
@@ -13,7 +13,7 @@ import { cn } from '@/utils/extendClass';
 import CharacterSwiper from './CharacterSwiper';
 import { useRecoilState } from 'recoil';
 import { promptState } from '@/store/atoms';
-import { bg_colors, gradients } from '@/app/_constant/constant';
+import { bg_colors, gradients } from '@/constant/constant';
 import { requestPermission } from '@/config/firebase';
 
 type Props = {};

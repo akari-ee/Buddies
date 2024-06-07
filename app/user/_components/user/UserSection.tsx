@@ -8,7 +8,7 @@ import ProfileSlideOver from '../profile/ProfileSlideOver';
 import { cn } from '@/utils/extendClass';
 import { useRecoilValue } from 'recoil';
 import { promptState } from '@/store/atoms';
-import { bg_colors, gradientsFromVia } from '@/app/_constant/constant';
+import { bg_colors, gradientsFromVia } from '@/constant/constant';
 
 type Props = {
   chatUsageData: any;

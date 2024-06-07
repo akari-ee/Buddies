@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-cards';
 import { cn } from '@/utils/extendClass';
-import { charactersForUserSwiper, text_colors } from '@/app/_constant/constant';
+import { charactersForUserSwiper, text_colors } from '@/constant/constant';
 import badge from '@/public/badge.svg';
 import userConverstaionIcon from '@/public/userConversationIcon.png';
 import userPositiveIcon from '@/public/userPositiveIcon.png';

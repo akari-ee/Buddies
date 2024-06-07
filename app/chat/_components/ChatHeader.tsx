@@ -12,7 +12,7 @@ import bomi from '/public/bomi_option.png';
 import yermi from '/public/yermi_option.png';
 import gauri from '/public/gauri_option.png';
 import gyeouri from '/public/gyeouri_option.png';
-import { text_colors } from '@/app/_constant/constant';
+import { text_colors } from '@/constant/constant';
 
 const characters = [
   { name: '보미', src: bomi },

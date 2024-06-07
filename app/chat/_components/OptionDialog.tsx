@@ -7,7 +7,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import { cn } from '@/utils/extendClass';
 import ReCheckDialog from './ReCheckDialog';
-import { bg_colors, border_colors, charactersDialogOption, ring_colors } from '@/app/_constant/constant';
+import { bg_colors, border_colors, charactersDialogOption, ring_colors } from '@/constant/constant';
 
 type OptionDialogProps = {
   isOpen: boolean;

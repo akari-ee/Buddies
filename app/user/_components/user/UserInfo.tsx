@@ -7,7 +7,7 @@ import CharacterSwiper from './CharacterSwiper';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import yermi from '@/public/yermi_option.png';
-import { bg_colors } from '@/app/_constant/constant';
+import { bg_colors } from '@/constant/constant';
 import { cn } from '@/utils/extendClass';
 
 type ValuePiece = Date | null;

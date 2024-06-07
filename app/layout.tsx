@@ -1,9 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import AuthSession from "./_wrapper/AuthSession";
+import AuthSession from "../wrapper/AuthSession";
 import { Roboto } from "next/font/google";
-import RecoilRootWrapper from "./_wrapper/RecoilRootWrapper";
+import RecoilRootWrapper from "../wrapper/RecoilRootWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -26,7 +26,6 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.className} ${roboto.variable}`}>
-      {/* <link rel='preload' as='font' /> */}
       <link rel="manifest" href="/manifest.json" />
       <link rel="apple-touch-icon" href="/images/icon-512x512.png" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
